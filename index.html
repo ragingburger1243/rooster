@@ -1631,6 +1631,26 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
 .sync-line.stale i{background:var(--orange)}
 
 .connect-tip{margin:2px 6px 0;font-size:12.5px;line-height:1.4;color:var(--label2);text-align:center}
+
+/* ---------- official averages + absences ---------- */
+.off-tag{align-self:center;margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.01em;color:var(--blue);background:color-mix(in srgb,var(--blue) 11%,transparent);border-radius:6px;padding:2px 6px}
+.abs-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.abs-st{background:var(--bg2);border-radius:var(--r-md,18px);box-shadow:var(--card-shadow);padding:12px 12px 11px;display:grid;gap:1px}
+.abs-st b{font-size:26px;font-weight:700;letter-spacing:-.03em;font-family:var(--round)}
+.abs-st span{font-size:12px;font-weight:600;color:var(--label2)}
+.abs-st.warn b{color:var(--red)}
+.abs-row{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 14px 11px 14px;min-height:58px}
+.abs-row + .abs-row{border-top:.5px solid var(--sep)}
+.abs-row b{display:block;font-size:15px;font-weight:600}
+.abs-row small{display:block;font-size:13px;color:var(--label2)}
+.abs-ic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:17px;background:var(--fill)}
+.abs-ic.k-late{background:color-mix(in srgb,var(--orange) 16%,transparent)}
+.abs-ic.k-sick{background:color-mix(in srgb,var(--blue) 13%,transparent)}
+.abs-ic.k-removed{background:color-mix(in srgb,var(--red) 14%,transparent)}
+.abs-tag{font-size:12px;font-weight:650;border-radius:999px;padding:3px 9px;background:var(--fill);color:var(--label2);white-space:nowrap}
+.abs-tag.ok{background:color-mix(in srgb,var(--green) 14%,transparent);color:color-mix(in srgb,var(--green) 75%,var(--label))}
+.abs-tag.bad{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red)}
+@media (max-width:420px){ .abs-stats{grid-template-columns:repeat(2,1fr)} }
 </style>
 </head>
 <body>
@@ -2123,7 +2143,30 @@ function rawGrades(items){
 /* ---------- "Begin met Magister": encrypted file in the user's own Google Drive ---------- */
 function rawToBundle(raw, via){
   return {version:1, via, updated: raw.updated || new Date().toISOString(), school: raw.school || "", name: raw.name || "",
-    events: (raw.afspraken || []).map(rawAppt), grades: raw.cijfers ? rawGrades(raw.cijfers) : null};
+    events: (raw.afspraken || []).map(rawAppt), grades: raw.cijfers ? rawGrades(raw.cijfers) : null,
+    absences: raw.absenties ? raw.absenties.map(rawAbsence).filter(Boolean) : null,
+    materials: raw.materialen ? raw.materialen.map(rawMaterial).filter(Boolean) : null,
+    averages: raw.gemiddelden ? raw.gemiddelden.map(rawAverage).filter(Boolean) : null,
+    magisterUrl: raw.magister || ""};
+}
+/* absences: late, sick, absent — with whether the school counts it as excused */
+function rawAbsence(a){
+  const start = new Date(a.Start); if(isNaN(start)) return null;
+  const txt = `${a.Omschrijving||""} ${a.Code||""}`.toLowerCase();
+  const kind = /laat|\btl\b/.test(txt) ? "late" : /ziek|\bz\b/.test(txt) ? "sick" : /verwijder|uitgestuurd|\bvw\b/.test(txt) ? "removed" : /huiswerk|boek|materiaal/.test(txt) ? "other" : "absent";
+  return {id:String(a.Id ?? a.Start), start:a.Start, end:a.Eind || a.Start, hour:a.Lesuur ?? null, kind, label:(a.Omschrijving || "").trim() || {late:"Te laat",sick:"Ziek",removed:"Verwijderd",absent:"Afwezig",other:"Overig"}[kind],
+    allowed: a.Geoorloofd === true ? true : a.Geoorloofd === false ? false : null, handled: a.Afgehandeld !== false, code: a.Vak || "", lesson: a.Les || ""};
+}
+/* learning materials -> Kast */
+function rawMaterial(m){
+  if(!m || !m.Titel) return null;
+  return {id:String(m.Id ?? m.Titel), title:m.Titel, publisher:m.Uitgeverij || "", code:m.Vak || "", subject:m.VakNaam || "", url:m.Url || "", digital: m.Type === 1 || !!m.Url};
+}
+/* official averages from Magister */
+function rawAverage(g){
+  const n = parseFloat(String(g.value||"").replace(",", "."));
+  if(!g.value && g.value !== 0) return null;
+  return {code:g.code || "", subject:g.subject || "", label:g.label || "Gemiddelde", column:g.column || "", period:g.period || "", value:String(g.value), num: n >= 1 && n <= 10 ? n : null};
 }
 async function openLinkFile(file, key){
   const r = await fetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(file)}?alt=media&key=${encodeURIComponent(DRIVE_KEY)}&t=${Date.now()}`, {cache:"no-store"});
@@ -2179,8 +2222,34 @@ function applyBundle(b, animate){
   mode = "live"; events = (b.events || []).map(fromBundle).filter(Boolean).sort((a,c)=>a.start-c.start);
   lastUpdated = new Date(b.updated || Date.now());
   if(b.grades){ grades = {at:b.gradesAt || b.updated, list:b.grades}; store.set("ml-grades", grades); }
+  extra = {absences: b.absences || null, averages: b.averages || null, magisterUrl: b.magisterUrl || ""};
+  if(b.materials) mergeMaterials(b.materials, b.magisterUrl);
   if(b.school && !store.get("ml-magister","")) store.set("ml-magister", b.school + ".magister.net");
   if(!wasLive) showApp(animate !== false); else render();
+}
+let extra = {absences:null, averages:null, magisterUrl:""};
+/* Magister's learning materials appear in your Kast by themselves; your own colours, notes and "meenemen" stay */
+function mergeMaterials(list, magisterUrl){
+  const hidden = store.get("ml-kasthide", []), ids = new Set(), fallback = (magisterUrl || "") + "#/leermiddelen";
+  let changed = false;
+  for(const m of list){
+    const id = "lm-" + m.id; ids.add(id);
+    if(hidden.includes(id)) continue;
+    const url = m.url || (magisterUrl ? fallback : "");
+    const code = SUBJECTS[m.code] ? m.code : "";
+    const it = stuff.find(x=>x.id === id);
+    if(it){
+      // keep what you changed yourself (name, colour, note, "meenemen"); only fill in what is missing
+      if(!it.url && url){ it.url = url; changed = true; }
+      if(code && !it.subject){ it.subject = code; changed = true; }
+    } else {
+      stuff.push({id, type:"boek", title:m.title, subject:code, url, note:m.publisher ? "Van " + m.publisher : "", bring:false, created:Date.now(), src:"magister"});
+      changed = true;
+    }
+  }
+  const before = stuff.length;
+  stuff = stuff.filter(x=>x.src !== "magister" || (ids.has(x.id) && !hidden.includes(x.id)));
+  if(changed || stuff.length !== before) saveStuff();
 }
 async function fetchBundle(code){
   const r = await fetch(DATA_URL + "?t=" + Date.now(), {cache:"no-store"});
@@ -3841,8 +3910,9 @@ function saveItem(){
 function deleteItem(id){
   const i = stuff.findIndex(x=>x.id===id); if(i < 0) return;
   const [removed] = stuff.splice(i, 1); saveStuff(); haptic();
+  if(removed.src === "magister"){ const h = store.get("ml-kasthide", []); if(!h.includes(id)){ h.push(id); store.set("ml-kasthide", h); touch("kasthide"); } }
   const card = document.querySelector(`[data-item="${CSS.escape(id)}"]`);
-  const finish = () => { render(); toast("Verwijderd", ()=>{ stuff.splice(Math.min(i, stuff.length), 0, removed); saveStuff(); justAdded = removed.id; render(); }); };
+  const finish = () => { render(); toast("Verwijderd", ()=>{ stuff.splice(Math.min(i, stuff.length), 0, removed); saveStuff(); store.set("ml-kasthide", store.get("ml-kasthide", []).filter(x=>x !== removed.id)); justAdded = removed.id; render(); }); };
   if(card && !reduced){ card.classList.add("removing"); setTimeout(finish, 300); } else finish();
 }
 function toggleBring(id){
@@ -3936,6 +4006,28 @@ function demoGrades(){
     g("entl","Engels",6.9,2,"Grammar test",30), g("schk","Scheikunde",7.0,1,"Practicum",35), g("gs","Geschiedenis",6.2,2,"Toets H1",38), g("nat","Natuurkunde",6.5,1,"Practicum",41)];
 }
 function gradeList(){ return mode === "demo" ? demoGrades() : (grades?.list || []); }
+function officialList(){
+  if(mode === "demo") return [{code:"wisB",subject:"Wiskunde B",label:"Gemiddelde periode 1",period:"P1",value:"6,0",num:6.0},{code:"entl",subject:"Engels",label:"Gemiddelde periode 1",period:"P1",value:"7,3",num:7.3}];
+  return extra.averages || [];
+}
+/* subjects from your grades, plus subjects that only have an official average so far */
+function subjectsWithOfficial(G){
+  const subs = bySubject(G);
+  for(const s of subs){ const o = officialFor(s.key, s.name); if(o){ s.official = o; s.own = s.avg; s.avg = o.num; } }
+  for(const a of officialList()){
+    if(a.num == null) continue;
+    const key = a.code || a.subject;
+    if(subs.some(s=>s.key === key || (a.subject && s.name.toLowerCase() === a.subject.toLowerCase()))) continue;
+    const o = officialFor(key, a.subject);
+    subs.push({key, code:a.code, name: SUBJECTS[a.code] || (a.subject ? a.subject[0].toUpperCase() + a.subject.slice(1) : key), all:[], sum:0, w:0, avg:o.num, official:o});
+  }
+  return subs.sort((a,b)=> a.name.localeCompare(b.name, "nl"));
+}
+/* the most relevant official average for a subject: the last listed numeric one */
+function officialFor(key, name){
+  const L = officialList().filter(a=>a.num != null && (a.code === key || (a.subject && name && a.subject.toLowerCase() === String(name).toLowerCase())));
+  return L.length ? L[L.length-1] : null;
+}
 function bySubject(list){
   const m = new Map();
   for(const g of list){
@@ -3956,40 +4048,67 @@ function renderGrades(now, list, el){
   const G = gradeList();
   if(!G.length){
     el.innerHTML = large("Cijfers", "") + `<div class="list"><div class="gr-empty">${GRADE_IC}<h3 style="margin:0">Nog geen cijfers</h3>
-      <p>${source === "google" ? "Je cijfers komen uit Magister via je sync. Draait die al met de nieuwste versie?" : "Je cijfers komen mee met je sync, of haal ze direct op met de Magister-bladwijzer."}</p>
-      <button class="btn press" type="button" data-bm>Magister-bladwijzer instellen</button></div></div>`;
+      <p>${source === "link" ? "Er staan nog geen cijfers in Magister voor dit schooljaar, of ze zijn nog niet opgehaald." : source === "google" ? "Je cijfers komen uit Magister via je sync. Draait die al met de nieuwste versie?" : "Je cijfers komen mee met je sync, of haal ze direct op met de Magister-bladwijzer."}</p>
+      ${source === "link" ? "" : `<button class="btn press" type="button" data-bm>Magister-bladwijzer instellen</button>`}</div></div>` + absencesHtml(now);
     return;
   }
-  const subs = bySubject(G), scored = subs.filter(s=>s.avg != null);
+  const subs = subjectsWithOfficial(G);
+  const scored = subs.filter(s=>s.avg != null);
   const overall = scored.length ? scored.reduce((a,s)=>a+s.avg, 0) / scored.length : null;
   const bad = scored.filter(s=>s.avg < 5.5), last = G[0];
   const at = mode === "demo" ? null : grades?.at;
   const [g1, g2] = overall == null ? ["#AF52DE","#5E5CE6"] : overall < 5.5 ? ["#FF453A","#FF2D55"] : overall < 6.5 ? ["#FF9F0A","#FF6B00"] : ["#30D158","#00A86B"];
-  let html = large("Cijfers", `${G.length} cijfers dit schooljaar${at ? " · bijgewerkt "+esc(relTime(at)) : ""}`);
+  let html = large("Cijfers", `${G.length} ${G.length === 1 ? "cijfer" : "cijfers"} dit schooljaar${at ? " · bijgewerkt "+esc(relTime(at)) : ""}`);
   html += `<div class="gr-top"><div class="gr-sum" style="--g1:${g1};--g2:${g2}"><small>Gemiddelde van je vakken</small><b class="num">${nl1(overall)}</b><span>${scored.length} vakken · ${bad.length ? bad.length+" onvoldoende" : "geen onvoldoendes"}</span></div>
     <div class="gr-side"><div class="gr-mini"><small>Laatste cijfer</small><b class="${gcls(last.num)}">${esc(last.value || "–")}</b><span>${esc(SUBJECTS[last.code] || last.subject)}${last.desc ? " · "+esc(last.desc) : ""}</span></div>
       <div class="gr-mini"><small>Laagste gemiddelde</small>${scored.length ? (()=>{ const lo = scored.reduce((a,s)=> s.avg < a.avg ? s : a); return `<b class="${gcls(lo.avg)}">${nl1(lo.avg)}</b><span>${esc(lo.name)}</span>`; })() : "<b>–</b>"}</div></div></div>`;
-  const cards = subs.map(s=>{ const c = s.code ? subjectColor(s.code) : "#8E8E93", lastG = s.all[s.all.length-1], prev = s.all.filter(g=>g.num!=null);
+  const cards = subs.map(s=>{ const c = s.code ? subjectColor(s.code) : "#8E8E93", lastG = s.all[s.all.length-1] || {value:"–"}, prev = s.all.filter(g=>g.num!=null);
     const trend = prev.length >= 2 ? (prev[prev.length-1].num >= prev[prev.length-2].num ? "▲" : "▼") : "";
     return `<button class="gr-card press" type="button" data-subj="${esc(s.key)}" style="--c:${c}"><span class="nm">${esc(s.name)}</span>
-      <span class="av"><b class="${gcls(s.avg)}">${nl1(s.avg)}</b>${trend ? `<small class="${trend==="▲"?"g-good":"g-bad"}">${trend}</small>` : ""}</span>
-      <span class="meta">${s.all.length} ${s.all.length===1?"cijfer":"cijfers"} · laatst ${esc(lastG.value)}</span>${spark(s.all)}</button>`; }).join("");
+      <span class="av"><b class="${gcls(s.avg)}">${nl1(s.avg)}</b>${trend ? `<small class="${trend==="▲"?"g-good":"g-bad"}">${trend}</small>` : ""}${s.official ? `<span class="off-tag" title="${esc(s.official.label)}">Magister</span>` : ""}</span>
+      <span class="meta">${s.all.length ? `${s.all.length} ${s.all.length===1?"cijfer":"cijfers"} · laatst ${esc(lastG.value)}` : esc(s.official?.label || "Officieel gemiddelde")}</span>${spark(s.all)}</button>`; }).join("");
   const recent = G.slice(0, 12).map(g=>`<div class="g-row" data-subj="${esc(g.code || g.subject)}" style="cursor:pointer"><span class="g-pill ${gcls(g.num)}">${esc(g.value || "–")}</span>
     <span style="min-width:0"><b>${esc(SUBJECTS[g.code] || g.subject)}</b><small>${esc(g.desc || "Cijfer")}</small></span>
     <span class="w"><em>${g.weight !== 1 ? "×"+String(g.weight).replace(".",",") : ""}</em>${esc(shortDate(g.date))}</span></div>`).join("");
   html += `<div class="gr-layout"><div><div class="section-h"><h2>Per vak</h2></div><div class="gr-grid">${cards}</div></div>
     <div><div class="section-h"><h2>Laatste cijfers</h2></div><div class="list">${recent}</div>
-    <p class="footnote">Gemiddelden zijn berekend uit je cijfers en wegingen. Magister kan anders rekenen, bijvoorbeeld per periode.</p></div></div>`;
+    <p class="footnote">${officialList().length ? "Vakken met het label Magister tonen het officiële gemiddelde uit Magister. De andere zijn berekend uit je cijfers en wegingen." : "Gemiddelden zijn berekend uit je cijfers en wegingen. Magister kan anders rekenen, bijvoorbeeld per periode."}</p></div></div>`;
+  html += absencesHtml(now);
   el.innerHTML = html;
+}
+/* ---------- Absenties ---------- */
+function absenceList(){
+  if(mode === "demo"){ const d = k => { const x = new Date(); x.setDate(x.getDate()-k); x.setHours(8,30,0,0); return x.toISOString(); };
+    return [{id:"a1",start:d(4),hour:1,kind:"late",label:"Te laat",allowed:false,handled:true,code:"wisB",lesson:"wisB - V4wisB_1"},
+      {id:"a2",start:d(12),hour:1,kind:"sick",label:"Ziek",allowed:true,handled:true,code:"",lesson:""},
+      {id:"a3",start:d(19),hour:5,kind:"absent",label:"Afspraak tandarts",allowed:true,handled:true,code:"dutl",lesson:""}]; }
+  return extra.absences;
+}
+const ABS_IC = {late:"⏱", sick:"🤒", absent:"🚪", removed:"⚠️", other:"📘"};
+function absencesHtml(now){
+  const A = absenceList(); if(!A) return "";
+  const list = [...A].sort((a,b)=> new Date(b.start) - new Date(a.start));
+  const n = k => list.filter(a=>a.kind === k).length, unexcused = list.filter(a=>a.allowed === false).length;
+  let html = `<div class="section-h" style="margin-top:40px"><h2>Absenties</h2><span class="side-count">dit schooljaar</span></div>`;
+  if(!list.length) return html + emptyState("done", "Geen absenties", "Je bent dit schooljaar nergens te laat of afwezig geweest. Netjes.", true);
+  html += `<div class="abs-stats"><div class="abs-st"><b class="num">${n("late")}</b><span>Te laat</span></div><div class="abs-st"><b class="num">${n("sick")}</b><span>Ziek</span></div>
+    <div class="abs-st"><b class="num">${n("absent") + n("removed") + n("other")}</b><span>Afwezig</span></div><div class="abs-st ${unexcused ? "warn" : ""}"><b class="num">${unexcused}</b><span>Ongeoorloofd</span></div></div>`;
+  html += `<div class="list" style="margin-top:12px">` + list.slice(0, 12).map(a=>{ const d = new Date(a.start);
+    const subj = SUBJECTS[a.code] || (a.lesson ? a.lesson.split(" - ")[0] : "");
+    return `<div class="abs-row"><span class="abs-ic k-${a.kind}" aria-hidden="true">${ABS_IC[a.kind] || "•"}</span>
+      <span style="min-width:0"><b>${esc(a.label)}</b><small>${esc(DOW[d.getDay()] + " " + d.getDate() + " " + MON[d.getMonth()])}${a.hour ? " · " + a.hour + "e uur" : ""}${subj ? " · " + esc(subj) : ""}</small></span>
+      <span class="abs-tag ${a.allowed === false ? "bad" : a.allowed ? "ok" : ""}">${a.allowed === false ? "Ongeoorloofd" : a.allowed ? "Geoorloofd" : "Open"}</span></div>`; }).join("") + `</div>`;
+  if(list.length > 12) html += `<p class="footnote">De laatste 12 van ${list.length}. Kijk in Magister voor het volledige overzicht.</p>`;
+  return html;
 }
 function shortDate(k){ const d = new Date(k+"T12:00"); const n = daysUntil(d, new Date()); return n === 0 ? "vandaag" : n === -1 ? "gisteren" : d.getDate()+" "+MON[d.getMonth()]; }
 function openSubject(key, src){
-  const s = bySubject(gradeList()).find(x=>x.key === key); if(!s) return;
+  const s = subjectsWithOfficial(gradeList()).find(x=>x.key === key); if(!s) return;
   haptic();
   const c = s.code ? subjectColor(s.code) : "#8E8E93";
   $("grade-title").textContent = s.name;
   const rows = [...s.all].reverse().map(g=>`<div class="g-row"><span class="g-pill ${gcls(g.num)}">${esc(g.value || "–")}</span><span style="min-width:0"><b>${esc(g.desc || "Cijfer")}</b><small>${esc(shortDate(g.date))}${g.counts === false ? " · telt niet mee" : ""}</small></span><span class="w"><em>×${String(g.weight).replace(".",",")}</em>weging</span></div>`).join("");
-  $("grade-body").innerHTML = `<div class="detail-hero" style="--c:${c}"><h3>${nl1(s.avg)}</h3><p>Gemiddelde ${esc(s.name)} · ${s.all.length} ${s.all.length===1?"cijfer":"cijfers"}</p></div>
+  $("grade-body").innerHTML = `<div class="detail-hero" style="--c:${c}"><h3>${nl1(s.avg)}</h3><p>${s.official ? "Officieel gemiddelde in Magister" + (s.own != null ? " · zelf berekend " + nl1(s.own) : "") : "Gemiddelde " + esc(s.name)} · ${s.all.length} ${s.all.length===1?"cijfer":"cijfers"}</p></div>
     <div class="caption">Wat moet ik halen?</div>
     <div class="list calc" style="--c:${c}">
       <div class="calc-row"><span>Ik wil staan op</span><input type="number" id="calc-goal" min="1" max="10" step="0.1" value="5.5" inputmode="decimal"></div>
@@ -3998,11 +4117,14 @@ function openSubject(key, src){
       <div class="calc-row"><span>En als ik een <b id="calc-tv">7,0</b> haal?</span><span id="calc-tavg" style="font-weight:700"></span></div>
       <input type="range" id="calc-try" min="1" max="10" step="0.1" value="7">
     </div>
+    ${(()=>{ const off = officialList().filter(a=>a.code === s.key || (a.subject && a.subject.toLowerCase() === s.name.toLowerCase()));
+      return off.length ? `<div class="caption">Officieel in Magister</div><div class="list">${off.map(a=>`<div class="g-row"><span class="g-pill ${gcls(a.num)}">${esc(a.value)}</span><span style="min-width:0"><b>${esc(a.label)}</b><small>${esc([a.period, a.column].filter(Boolean).join(" · ") || "Gemiddelde")}</small></span><span class="w"></span></div>`).join("")}</div>` : ""; })()}
     <div class="caption">Cijfers</div><div class="list">${rows}</div>`;
   const upd = () => {
     const goal = parseFloat($("calc-goal").value.replace(",", ".")) || 5.5, w = parseFloat($("calc-w").value.replace(",", ".")) || 1, t = parseFloat($("calc-try").value);
     const need = (goal * (s.w + w) - s.sum) / w;
-    $("calc-out").innerHTML = s.w === 0 ? `Je hebt nog geen cijfers die meetellen. Haal een <b>${nl1(goal)}</b> en je staat op ${nl1(goal)}.`
+    $("calc-out").innerHTML = s.w === 0 && s.official ? `De losse cijfers voor dit vak staan niet in je laatste cijfers, dus MCML kan niet uitrekenen wat je nodig hebt. Je officiële gemiddelde in Magister is <b>${nl1(s.official.num)}</b>.`
+      : s.w === 0 ? `Je hebt nog geen cijfers die meetellen. Haal een <b>${nl1(goal)}</b> en je staat op ${nl1(goal)}.`
       : need > 10 ? `Met één toets lukt een <b>${nl1(goal)}</b> niet meer: je zou een ${nl1(need)} nodig hebben. Kijk of er meer toetsen komen.`
       : need <= 1 ? `Je staat sowieso op een <b>${nl1(goal)}</b> of hoger, zelfs met een 1.`
       : `Haal minimaal een <b>${nl1(Math.ceil(need*10)/10)}</b> om op ${nl1(goal)} te komen.`;
@@ -4155,6 +4277,7 @@ const SYNC_KEYS = {
   prefs:    [()=>prefs,  v=>{ if(v && typeof v === "object"){ Object.assign(prefs, v); store.set("ml-prefs", prefs); } }],
   tint:     [()=>tint,   v=>{ tint = Math.min(TINTS.length-1, Math.max(0, Number(v)||0)); store.set("ml-tint", tint); }],
   magister: [()=>store.get("ml-magister",""), v=>store.set("ml-magister", v || "")],
+  kasthide: [()=>store.get("ml-kasthide", []), v=>store.set("ml-kasthide", Array.isArray(v) ? v : [])],
 };
 let syncing = false, syncAgain = false;
 const MERGE_KEYS = ["done", "packed", "plans", "stuff"];
