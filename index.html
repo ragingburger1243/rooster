@@ -1651,6 +1651,40 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
 .abs-tag.ok{background:color-mix(in srgb,var(--green) 14%,transparent);color:color-mix(in srgb,var(--green) 75%,var(--label))}
 .abs-tag.bad{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red)}
 @media (max-width:420px){ .abs-stats{grid-template-columns:repeat(2,1fr)} }
+
+.mat-note{margin-top:22px;text-align:center}
+/* ---------- Absenties tab ---------- */
+.abs-big .abs-st{border:0;font:inherit;color:var(--label);text-align:left;cursor:pointer;position:relative;overflow:hidden;padding:14px 14px 12px}
+.abs-big .abs-st::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3.5px;border-radius:0 3px 3px 0;background:var(--k)}
+.abs-big .abs-st b{font-size:32px}
+.abs-big .abs-st.on{box-shadow:var(--card-shadow),inset 0 0 0 2px var(--k)}
+.abs-note{margin:12px 6px 0;font-size:13.5px;font-weight:600;color:var(--orange)}
+.abs-card{background:var(--bg2);border-radius:var(--r-lg,22px);box-shadow:var(--card-shadow);padding:16px 14px 12px}
+.abs-chart{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px;align-items:end;height:150px}
+.abs-col{display:grid;grid-template-rows:1fr auto auto;justify-items:center;height:100%;gap:3px}
+.abs-col small{font-size:11px;font-weight:600;color:var(--label2)}
+.abs-col b{font-size:11px;font-weight:700;color:var(--label);min-height:13px}
+.abs-bar{align-self:end;width:100%;max-width:30px;min-height:3px;border-radius:7px;overflow:hidden;display:flex;flex-direction:column-reverse;background:var(--fill);
+  animation:growH .7s var(--out) both;animation-delay:calc(var(--k) * 45ms)}
+.abs-bar i{display:block;min-height:3px}
+.b-late{background:var(--orange)} .b-sick{background:var(--blue)} .b-absent{background:#8E8E93}
+.abs-legend{display:flex;gap:14px;justify-content:center;margin-top:10px;font-size:12px;font-weight:600;color:var(--label2)}
+.abs-legend span{display:inline-flex;align-items:center;gap:6px}
+.abs-legend i{width:9px;height:9px;border-radius:3px}
+.abs-sub{display:grid;grid-template-columns:10px minmax(0,130px) minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 16px;font-size:15px}
+.abs-sub + .abs-sub{border-top:.5px solid var(--sep)}
+.abs-sub b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.abs-subbar{height:8px;border-radius:4px;background:var(--fill);overflow:hidden}
+.abs-subbar i{display:block;height:100%;border-radius:4px;animation:growW .8s var(--out) both}
+.abs-subn{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.abs-subn small{font-weight:500;color:var(--label2);font-size:12px}
+.abs-chips{margin-bottom:4px}
+.abs-chips .chip.on{background:var(--label);color:var(--bg2)}
+@media (min-width:1024px){
+  .abs-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,460px);gap:40px;align-items:start}
+  .abs-layout .section-h:first-child{margin-top:34px}
+  .abs-chart{height:190px}
+}
 </style>
 </head>
 <body>
@@ -1712,6 +1746,7 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
   <section id="v-hw" class="view" hidden></section>
   <section id="v-tests" class="view" hidden></section>
   <section id="v-grades" class="view" hidden></section>
+  <section id="v-absences" class="view" hidden></section>
   <section id="v-items" class="view" hidden></section>
   <p class="app-disclaimer" id="app-disclaimer" hidden>Controleer Magister voor alle belangrijke informatie.</p>
 </main>
@@ -1735,6 +1770,9 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
   <button type="button" data-view="grades">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect class="fillable" x="3.5" y="13" width="4" height="7.5" rx="1.2"/><rect class="fillable" x="10" y="8.5" width="4" height="12" rx="1.2"/><rect class="fillable" x="16.5" y="4" width="4" height="16.5" rx="1.2"/></svg>
     <span>Cijfers</span></button>
+  <button type="button" data-view="absences">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle class="fillable" cx="12" cy="12.5" r="8.5"/><path d="M12 8v4.8l3 1.9"/></svg>
+    <span>Absenties</span></button>
   <button type="button" data-view="items">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect class="fillable" x="3.5" y="4" width="4.5" height="16" rx="1.2"/><rect class="fillable" x="8" y="6" width="4.5" height="14" rx="1.2"/><path class="fillable" d="M13.6 7.4l3.6-1.1a1 1 0 0 1 1.25.66l3.2 10.6a1 1 0 0 1-.66 1.25l-3.6 1.1a1 1 0 0 1-1.25-.66L12.94 8.65a1 1 0 0 1 .66-1.25z"/><path d="M3.5 7.5H8M8 9.5h4.5"/></svg>
     <span>Kast</span></button>
@@ -1898,6 +1936,7 @@ const dayKey = d => d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())
 const DOW = ["zo","ma","di","wo","do","vr","za"];
 const DOW_LONG = ["zondag","maandag","dinsdag","woensdag","donderdag","vrijdag","zaterdag"];
 const MON = ["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+const MONTHS_FULL = ["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
 const MON_LONG = ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const cap = s => s.replace(/^./, c => c.toUpperCase());
@@ -1908,7 +1947,7 @@ const store = {
 };
 
 /* ================= preferences ================= */
-const VIEWS = ["today","rooster","hw","tests","grades","items"];
+const VIEWS = ["today","rooster","hw","tests","grades","absences","items"];
 const PREF_DEFAULTS = {
   theme:"auto",          // auto | light | dark
   bg:"glow",             // glow | plain | mesh
@@ -2222,12 +2261,12 @@ function applyBundle(b, animate){
   mode = "live"; events = (b.events || []).map(fromBundle).filter(Boolean).sort((a,c)=>a.start-c.start);
   lastUpdated = new Date(b.updated || Date.now());
   if(b.grades){ grades = {at:b.gradesAt || b.updated, list:b.grades}; store.set("ml-grades", grades); }
-  extra = {absences: b.absences || null, averages: b.averages || null, magisterUrl: b.magisterUrl || ""};
+  extra = {absences: b.absences || null, averages: b.averages || null, magisterUrl: b.magisterUrl || "", materials: Array.isArray(b.materials) ? b.materials.length : null};
   if(b.materials) mergeMaterials(b.materials, b.magisterUrl);
   if(b.school && !store.get("ml-magister","")) store.set("ml-magister", b.school + ".magister.net");
   if(!wasLive) showApp(animate !== false); else render();
 }
-let extra = {absences:null, averages:null, magisterUrl:""};
+let extra = {absences:null, averages:null, magisterUrl:"", materials:null};
 /* Magister's learning materials appear in your Kast by themselves; your own colours, notes and "meenemen" stay */
 function mergeMaterials(list, magisterUrl){
   const hidden = store.get("ml-kasthide", []), ids = new Set(), fallback = (magisterUrl || "") + "#/leermiddelen";
@@ -2431,6 +2470,7 @@ function render(animate, dir){
   if(view==="tests") renderTests(now, list, el);
   if(view==="items") renderItems(now, list, el);
   if(view==="grades") renderGrades(now, list, el);
+  if(view==="absences") renderAbsences(now, list, el);
   renderSide(now, list);
   lastSig = stateSig();
   // iOS-style numeric transition: the countdown rolls to its new value
@@ -2917,7 +2957,7 @@ function renderSide(now, list){
 }
 
 /* ================= navigation ================= */
-const TITLES = {today:"Vandaag", rooster:"Rooster", hw:"Huiswerk", tests:"Toetsen", grades:"Cijfers", items:"Kast"};
+const TITLES = {today:"Vandaag", rooster:"Rooster", hw:"Huiswerk", tests:"Toetsen", grades:"Cijfers", absences:"Absenties", items:"Kast"};
 // tab order and visibility come from your settings
 function applyTabs(){
   layoutTabs(); const vis = visibleViews();
@@ -2976,6 +3016,7 @@ $("main").addEventListener("click", e=>{
   if(e.target.closest("[data-replan]")){ replanAll(); return; }
   const gs = e.target.closest("[data-subj]"); if(gs){ openSubject(gs.dataset.subj, gs); return; }
   if(e.target.closest("[data-bm]")){ openBookmarklet(); return; }
+  const af = e.target.closest("[data-absf]"); if(af){ absFilter = af.dataset.absf; haptic(); render(); return; }
   const itm = e.target.closest("[data-item]");
   if(itm){
     const it = stuff.find(x=>x.id===itm.dataset.item);
@@ -3189,7 +3230,7 @@ const PREF_OPTS = {
   density:[["normal","Ruim"],["compact","Compact"]],
 };
 const TAB_META_FN = () => ({today:["#007AFF",'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg>'],
-  rooster:["#5856D6",IC.cal], hw:["#34C759",IC.check], tests:["#FF3B30",IC.info], grades:["#AF52DE",GRADE_IC], items:["#FF9500",IC.book]});
+  rooster:["#5856D6",IC.cal], hw:["#34C759",IC.check], tests:["#FF3B30",IC.info], grades:["#AF52DE",GRADE_IC], absences:["#30B0C7",ABS_TAB_IC], items:["#FF9500",IC.book]});
 const TODAY_PARTS = [["widgets","Widgets","Volgende toets en huiswerk"],["focus","Focus","Studietimer en je focustijd"],["plan","Leren voor toetsen","Je studieplanning van vandaag"],["pack","Inpaklijst","Wat je mee moet nemen"],["next","Daarna / tijdlijn","De rest van je dag"],
   ["hw","Huiswerk","Alleen op de computer"],["tests","Toetsen","Alleen op de computer"],["apps","Snel naar","Magister, Agenda en links"]];
 const CHEV = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
@@ -3464,7 +3505,7 @@ function runSpot(q){
   const list = schoolList().filter(e=>e.end>now || dayKey(e.start)===dayKey(now));
   const hit = (...fields) => !Q || fields.some(f => norm(f).includes(Q));
   const groups = [];
-  const go = [["Vandaag","today",IC.grid,"#007AFF"],["Rooster","rooster",IC.cal,"#5856D6"],["Huiswerk","hw",IC.check,"#34C759"],["Toetsen","tests",IC.info,"#FF3B30"],["Cijfers","grades",GRADE_IC,"#AF52DE"],["Kast","items",IC.book,"#FF9500"],["Instellingen","settings",IC.gear,"#8E8E93"]].filter(([,v])=>v==="settings" || visibleViews().includes(v))
+  const go = [["Vandaag","today",IC.grid,"#007AFF"],["Rooster","rooster",IC.cal,"#5856D6"],["Huiswerk","hw",IC.check,"#34C759"],["Toetsen","tests",IC.info,"#FF3B30"],["Cijfers","grades",GRADE_IC,"#AF52DE"],["Absenties","absences",ABS_TAB_IC,"#30B0C7"],["Kast","items",IC.book,"#FF9500"],["Instellingen","settings",IC.gear,"#8E8E93"]].filter(([,v])=>v==="settings" || visibleViews().includes(v))
     .filter(([l])=>hit(l)).map(([l,v,ic,c])=>({title:l, sub: v==="settings" ? "Accentkleur, Magister-adres en meer" : "Ga naar "+l.toLowerCase(), icon:ic, color:c, hint: v==="settings" ? "," : String(visibleViews().indexOf(v)+1),
       run:()=> v==="settings" ? openSettings() : setView(v, true)}));
   if(go.length && (Q || true)) groups.push(["Ga naar", Q ? go : go.slice(0,4)]);
@@ -3662,15 +3703,25 @@ function renderItems(now, list, el){
   const nBring = stuff.filter(i=>i.bring).length;
   const sub = stuff.length ? `${stuff.length} ${stuff.length===1?"item":"items"}${nBring ? " · "+nBring+" om mee te nemen" : ""}` : "Je boeken, hulpmiddelen en links";
   let html = `<div class="large-row">${large("Kast", esc(sub))}<div class="kast-actions">${stuff.length ? `<button class="edit-btn press" type="button" data-kastedit aria-pressed="${kastEdit}">${kastEdit ? "Klaar" : "Wijzig"}</button>` : ""}<button class="add-btn press" type="button" data-add aria-label="Nieuw item toevoegen" title="Nieuw (N)">${IC.plus}</button></div></div>`;
-  if(!stuff.length){ kastEdit = false; el.innerHTML = html + emptyItemsHtml(); return; }
+  if(!stuff.length){ kastEdit = false; el.innerHTML = html + emptyItemsHtml() + materialsNote(); return; }
   const counts = {all:stuff.length, boek:stuff.filter(isBook).length, hulp:stuff.filter(i=>i.type==="hulp"||i.type==="overig").length, link:stuff.filter(i=>i.type==="link"||i.url).length};
   html += `<div class="chips" role="group" aria-label="Filter">` + [["all","Alles"],["boek","Boeken"],["hulp","Hulpmiddelen"],["link","Links"]]
     .map(([k,l])=>`<button class="chip" type="button" data-filter="${k}" aria-pressed="${itemFilter===k}">${l}<span>${counts[k]}</span></button>`).join("") +
     `<button class="chip sort-chip" type="button" data-sortmenu aria-label="Sorteren"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3.5 16.5L7 20l3.5-3.5M17 20V4M13.5 7.5L17 4l3.5 3.5"/></svg>${SORTS[prefs.kastSort]}</button>${zoomCtlHtml()}</div>`;
   if(kastEdit) html += `<p class="kast-hint">Sleep om te ordenen · tik om te bewerken · <b>−</b> om te verwijderen</p>`;
   html += `<div class="shelf-wrap ${kastEdit?"editing":""}" id="shelf-wrap">${shelvesHtml()}</div>`;
+  html += materialsNote();
   el.innerHTML = html;
   justAdded = null;
+}
+/* tell plainly whether Magister's learning materials came through */
+function materialsNote(){
+  if(mode !== "live" || source !== "link") return "";
+  const n = extra.materials, mine = stuff.filter(x=>x.src === "magister").length;
+  const txt = n == null ? "Je lesmateriaal uit Magister is nog niet opgehaald. Open je koppelpagina en tik op Nu bijwerken."
+    : n === 0 ? "Magister heeft geen lesmateriaal voor je klaarstaan. Je school zet je boeken er misschien niet in."
+    : `${n} ${n === 1 ? "boek komt" : "boeken komen"} uit Magister${mine < n ? ` (${n - mine} verborgen)` : ""}. Tik erop om ze in Magister te openen.`;
+  return `<p class="footnote mat-note">${esc(txt)}</p>`;
 }
 /* book size: − / + buttons, ctrl+scroll or trackpad pinch, two-finger pinch on a phone */
 const bkVal = () => BOOK_SIZES[Math.max(0, Math.min(BOOK_SIZES.length-1, prefs.bookSize|0))];
@@ -4049,7 +4100,7 @@ function renderGrades(now, list, el){
   if(!G.length){
     el.innerHTML = large("Cijfers", "") + `<div class="list"><div class="gr-empty">${GRADE_IC}<h3 style="margin:0">Nog geen cijfers</h3>
       <p>${source === "link" ? "Er staan nog geen cijfers in Magister voor dit schooljaar, of ze zijn nog niet opgehaald." : source === "google" ? "Je cijfers komen uit Magister via je sync. Draait die al met de nieuwste versie?" : "Je cijfers komen mee met je sync, of haal ze direct op met de Magister-bladwijzer."}</p>
-      ${source === "link" ? "" : `<button class="btn press" type="button" data-bm>Magister-bladwijzer instellen</button>`}</div></div>` + absencesHtml(now);
+      ${source === "link" ? "" : `<button class="btn press" type="button" data-bm>Magister-bladwijzer instellen</button>`}</div></div>`;
     return;
   }
   const subs = subjectsWithOfficial(G);
@@ -4073,7 +4124,6 @@ function renderGrades(now, list, el){
   html += `<div class="gr-layout"><div><div class="section-h"><h2>Per vak</h2></div><div class="gr-grid">${cards}</div></div>
     <div><div class="section-h"><h2>Laatste cijfers</h2></div><div class="list">${recent}</div>
     <p class="footnote">${officialList().length ? "Vakken met het label Magister tonen het officiële gemiddelde uit Magister. De andere zijn berekend uit je cijfers en wegingen." : "Gemiddelden zijn berekend uit je cijfers en wegingen. Magister kan anders rekenen, bijvoorbeeld per periode."}</p></div></div>`;
-  html += absencesHtml(now);
   el.innerHTML = html;
 }
 /* ---------- Absenties ---------- */
@@ -4081,25 +4131,75 @@ function absenceList(){
   if(mode === "demo"){ const d = k => { const x = new Date(); x.setDate(x.getDate()-k); x.setHours(8,30,0,0); return x.toISOString(); };
     return [{id:"a1",start:d(4),hour:1,kind:"late",label:"Te laat",allowed:false,handled:true,code:"wisB",lesson:"wisB - V4wisB_1"},
       {id:"a2",start:d(12),hour:1,kind:"sick",label:"Ziek",allowed:true,handled:true,code:"",lesson:""},
-      {id:"a3",start:d(19),hour:5,kind:"absent",label:"Afspraak tandarts",allowed:true,handled:true,code:"dutl",lesson:""}]; }
+      {id:"a3",start:d(19),hour:5,kind:"absent",label:"Afspraak tandarts",allowed:true,handled:true,code:"dutl",lesson:""},
+      {id:"a4",start:d(33),hour:1,kind:"late",label:"Te laat",allowed:true,handled:true,code:"netl",lesson:""},
+      {id:"a5",start:d(40),hour:2,kind:"late",label:"Te laat",allowed:false,handled:true,code:"wisB",lesson:""},
+      {id:"a6",start:d(47),hour:1,kind:"sick",label:"Ziek",allowed:true,handled:true,code:"",lesson:""}]; }
   return extra.absences;
 }
 const ABS_IC = {late:"⏱", sick:"🤒", absent:"🚪", removed:"⚠️", other:"📘"};
-function absencesHtml(now){
-  const A = absenceList(); if(!A) return "";
-  const list = [...A].sort((a,b)=> new Date(b.start) - new Date(a.start));
-  const n = k => list.filter(a=>a.kind === k).length, unexcused = list.filter(a=>a.allowed === false).length;
-  let html = `<div class="section-h" style="margin-top:40px"><h2>Absenties</h2><span class="side-count">dit schooljaar</span></div>`;
-  if(!list.length) return html + emptyState("done", "Geen absenties", "Je bent dit schooljaar nergens te laat of afwezig geweest. Netjes.", true);
-  html += `<div class="abs-stats"><div class="abs-st"><b class="num">${n("late")}</b><span>Te laat</span></div><div class="abs-st"><b class="num">${n("sick")}</b><span>Ziek</span></div>
-    <div class="abs-st"><b class="num">${n("absent") + n("removed") + n("other")}</b><span>Afwezig</span></div><div class="abs-st ${unexcused ? "warn" : ""}"><b class="num">${unexcused}</b><span>Ongeoorloofd</span></div></div>`;
-  html += `<div class="list" style="margin-top:12px">` + list.slice(0, 12).map(a=>{ const d = new Date(a.start);
-    const subj = SUBJECTS[a.code] || (a.lesson ? a.lesson.split(" - ")[0] : "");
-    return `<div class="abs-row"><span class="abs-ic k-${a.kind}" aria-hidden="true">${ABS_IC[a.kind] || "•"}</span>
-      <span style="min-width:0"><b>${esc(a.label)}</b><small>${esc(DOW[d.getDay()] + " " + d.getDate() + " " + MON[d.getMonth()])}${a.hour ? " · " + a.hour + "e uur" : ""}${subj ? " · " + esc(subj) : ""}</small></span>
-      <span class="abs-tag ${a.allowed === false ? "bad" : a.allowed ? "ok" : ""}">${a.allowed === false ? "Ongeoorloofd" : a.allowed ? "Geoorloofd" : "Open"}</span></div>`; }).join("") + `</div>`;
-  if(list.length > 12) html += `<p class="footnote">De laatste 12 van ${list.length}. Kijk in Magister voor het volledige overzicht.</p>`;
-  return html;
+const ABS_TAB_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12.5" r="8.5"/><path d="M12 8v4.8l3 1.9"/></svg>';
+const ABS_KINDS = {late:["Te laat","var(--orange)"], sick:["Ziek","var(--blue)"], absent:["Afwezig","#8E8E93"]};
+const absKind = a => a.kind === "late" || a.kind === "sick" ? a.kind : "absent";
+let absFilter = "all";
+function renderAbsences(now, list, el){
+  const A = absenceList();
+  const sub = extra.absences || mode === "demo" ? "dit schooljaar" + (lastUpdated && mode === "live" ? " · bijgewerkt " + esc(relTime(lastUpdated)) : "") : "";
+  let html = large("Absenties", sub);
+  if(!A){
+    el.innerHTML = html + emptyState("hw", "Nog geen absenties opgehaald",
+      source === "link" ? "Ze komen mee bij de volgende update van je koppeling. Open je koppelpagina en tik op Nu bijwerken." : "Absenties komen mee via Begin met Magister (de koppeling).");
+    return;
+  }
+  const all = [...A].sort((a,b)=> new Date(b.start) - new Date(a.start));
+  if(!all.length){ el.innerHTML = html + emptyState("done", "Geen absenties", "Je bent dit schooljaar nergens te laat of afwezig geweest. Netjes."); return; }
+  const n = k => all.filter(a=>absKind(a) === k).length, unexcused = all.filter(a=>a.allowed === false);
+  html += `<div class="abs-stats abs-big">
+    <button class="abs-st press ${absFilter==="late"?"on":""}" type="button" data-absf="${absFilter==="late"?"all":"late"}" style="--k:var(--orange)"><b class="num">${n("late")}</b><span>Te laat</span></button>
+    <button class="abs-st press ${absFilter==="sick"?"on":""}" type="button" data-absf="${absFilter==="sick"?"all":"sick"}" style="--k:var(--blue)"><b class="num">${n("sick")}</b><span>Ziek</span></button>
+    <button class="abs-st press ${absFilter==="absent"?"on":""}" type="button" data-absf="${absFilter==="absent"?"all":"absent"}" style="--k:#8E8E93"><b class="num">${n("absent")}</b><span>Afwezig</span></button>
+    <button class="abs-st press ${unexcused.length ? "warn" : ""} ${absFilter==="bad"?"on":""}" type="button" data-absf="${absFilter==="bad"?"all":"bad"}" style="--k:var(--red)"><b class="num">${unexcused.length}</b><span>Ongeoorloofd</span></button></div>`;
+  if(unexcused.some(a=>!a.handled)) html += `<p class="abs-note">Er staat iets open bij je absenties. Kijk in Magister of je nog iets moet regelen.</p>`;
+
+  // per month, from the start of the school year
+  const ys = yearStart(now), months = [];
+  for(let d = new Date(ys); d <= now && months.length < 12; d.setMonth(d.getMonth()+1)) months.push([d.getFullYear(), d.getMonth()]);
+  const per = months.map(([y,m])=>{ const inM = all.filter(a=>{ const d = new Date(a.start); return d.getFullYear() === y && d.getMonth() === m; });
+    return {m, late:inM.filter(a=>absKind(a)==="late").length, sick:inM.filter(a=>absKind(a)==="sick").length, absent:inM.filter(a=>absKind(a)==="absent").length, total:inM.length}; });
+  const max = Math.max(1, ...per.map(p=>p.total));
+  const chart = `<div class="abs-chart" role="img" aria-label="Absenties per maand">${per.map((p,i)=>`<div class="abs-col" title="${p.total} in ${MON[p.m]}">
+      <div class="abs-bar" style="height:${Math.round(p.total/max*100)}%;--k:${i}">${["absent","sick","late"].map(k=>p[k] ? `<i class="b-${k}" style="flex:${p[k]}"></i>` : "").join("")}</div>
+      <small>${MON[p.m]}</small><b>${p.total || ""}</b></div>`).join("")}</div>
+    <div class="abs-legend">${Object.entries(ABS_KINDS).map(([k,[l]])=>`<span><i class="b-${k}"></i>${l}</span>`).join("")}</div>`;
+
+  // which lessons it happens most in
+  const bySub = {};
+  for(const a of all){ const c = a.code || (a.lesson ? a.lesson.split(" - ")[0] : ""); if(!c) continue; (bySub[c] = bySub[c] || {late:0, total:0}); bySub[c].total++; if(absKind(a)==="late") bySub[c].late++; }
+  const subs = Object.entries(bySub).sort((a,b)=>b[1].total-a[1].total).slice(0,6);
+  const subHtml = subs.length ? `<div class="list">${subs.map(([c,v])=>`<div class="abs-sub"><span class="dot" style="background:${subjectColor(c)}"></span><b>${esc(SUBJECTS[c] || c)}</b>
+      <span class="abs-subbar"><i style="width:${Math.round(v.total/subs[0][1].total*100)}%;background:${subjectColor(c)}"></i></span><span class="abs-subn">${v.total}${v.late ? ` <small>(${v.late} te laat)</small>` : ""}</span></div>`).join("")}</div>` : "";
+
+  // the list, grouped per month, with the filter from the tiles
+  const pick = absFilter === "bad" ? all.filter(a=>a.allowed === false) : absFilter === "all" ? all : all.filter(a=>absKind(a) === absFilter);
+  const groups = [];
+  for(const a of pick){ const d = new Date(a.start), k = d.getFullYear()+"-"+d.getMonth(); let g = groups[groups.length-1]; if(!g || g.k !== k){ g = {k, label: MONTHS_FULL[d.getMonth()] + (d.getFullYear() !== now.getFullYear() ? " " + d.getFullYear() : ""), items:[]}; groups.push(g); } g.items.push(a); }
+  const chips = [["all","Alles"],["late","Te laat"],["sick","Ziek"],["absent","Afwezig"],["bad","Ongeoorloofd"]].map(([k,l])=>`<button type="button" class="chip ${absFilter===k?"on":""}" data-absf="${k}">${l}</button>`).join("");
+  const listHtml = groups.length ? groups.map(g=>`<div class="caption">${esc(g.label)}</div><div class="list">${g.items.map(a=>{ const d = new Date(a.start), subj = SUBJECTS[a.code] || (a.lesson ? a.lesson.split(" - ")[0] : "");
+      return `<div class="abs-row"><span class="abs-ic k-${absKind(a)}" aria-hidden="true">${ABS_IC[a.kind] || "•"}</span>
+        <span style="min-width:0"><b>${esc(a.label)}</b><small>${esc(DOW[d.getDay()] + " " + d.getDate() + " " + MON[d.getMonth()])}${a.hour ? " · " + a.hour + "e uur" : ""}${subj ? " · " + esc(subj) : ""}</small></span>
+        <span class="abs-tag ${a.allowed === false ? "bad" : a.allowed ? "ok" : ""}">${a.allowed === false ? "Ongeoorloofd" : a.allowed ? "Geoorloofd" : "Open"}</span></div>`; }).join("")}</div>`).join("")
+    : emptyState("done", "Niets in deze lijst", "Kies een ander filter.", true);
+
+  if(WIDE.matches){
+    html += `<div class="abs-layout"><div><div class="section-h"><h2>Per maand</h2></div><div class="abs-card">${chart}</div>${subs.length ? `<div class="section-h"><h2>Vaakst bij</h2></div>${subHtml}` : ""}</div>
+      <div><div class="section-h"><h2>Overzicht</h2></div><div class="chips abs-chips">${chips}</div>${listHtml}</div></div>`;
+  } else {
+    html += `<div class="section-h"><h2>Per maand</h2></div><div class="abs-card">${chart}</div>`;
+    if(subs.length) html += `<div class="section-h"><h2>Vaakst bij</h2></div>${subHtml}`;
+    html += `<div class="section-h"><h2>Overzicht</h2></div><div class="chips abs-chips">${chips}</div>${listHtml}`;
+  }
+  html += `<p class="footnote">Uit Magister. Controleer Magister voor het officiële overzicht.</p>`;
+  el.innerHTML = html;
 }
 function shortDate(k){ const d = new Date(k+"T12:00"); const n = daysUntil(d, new Date()); return n === 0 ? "vandaag" : n === -1 ? "gisteren" : d.getDate()+" "+MON[d.getMonth()]; }
 function openSubject(key, src){
