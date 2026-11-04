@@ -2217,7 +2217,7 @@ function toEvent(e){
   const school = !!(tp.code || dp.id);
   const gone = tp.flags.gone;
   return {
-    id:e.id, start, end, school, gone,
+    id: dp.id ? "m"+dp.id : e.id, start, end, school, gone,
     test: tp.flags.test, hw: tp.flags.hw || (!!dp.body && !tp.flags.test && school && !gone),
     code: tp.code, label: tp.code ? (SUBJECTS[tp.code] || tp.code) : tp.base,
     change: tp.change, room: e.location || "", teacher: dp.teacher, body: gone ? "" : dp.body, links: dp.links,
@@ -4078,12 +4078,32 @@ const SYNC_KEYS = {
   magister: [()=>store.get("ml-magister",""), v=>store.set("ml-magister", v || "")],
 };
 let syncing = false, syncAgain = false;
+const MERGE_KEYS = ["done", "packed", "plans", "stuff"];
+const J = v => JSON.stringify(v === undefined ? null : v);
+function merge3(b, l, r){
+  b = b || {}; l = l || {}; r = r || {};
+  const out = {};
+  for(const id of new Set([...Object.keys(b), ...Object.keys(l), ...Object.keys(r)])){
+    const bv = J(b[id]), lv = J(l[id]), rv = J(r[id]);
+    const pick = lv === rv ? l[id] : lv === bv ? r[id] : l[id];
+    if(pick !== undefined && pick !== null) out[id] = pick;
+  }
+  return out;
+}
+function mergeKey(k, b, l, r){
+  if(r === undefined || r === null) return l;
+  if(k !== "stuff") return merge3(b, l, r);
+  // the Kast is a list: merge by id, keep this device's order, add new items from elsewhere at the end
+  const map = a => Object.fromEntries((Array.isArray(a) ? a : []).map(x=>[x.id, x]));
+  const m = merge3(map(b), map(l), map(r)), order = [...(l || []).map(x=>x.id), ...(r || []).map(x=>x.id)];
+  return [...new Set(order)].filter(id=>m[id]).map(id=>m[id]);
+}
 function syncState(){
   if(!store.get("ml-synclinked", false)) return {on:false, text:"Uit"};
   const err = store.get("ml-syncerr", null), last = store.get("ml-lastsync", 0);
   if(err === "scope") return {on:true, text:"Geef toestemming", warn:true};
   if(err === "api") return {on:true, text:"Drive API staat uit", warn:true};
-  if(!token()) return {on:true, text: last ? "Aan · laatst "+relTime(last) : "Aan", idle:true};
+  if(!token()) return {on:true, text: store.get("ml-syncpending", false) ? "Wacht op Google-login" : last ? "Aan · laatst "+relTime(last) : "Aan", idle:true};
   return {on:true, text: last ? "Aan · "+relTime(last) : "Aan"};
 }
 function relTime(t){ const d = new Date(t), now = new Date(); return dayKey(d) === dayKey(now) ? hm(d) : d.getDate()+" "+MON[d.getMonth()]+" "+hm(d); }
@@ -4102,7 +4122,7 @@ async function driveUpload(tk, id, obj){
 async function syncNow(manual){
   if(!store.get("ml-synclinked", false) || mode === "demo") return;
   const tk = token();
-  if(!tk){ if(manual) signIn(false, source === "google" ? "login" : "sync"); return; }
+  if(!tk){ store.set("ml-syncpending", true); if(manual) signIn(false, source === "google" ? "login" : "sync"); return; }
   if(syncing){ syncAgain = true; return; }
   syncing = true;
   try{
@@ -4110,8 +4130,17 @@ async function syncNow(manual){
     const remote = f ? await driveRead(tk, f.id) : {};
     const rk = remote.keys || {}, meta = store.get("ml-meta", {}), out = {v:1, device:navigator.platform || "", saved:new Date().toISOString(), keys:{}};
     let up = !f, pulled = false, look = false;
+    const base = store.get("ml-syncbase", {}), newBase = {};
     for(const [k, [get, set]] of Object.entries(SYNC_KEYS)){
       const r = rk[k], lt = meta[k] || 0;
+      if(MERGE_KEYS.includes(k)){
+        // per item: what changed here since the last sync wins over what didn't; both changed: this device wins
+        const local = get(), merged = mergeKey(k, base[k], local, r ? r.v : undefined);
+        if(J(merged) !== J(local)){ set(merged); pulled = true; }
+        if(!r || J(merged) !== J(r.v)) up = true;
+        out.keys[k] = {t:Math.max(lt, r?.t || 0), v:merged}; newBase[k] = merged;
+        continue;
+      }
       if(r && r.t > lt){ set(r.v); meta[k] = r.t; out.keys[k] = r; pulled = true; if(k === "prefs" || k === "tint") look = true; }
       else { out.keys[k] = {t:lt, v:get()}; if(!r || lt > r.t) up = true; }
     }
@@ -4132,7 +4161,8 @@ async function syncNow(manual){
     } else if(rk.bundle) out.keys.bundle = rk.bundle;
     store.set("ml-meta", meta);
     if(up) await driveUpload(tk, f?.id, out);
-    store.set("ml-lastsync", Date.now()); store.del("ml-syncerr");
+    store.set("ml-syncbase", newBase);
+    store.set("ml-lastsync", Date.now()); store.del("ml-syncerr"); store.del("ml-syncpending");
     if(look){ applyLook(); applyTint(); applyTabs(); }
     if(pulled && (mode === "live") && !document.querySelector("dialog[open]")) render();
     if(manual) toast(pulled ? "Gesynchroniseerd" : "Alles is al bijgewerkt");
@@ -4457,6 +4487,13 @@ function tick(){
 setInterval(tick, 15000);
 WIDE.addEventListener?.("change", ()=>{ if(mode==="live"||mode==="demo"||mode==="loading"){ setView(view, false); } });
 setInterval(()=>{ if(mode==="live" && document.visibilityState==="visible" && source !== "bm") load(); }, 5*60000);
+setInterval(()=>{ if(mode==="live" && document.visibilityState==="visible") syncNow(); }, 2*60000);
+document.addEventListener("visibilitychange", ()=>{
+  if(document.visibilityState !== "visible" || mode !== "live" || !store.get("ml-synclinked", false)) return;
+  if(token()) { syncNow(); return; }
+  // access ran out while the app was in the background: quietly get a new one (your changes are kept on this device)
+  if(source !== "google" && !document.querySelector("dialog[open]") && !recentlyTriedSilent()) signIn(true, "sync");
+});
 document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible" && mode==="live" && source !== "bm" && (!lastUpdated || Date.now()-lastUpdated > 60000)) load(); });
 updateScroll();
 boot();
