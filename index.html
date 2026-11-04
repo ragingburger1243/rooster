@@ -1685,6 +1685,99 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
   .abs-layout .section-h:first-child{margin-top:34px}
   .abs-chart{height:190px}
 }
+
+/* =========================================================
+   Cijferlijst (like Magister's overview, calmer and alive)
+   ========================================================= */
+.cl-sum{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:10px;margin-bottom:18px}
+.cl-big,.cl-mini{background:var(--bg2);border-radius:var(--r-lg,22px);box-shadow:var(--card-shadow);padding:14px 15px 13px;display:grid;align-content:space-between;gap:2px;min-width:0}
+.cl-big{background:radial-gradient(110% 120% at 0% 0%,color-mix(in srgb,var(--g1) 15%,transparent),transparent 65%),var(--bg2)}
+.cl-big small,.cl-mini small{font-size:12.5px;font-weight:600;color:var(--label2)}
+.cl-big b{font-family:var(--round);font-size:44px;font-weight:750;letter-spacing:-.04em;line-height:1.05;color:color-mix(in srgb,var(--g1) 88%,var(--label))}
+.cl-mini b{font-family:var(--round);font-size:28px;font-weight:750;letter-spacing:-.03em;line-height:1.1}
+.cl-big span,.cl-mini span{font-size:12.5px;color:var(--label2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cl-big em{font-style:normal;font-weight:650}
+.cl-seg{margin-bottom:10px}
+.cl-tools{display:flex;justify-content:flex-end;margin:0 2px 10px}
+.cl-tools > span{display:inline-flex;gap:2px;padding:3px;border-radius:11px;background:var(--fill)}
+.cl-sort{border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:var(--label2);padding:5px 10px;border-radius:8px;cursor:pointer;transition:background-color .25s,color .25s}
+.cl-sort[aria-pressed="true"]{background:var(--bg2);color:var(--label);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+
+/* the table: subject column and average stay put while the grades scroll */
+.cl-scroll{overflow-x:auto;margin:0 -16px;padding:0 16px 6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.cl{display:grid;grid-template-columns:minmax(100px,130px) repeat(var(--n),46px) 0 60px;column-gap:6px;row-gap:6px;align-items:stretch;width:max-content;min-width:100%;
+  background:var(--bg2);border-radius:var(--r-lg,22px);box-shadow:var(--card-shadow);padding:10px 10px 12px}
+.cl-h{font-size:11.5px;font-weight:650;color:var(--label3);text-align:center;padding:2px 0 4px}
+.cl-h.cl-name{text-align:left;padding-left:8px}
+.cl-name,.cl-h.cl-name{position:sticky;left:0;z-index:2;background:var(--bg2)}
+.cl-avg,.cl-h.cl-avg{position:sticky;right:0;z-index:2;background:var(--bg2)}
+.cl-h.cl-avg{color:var(--label2)}
+.cl-cell-name{display:flex;align-items:center;gap:9px;min-width:0;border:0;font:inherit;color:var(--label);text-align:left;cursor:pointer;padding:0 8px 0 4px;border-radius:12px;
+  box-shadow:6px 0 10px -8px rgba(0,0,0,.18)}
+.cl-cell-name i{flex:none;width:4px;height:26px;border-radius:2px;background:var(--c)}
+.cl-cell-name span{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cl-c{position:relative;height:44px;border:0;border-radius:12px;display:grid;place-items:center;cursor:pointer;font:inherit;
+  background:color-mix(in srgb,currentColor 11%,transparent);transition:transform .35s var(--spring),box-shadow .25s}
+.cl-c b{font-family:var(--round);font-size:16px;font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.cl-c sup{position:absolute;top:3px;right:4px;font-size:9.5px;font-weight:700;opacity:.75;line-height:1}
+.cl-c.empty{background:transparent;cursor:default}
+.cl-c.nc{background:transparent;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--label3) 80%,transparent);color:var(--label2)}
+.cl-c:not(.g-bad):not(.g-mid):not(.g-good):not(.empty){color:var(--label2)}
+.cl-sp{overflow:hidden;min-width:0}
+.cl-trend{display:block;padding:0}
+.cl-trend svg{display:none;width:100%;max-width:340px;height:32px;overflow:visible}
+.cl-trend svg path{fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cl-trend svg circle{fill:var(--c)}
+.cl-trend svg line{stroke:var(--red);stroke-width:1;stroke-dasharray:3 3;opacity:.45}
+.cl-c.new::after{content:"";position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 2px var(--bg2),0 0 10px color-mix(in srgb,var(--blue) 80%,transparent);animation:newPulse 2.4s ease-in-out infinite}
+.cl-c.new sup{right:auto;left:4px}
+.cl-pill.new::after{content:"";position:absolute;top:-3px;left:-3px;width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 2px var(--bg2),0 0 10px color-mix(in srgb,var(--blue) 80%,transparent);animation:newPulse 2.4s ease-in-out infinite}
+@keyframes newPulse{50%{box-shadow:0 0 0 2px var(--bg2),0 0 2px transparent}}
+.cl-cell-avg{display:grid;place-content:center;justify-items:center;gap:0;border:0;font:inherit;cursor:pointer;border-radius:12px;
+  box-shadow:-6px 0 10px -8px rgba(0,0,0,.18)}
+.cl-cell-avg b{font-family:var(--round);font-size:18px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cl-cell-avg small{font-size:9.5px;font-weight:700;color:var(--blue);letter-spacing:.01em}
+@media (hover:hover){
+  .cl-c:not(.empty):hover{transform:translateY(-2px) scale(1.06);box-shadow:0 8px 16px -8px currentColor;z-index:1}
+  .cl-cell-name:hover span{color:var(--blue)}
+}
+.cl-c:active{transform:scale(.9)}
+@keyframes clRow{from{opacity:0;transform:translateX(-10px)}}
+@keyframes clCell{from{opacity:0;transform:scale(.5)}}
+
+/* per subject cards + latest list */
+.view.enter .cl-cell-name{animation:clRow .55s var(--out) both;animation-delay:calc(var(--r) * 35ms)}
+.view.enter .cl-c:not(.empty){animation:clCell .5s var(--spring) both;animation-delay:calc(var(--r) * 35ms + var(--i) * 28ms + 80ms)}
+.view.enter .cl-cell-avg{animation:clRow .55s var(--out) both;animation-delay:calc(var(--r) * 35ms + 120ms)}
+.view.enter .cl-cards .gr-card{animation:clCell .55s var(--spring) both;animation-delay:calc(var(--i) * 45ms)}
+.view.enter .cl-row{animation:clRow .5s var(--out) both;animation-delay:calc(min(var(--i), 14) * 35ms)}
+.cl-row{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:13px;align-items:center;width:100%;border:0;background:none;font:inherit;color:var(--label);text-align:left;cursor:pointer;
+  padding:11px 16px;min-height:64px;transition:background-color .2s}
+.cl-row + .cl-row{border-top:.5px solid var(--sep)}
+@media (hover:hover){ .cl-row:hover{background:color-mix(in srgb,var(--fill) 50%,transparent)} }
+.cl-pill{position:relative;height:44px;border-radius:13px;display:grid;place-items:center;background:color-mix(in srgb,currentColor 12%,transparent)}
+.cl-pill b{font-family:var(--round);font-size:19px;font-weight:800;letter-spacing:-.03em}
+.cl-txt{min-width:0}
+.cl-txt b{display:block;font-size:15.5px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cl-txt small{display:block;font-size:13px;color:var(--label2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cl-eff{display:grid;justify-items:end;gap:2px;font-size:12.5px;color:var(--label2);white-space:nowrap}
+.cl-eff em{font-style:normal;font-weight:700;font-size:13px;font-variant-numeric:tabular-nums}
+.cl-eff em.up{color:var(--green)} .cl-eff em.down{color:var(--red)}
+.g-row.hl{background:color-mix(in srgb,var(--blue) 10%,transparent);animation:hlFlash 1.6s ease-out}
+@keyframes hlFlash{0%,30%{background:color-mix(in srgb,var(--blue) 26%,transparent)}}
+@media (max-width:420px){ .cl-sum{grid-template-columns:1fr 1fr} .cl-big{grid-column:1/-1} }
+@media (min-width:1024px){
+  .cl-scroll{margin:0;padding:0 0 6px}
+  .cl{grid-template-columns:minmax(170px,220px) repeat(var(--n),56px) minmax(0,1fr) 80px;column-gap:8px;padding:14px 16px 16px}
+  .cl-trend{display:flex;align-items:center;padding:0 10px}
+  .cl-trend svg{display:block}
+  .cl-h.cl-sp{text-align:left;padding-left:8px}
+  .cl-c{height:48px}
+  .cl-sum{gap:16px}
+  .cl-big b{font-size:52px}
+}
+@media (prefers-reduced-motion:reduce){ .cl-c,.cl-cell-name,.cl-cell-avg,.cl-row,.cl-cards .gr-card,.cl-c.new::after{animation:none!important} }
+html.calm .cl-c,html.calm .cl-cell-name,html.calm .cl-cell-avg,html.calm .cl-row,html.calm .cl-cards .gr-card{animation:none!important}
 </style>
 </head>
 <body>
@@ -1959,6 +2052,8 @@ const PREF_DEFAULTS = {
   hidden:[],             // tabs you switched off
   today:{widgets:true, focus:true, plan:true, pack:true, next:true, hw:true, tests:true, apps:true},
   kastSort:"subject",    // subject | name | new | own
+  gradesView:"grid",     // grid (like Magister) | cards | recent
+  gradesSort:"subject",  // subject | low | new
   bookSize:2,            // index in BOOK_SIZES
   focusMin:25,           // focus session length
   breakMin:5,
@@ -3014,7 +3109,9 @@ $("main").addEventListener("click", e=>{
   const pd = e.target.closest("[data-plandone]"); if(pd){ togglePlanPart(pd.dataset.plandone, pd); return; }
   const po = e.target.closest("[data-planopen]"); if(po){ openPlan(po.dataset.planopen); return; }
   if(e.target.closest("[data-replan]")){ replanAll(); return; }
-  const gs = e.target.closest("[data-subj]"); if(gs){ openSubject(gs.dataset.subj, gs); return; }
+  const gvw = e.target.closest("[data-gview]"); if(gvw){ if(prefs.gradesView !== gvw.dataset.gview){ prefs.gradesView = gvw.dataset.gview; savePrefs(); haptic(); render(true); } return; }
+  const gso = e.target.closest("[data-gsort]"); if(gso){ prefs.gradesSort = gso.dataset.gsort; savePrefs(); haptic(); flipGrades(()=>render()); return; }
+  const gs = e.target.closest("[data-subj]"); if(gs){ openSubject(gs.dataset.subj, gs, gs.dataset.g); return; }
   if(e.target.closest("[data-bm]")){ openBookmarklet(); return; }
   const af = e.target.closest("[data-absf]"); if(af){ absFilter = af.dataset.absf; haptic(); render(); return; }
   const itm = e.target.closest("[data-item]");
@@ -4054,7 +4151,9 @@ function demoGrades(){
   const g = (code, subject, value, weight, desc, ago) => ({code, subject, desc, value:String(value).replace(".",","), num:value, weight, counts:true, date:d(ago)});
   return [g("wisB","Wiskunde B",5.1,1,"SO H2",6), g("entl","Engels",7.9,1,"Reading",9), g("schk","Scheikunde",6.4,2,"Toets H2",13), g("wisB","Wiskunde B",6.8,2,"Toets H1",23),
     g("netl","Nederlands",7.2,1,"Betoog",15), g("dutl","Duits",8.1,1,"Vocabulaire",17), g("nat","Natuurkunde",5.6,2,"Toets H1",20), g("beco","Bedrijfseconomie",7.5,1,"Opdracht",26),
-    g("entl","Engels",6.9,2,"Grammar test",30), g("schk","Scheikunde",7.0,1,"Practicum",35), g("gs","Geschiedenis",6.2,2,"Toets H1",38), g("nat","Natuurkunde",6.5,1,"Practicum",41)];
+    g("entl","Engels",6.9,2,"Grammar test",30), g("schk","Scheikunde",7.0,1,"Practicum",35), g("gs","Geschiedenis",6.2,2,"Toets H1",38), g("nat","Natuurkunde",6.5,1,"Practicum",41),
+    g("wisB","Wiskunde B",7.2,1,"SO H1",44), g("netl","Nederlands",5.8,2,"Leesvaardigheid",47), g("dutl","Duits",7.4,2,"Toets H1",49), g("gs","Geschiedenis",7.1,1,"Bronnen",52),
+    g("beco","Bedrijfseconomie",6.1,2,"Toets H1",55), g("entl","Engels",8.0,1,"Words",3), g("nat","Natuurkunde",4.8,1,"SO H2",2)];
 }
 function gradeList(){ return mode === "demo" ? demoGrades() : (grades?.list || []); }
 function officialList(){
@@ -4095,6 +4194,22 @@ function spark(all){
   const W = 140, H = 30, x = i => 4 + i * (W-8) / (pts.length-1), y = v => H - 3 - (v-1) / 9 * (H-6);
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="${W}" y1="${y(5.5).toFixed(1)}" y2="${y(5.5).toFixed(1)}"/><path d="${pts.map((g,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+y(g.num).toFixed(1)).join(" ")}"/>${pts.map((g,i)=>`<circle cx="${x(i).toFixed(1)}" cy="${y(g.num).toFixed(1)}" r="${i===pts.length-1?3:2}"/>`).join("")}</svg>`;
 }
+/* a stable key for one grade, so a tap in the overview can point at it in the subject sheet */
+const gkey = g => [g.code || g.subject, g.date, g.value, g.desc].join("|");
+const isNew = (g, now) => g.date && (now - new Date(g.date + "T12:00")) < 7*864e5;
+/* how much one grade moved the average of its subject (chronological, weighted, only grades that count) */
+function gradeEffects(subs){
+  const eff = new Map();
+  for(const s of subs){
+    let sum = 0, w = 0;
+    for(const g of s.all){
+      if(g.num == null || g.counts === false){ continue; }
+      const before = w ? sum / w : null; sum += g.num * g.weight; w += g.weight;
+      eff.set(gkey(g), before == null ? null : sum / w - before);
+    }
+  }
+  return eff;
+}
 function renderGrades(now, list, el){
   const G = gradeList();
   if(!G.length){
@@ -4106,25 +4221,96 @@ function renderGrades(now, list, el){
   const subs = subjectsWithOfficial(G);
   const scored = subs.filter(s=>s.avg != null);
   const overall = scored.length ? scored.reduce((a,s)=>a+s.avg, 0) / scored.length : null;
-  const bad = scored.filter(s=>s.avg < 5.5), last = G[0];
+  const bad = scored.filter(s=>s.avg < 5.5);
   const at = mode === "demo" ? null : grades?.at;
+  const fresh = G.filter(g=>isNew(g, now));
   const [g1, g2] = overall == null ? ["#AF52DE","#5E5CE6"] : overall < 5.5 ? ["#FF453A","#FF2D55"] : overall < 6.5 ? ["#FF9F0A","#FF6B00"] : ["#30D158","#00A86B"];
   let html = large("Cijfers", `${G.length} ${G.length === 1 ? "cijfer" : "cijfers"} dit schooljaar${at ? " · bijgewerkt "+esc(relTime(at)) : ""}`);
-  html += `<div class="gr-top"><div class="gr-sum" style="--g1:${g1};--g2:${g2}"><small>Gemiddelde van je vakken</small><b class="num">${nl1(overall)}</b><span>${scored.length} vakken · ${bad.length ? bad.length+" onvoldoende" : "geen onvoldoendes"}</span></div>
-    <div class="gr-side"><div class="gr-mini"><small>Laatste cijfer</small><b class="${gcls(last.num)}">${esc(last.value || "–")}</b><span>${esc(SUBJECTS[last.code] || last.subject)}${last.desc ? " · "+esc(last.desc) : ""}</span></div>
-      <div class="gr-mini"><small>Laagste gemiddelde</small>${scored.length ? (()=>{ const lo = scored.reduce((a,s)=> s.avg < a.avg ? s : a); return `<b class="${gcls(lo.avg)}">${nl1(lo.avg)}</b><span>${esc(lo.name)}</span>`; })() : "<b>–</b>"}</div></div></div>`;
-  const cards = subs.map(s=>{ const c = s.code ? subjectColor(s.code) : "#8E8E93", lastG = s.all[s.all.length-1] || {value:"–"}, prev = s.all.filter(g=>g.num!=null);
-    const trend = prev.length >= 2 ? (prev[prev.length-1].num >= prev[prev.length-2].num ? "▲" : "▼") : "";
-    return `<button class="gr-card press" type="button" data-subj="${esc(s.key)}" style="--c:${c}"><span class="nm">${esc(s.name)}</span>
-      <span class="av"><b class="${gcls(s.avg)}">${nl1(s.avg)}</b>${trend ? `<small class="${trend==="▲"?"g-good":"g-bad"}">${trend}</small>` : ""}${s.official ? `<span class="off-tag" title="${esc(s.official.label)}">Magister</span>` : ""}</span>
-      <span class="meta">${s.all.length ? `${s.all.length} ${s.all.length===1?"cijfer":"cijfers"} · laatst ${esc(lastG.value)}` : esc(s.official?.label || "Officieel gemiddelde")}</span>${spark(s.all)}</button>`; }).join("");
-  const recent = G.slice(0, 12).map(g=>`<div class="g-row" data-subj="${esc(g.code || g.subject)}" style="cursor:pointer"><span class="g-pill ${gcls(g.num)}">${esc(g.value || "–")}</span>
-    <span style="min-width:0"><b>${esc(SUBJECTS[g.code] || g.subject)}</b><small>${esc(g.desc || "Cijfer")}</small></span>
-    <span class="w"><em>${g.weight !== 1 ? "×"+String(g.weight).replace(".",",") : ""}</em>${esc(shortDate(g.date))}</span></div>`).join("");
-  html += `<div class="gr-layout"><div><div class="section-h"><h2>Per vak</h2></div><div class="gr-grid">${cards}</div></div>
-    <div><div class="section-h"><h2>Laatste cijfers</h2></div><div class="list">${recent}</div>
-    <p class="footnote">${officialList().length ? "Vakken met het label Magister tonen het officiële gemiddelde uit Magister. De andere zijn berekend uit je cijfers en wegingen." : "Gemiddelden zijn berekend uit je cijfers en wegingen. Magister kan anders rekenen, bijvoorbeeld per periode."}</p></div></div>`;
+
+  // summary: average, lowest, newest
+  const lo = scored.length ? scored.reduce((a,s)=> s.avg < a.avg ? s : a) : null;
+  html += `<div class="cl-sum">
+    <div class="cl-big" style="--g1:${g1}"><small>Gemiddeld</small><b class="num" data-avg="${overall ?? ""}">${nl1(overall)}</b><span>${scored.length} vakken · ${bad.length ? `<em class="g-bad">${bad.length} onvoldoende</em>` : "geen onvoldoendes"}</span></div>
+    <div class="cl-mini"><small>Laagste</small>${lo ? `<b class="${gcls(lo.avg)} num">${nl1(lo.avg)}</b><span>${esc(lo.name)}</span>` : "<b>–</b>"}</div>
+    <div class="cl-mini"><small>${fresh.length ? "Nieuw deze week" : "Laatste cijfer"}</small><b class="${gcls(G[0].num)} num">${fresh.length > 1 ? fresh.length : esc(G[0].value || "–")}</b><span>${fresh.length > 1 ? "nieuwe cijfers" : esc(SUBJECTS[G[0].code] || G[0].subject)}</span></div>
+  </div>`;
+
+  // view switch + sort
+  const v = ["grid","cards","recent"].includes(prefs.gradesView) ? prefs.gradesView : "grid";
+  html += `<div class="seg cl-seg" role="tablist" style="--n:3">${[["grid","Overzicht"],["cards","Per vak"],["recent","Laatste"]].map(([k,l],i)=>`<button type="button" role="tab" data-gview="${k}" aria-pressed="${v===k}">${l}</button>`).join("")}<span class="seg-thumb" style="transform:translateX(${["grid","cards","recent"].indexOf(v)*100}%)"></span></div>`;
+
+  const sortKey = ["subject","low","new"].includes(prefs.gradesSort) ? prefs.gradesSort : "subject";
+  const lastDate = s => s.all.length ? s.all[s.all.length-1].date : "";
+  const sorted = [...subs].sort(sortKey === "low" ? (a,b)=>(a.avg ?? 11) - (b.avg ?? 11) : sortKey === "new" ? (a,b)=> lastDate(a) < lastDate(b) ? 1 : -1 : (a,b)=>a.name.localeCompare(b.name, "nl"));
+  const effects = gradeEffects(subs);
+
+  if(v === "grid"){
+    const maxN = Math.max(1, ...subs.map(s=>s.all.length));
+    html += `<div class="cl-tools"><span>${[["subject","Vak"],["low","Laagste eerst"],["new","Nieuwste"]].map(([k,l])=>`<button type="button" class="cl-sort" data-gsort="${k}" aria-pressed="${sortKey===k}">${l}</button>`).join("")}</span></div>`;
+    html += `<div class="cl-scroll"><div class="cl" style="--n:${maxN}" role="table" aria-label="Cijferoverzicht">
+      <div class="cl-h cl-name" role="columnheader">Vak</div>${Array.from({length:maxN},(_,i)=>`<div class="cl-h" role="columnheader">${i+1}</div>`).join("")}<div class="cl-h cl-sp" role="columnheader">Verloop</div><div class="cl-h cl-avg" role="columnheader">Gem.</div>`;
+    sorted.forEach((s, r)=>{
+      const c = s.code ? subjectColor(s.code) : "#8E8E93";
+      html += `<button type="button" class="cl-name cl-cell-name" data-subj="${esc(s.key)}" style="--c:${c};--r:${r}" role="rowheader"><i></i><span>${esc(s.name)}</span></button>`;
+      for(let i = 0; i < maxN; i++){
+        const g = s.all[i];
+        if(!g){ html += `<div class="cl-c empty" style="--r:${r};--i:${i}"></div>`; continue; }
+        const e = effects.get(gkey(g));
+        html += `<button type="button" class="cl-c ${gcls(g.num)} ${g.counts === false ? "nc" : ""} ${isNew(g, now) ? "new" : ""}" data-subj="${esc(s.key)}" data-g="${esc(gkey(g))}" style="--r:${r};--i:${i}"
+          title="${esc((g.desc || "Cijfer") + " · " + shortDate(g.date) + (g.weight !== 1 ? " · weging " + g.weight : "") + (e != null ? " · " + (e >= 0 ? "+" : "") + nl1(e) : ""))}"><b>${esc(g.value || "–")}</b>${g.weight !== 1 ? `<sup>${String(g.weight).replace(".",",")}×</sup>` : ""}</button>`;
+      }
+      html += `<div class="cl-sp cl-trend" style="--c:${c};--r:${r}" aria-hidden="true">${spark(s.all)}</div>`;
+      html += `<button type="button" class="cl-avg cl-cell-avg ${gcls(s.avg)}" data-subj="${esc(s.key)}" style="--r:${r}"><b class="num" data-avg="${s.avg ?? ""}">${nl1(s.avg)}</b>${s.official ? `<small>Magister</small>` : ""}</button>`;
+    });
+    html += `</div></div><p class="footnote">Tik op een cijfer of vak voor details. Grijs omrand: telt niet mee. Het kleine getal is de weging.${officialList().length ? " Gemiddelden met Magister erbij zijn officieel; de rest is berekend." : " Gemiddelden zijn berekend uit je cijfers en wegingen."}</p>`;
+  }
+
+  if(v === "cards"){
+    const cards = sorted.map((s,i)=>{ const c = s.code ? subjectColor(s.code) : "#8E8E93", lastG = s.all[s.all.length-1] || {value:"–"}, prev = s.all.filter(g=>g.num!=null);
+      const trend = prev.length >= 2 ? (prev[prev.length-1].num >= prev[prev.length-2].num ? "▲" : "▼") : "";
+      return `<button class="gr-card press" type="button" data-subj="${esc(s.key)}" style="--c:${c};--i:${i}"><span class="nm">${esc(s.name)}</span>
+        <span class="av"><b class="${gcls(s.avg)} num" data-avg="${s.avg ?? ""}">${nl1(s.avg)}</b>${trend ? `<small class="${trend==="▲"?"g-good":"g-bad"}">${trend}</small>` : ""}${s.official ? `<span class="off-tag" title="${esc(s.official.label)}">Magister</span>` : ""}</span>
+        <span class="meta">${s.all.length ? `${s.all.length} ${s.all.length===1?"cijfer":"cijfers"} · laatst ${esc(lastG.value)}` : esc(s.official?.label || "Officieel gemiddelde")}</span>${spark(s.all)}</button>`; }).join("");
+    html += `<div class="cl-tools"><span>${[["subject","Vak"],["low","Laagste eerst"],["new","Nieuwste"]].map(([k,l])=>`<button type="button" class="cl-sort" data-gsort="${k}" aria-pressed="${sortKey===k}">${l}</button>`).join("")}</span></div><div class="gr-grid cl-cards">${cards}</div>`;
+  }
+
+  if(v === "recent"){
+    const groups = [];
+    for(const g of G){ const d = new Date(g.date + "T12:00"), k = d.getFullYear()+"-"+d.getMonth(); let gr = groups[groups.length-1];
+      if(!gr || gr.k !== k){ gr = {k, label: MONTHS_FULL[d.getMonth()], items:[]}; groups.push(gr); } gr.items.push(g); }
+    let i = 0;
+    html += groups.map(gr=>`<div class="caption">${esc(gr.label)}</div><div class="list">${gr.items.map(g=>{ const e = effects.get(gkey(g)), c = g.code ? subjectColor(g.code) : "#8E8E93";
+      return `<button type="button" class="cl-row" data-subj="${esc(g.code || g.subject)}" data-g="${esc(gkey(g))}" style="--c:${c};--i:${i++}">
+        <span class="cl-pill ${gcls(g.num)} ${isNew(g, now) ? "new" : ""}"><b>${esc(g.value || "–")}</b></span>
+        <span class="cl-txt"><b>${esc(SUBJECTS[g.code] || g.subject)}</b><small>${esc(g.desc || "Cijfer")}${g.weight !== 1 ? " · weging " + String(g.weight).replace(".",",") : ""}${g.counts === false ? " · telt niet mee" : ""}</small></span>
+        <span class="cl-eff">${e != null && Math.abs(e) >= .05 ? `<em class="${e >= 0 ? "up" : "down"}">${e >= 0 ? "▲" : "▼"} ${nl1(Math.abs(e))}</em>` : ""}<small>${esc(shortDate(g.date))}</small></span></button>`; }).join("")}</div>`).join("");
+    html += `<p class="footnote">De pijl laat zien hoeveel dat cijfer je gemiddelde voor dat vak omhoog of omlaag bracht.</p>`;
+  }
   el.innerHTML = html;
+  animateAverages(el);
+}
+/* rows glide to their new place when you change the sort */
+function flipGrades(change){
+  const items = [...document.querySelectorAll("#v-grades [data-subj]")], key = n => n.dataset.subj + "|" + (n.dataset.g || n.className.split(" ")[0]);
+  const before = new Map(items.map(n=>[key(n), n.getBoundingClientRect()]));
+  change();
+  if(reduced) return;
+  document.querySelectorAll("#v-grades [data-subj]").forEach(n=>{ const a = before.get(key(n)); if(!a) return; const b = n.getBoundingClientRect();
+    const dx = a.left - b.left, dy = a.top - b.top; if(!dx && !dy) return;
+    n.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:"none"}], {duration:480, easing:"cubic-bezier(.3,1.2,.4,1)"}); });
+}
+/* averages count up from the bottom when the tab opens (not on every refresh) */
+function animateAverages(el){
+  if(reduced) return;
+  requestAnimationFrame(()=>{ if(el.classList.contains("enter")) countAverages(el); });
+}
+function countAverages(el){
+  const nums = [...el.querySelectorAll("[data-avg]")].filter(n=>n.dataset.avg !== "");
+  const t0 = performance.now(), dur = 900;
+  const step = t => { const p = Math.min(1, (t - t0) / dur), k = 1 - Math.pow(1 - p, 3);
+    for(const n of nums){ const target = Number(n.dataset.avg); n.textContent = nl1(1 + (target - 1) * k); }
+    if(p < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
 }
 /* ---------- Absenties ---------- */
 function absenceList(){
@@ -4202,12 +4388,12 @@ function renderAbsences(now, list, el){
   el.innerHTML = html;
 }
 function shortDate(k){ const d = new Date(k+"T12:00"); const n = daysUntil(d, new Date()); return n === 0 ? "vandaag" : n === -1 ? "gisteren" : d.getDate()+" "+MON[d.getMonth()]; }
-function openSubject(key, src){
+function openSubject(key, src, highlight){
   const s = subjectsWithOfficial(gradeList()).find(x=>x.key === key); if(!s) return;
   haptic();
   const c = s.code ? subjectColor(s.code) : "#8E8E93";
   $("grade-title").textContent = s.name;
-  const rows = [...s.all].reverse().map(g=>`<div class="g-row"><span class="g-pill ${gcls(g.num)}">${esc(g.value || "–")}</span><span style="min-width:0"><b>${esc(g.desc || "Cijfer")}</b><small>${esc(shortDate(g.date))}${g.counts === false ? " · telt niet mee" : ""}</small></span><span class="w"><em>×${String(g.weight).replace(".",",")}</em>weging</span></div>`).join("");
+  const rows = [...s.all].reverse().map(g=>`<div class="g-row ${highlight && gkey(g) === highlight ? "hl" : ""}"><span class="g-pill ${gcls(g.num)}">${esc(g.value || "–")}</span><span style="min-width:0"><b>${esc(g.desc || "Cijfer")}</b><small>${esc(shortDate(g.date))}${g.counts === false ? " · telt niet mee" : ""}</small></span><span class="w"><em>×${String(g.weight).replace(".",",")}</em>weging</span></div>`).join("");
   $("grade-body").innerHTML = `<div class="detail-hero" style="--c:${c}"><h3>${nl1(s.avg)}</h3><p>${s.official ? "Officieel gemiddelde in Magister" + (s.own != null ? " · zelf berekend " + nl1(s.own) : "") : "Gemiddelde " + esc(s.name)} · ${s.all.length} ${s.all.length===1?"cijfer":"cijfers"}</p></div>
     <div class="caption">Wat moet ik halen?</div>
     <div class="list calc" style="--c:${c}">
@@ -4233,6 +4419,7 @@ function openSubject(key, src){
   };
   $("grade-body").oninput = upd; upd();
   openSheet(gradeDlg, src);
+  if(highlight) setTimeout(()=>{ const h = gradeDlg.querySelector(".g-row.hl"); if(h) h.scrollIntoView({block:"center", behavior: reduced ? "auto" : "smooth"}); }, 420);
 }
 
 /* ================= Leerplan (study planner for tests) ================= */
