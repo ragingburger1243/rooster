@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Rooster</title>
-<meta name="description" content="Je schooldag in één oogopslag: volgende les, rooster, huiswerk en toetsen.">
+<title>MCML</title>
+<meta name="description" content="MCML, Mark's custom Magister launcher: je schooldag in één oogopslag.">
 <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Rooster">
+<meta name="apple-mobile-web-app-title" content="MCML">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&display=swap">
@@ -1610,6 +1610,13 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
 @media (min-width:1024px) and (max-width:1599px){
   .dash-top .hero{min-height:220px}
 }
+
+/* ---------- name + disclaimer ---------- */
+.welcome-sub{margin:-8px 0 2px!important;font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--label2)}
+.disclaimer{margin:4px 0 0!important;max-width:36ch;font-size:13px!important;line-height:1.4;color:var(--label2);
+  padding:9px 13px;border-radius:12px;background:color-mix(in srgb,var(--orange) 9%,transparent)}
+.app-disclaimer{margin:44px auto 0;max-width:42ch;text-align:center;font-size:12.5px;line-height:1.4;color:var(--label3)}
+.disclaimer-set{margin-top:16px}
 </style>
 </head>
 <body>
@@ -1632,13 +1639,14 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
 <main id="main">
   <section id="welcome" class="welcome" hidden>
     <img src="icon-180.png" alt="" style="--i:0">
-    <h1 style="--i:1">Rooster</h1>
+    <h1 style="--i:1">MCML</h1>
+    <p class="welcome-sub" style="--i:1">Mark's custom Magister launcher</p>
     <p id="welcome-text" style="--i:2">Je lessen, huiswerk, toetsen en cijfers uit Magister, in één oogopslag.</p>
     <div class="actions" style="--i:3">
       <form class="code-form" id="code-form" autocomplete="on">
         <input type="text" name="username" autocomplete="username" value="rooster" hidden>
         <label class="code-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
-          <input id="code-input" type="password" name="password" autocomplete="current-password" placeholder="Je Rooster-code" aria-label="Je Rooster-code" spellcheck="false" autocapitalize="off"></label>
+          <input id="code-input" type="password" name="password" autocomplete="current-password" placeholder="Je MCML-code" aria-label="Je MCML-code" spellcheck="false" autocapitalize="off"></label>
         <button class="btn block press" id="code-go" type="submit">Inloggen met code</button>
         <p class="code-err" id="code-err" role="alert"></p>
       </form>
@@ -1650,6 +1658,7 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
       <button class="btn block press" id="demo" type="button" style="justify-content:center">Bekijk voorbeeld</button>
       <button class="textlink" id="bm-open" type="button">Ik gebruik de Magister-bladwijzer</button>
     </div>
+    <p class="disclaimer" style="--i:4">Controleer Magister voor alle belangrijke informatie. MCML is geen officiële app van Magister.</p>
     <p class="footnote" id="welcome-note" style="--i:4">Je gegevens gaan rechtstreeks van Google naar dit apparaat.</p>
   </section>
 
@@ -1661,10 +1670,11 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
   <section id="v-tests" class="view" hidden></section>
   <section id="v-grades" class="view" hidden></section>
   <section id="v-items" class="view" hidden></section>
+  <p class="app-disclaimer" id="app-disclaimer" hidden>Controleer Magister voor alle belangrijke informatie.</p>
 </main>
 
 <nav class="tabbar glass-rim" id="tabbar" aria-label="Weergaven" hidden>
-  <div class="side-head"><img src="icon-180.png" alt=""><div><b>Rooster</b><small id="side-date"></small></div></div>
+  <div class="side-head"><img src="icon-180.png" alt=""><div><b>MCML</b><small id="side-date"></small></div></div>
   <div class="side-search-wrap"><button class="side-search" type="button" data-search><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>Zoeken</span><kbd id="kbd-hint">⌘K</kbd></button></div>
   <span class="tab-ind" id="tab-ind" aria-hidden="true"></span>
   <button type="button" data-view="today" aria-current="page">
@@ -1766,7 +1776,7 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
       <button class="linkrow" type="button" id="do-sync">Koppelen</button>
       <button class="linkrow danger" type="button" id="do-unsync" hidden>Ontkoppelen</button>
     </div>
-    <p class="footnote">Vinkjes, je Kast, studieplannen, focustijd en instellingen staan dan op al je apparaten. Ze komen in een verborgen map in je eigen Google Drive die alleen Rooster kan zien.</p>
+    <p class="footnote">Vinkjes, je Kast, studieplannen, focustijd en instellingen staan dan op al je apparaten. Ze komen in een verborgen map in je eigen Google Drive die alleen MCML kan zien.</p>
     <div class="caption">Kast</div>
     <div class="list">
       <button class="linkrow" type="button" id="do-export">Back-up van je kast downloaden</button>
@@ -1782,6 +1792,7 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
       <button class="linkrow danger" type="button" id="do-signout">Uitloggen</button>
     </div>
     <p class="footnote" id="set-status"></p>
+    <p class="footnote disclaimer-set">MCML (Mark's custom Magister launcher) is geen officiële app van Magister. Controleer Magister altijd voor alle belangrijke informatie, zoals cijfers, toetsen en roosterwijzigingen.</p>
   </div>
 </dialog>
 
@@ -2131,7 +2142,7 @@ async function loadBundle(manual){
     } else {
       const b = store.get("ml-bundle", null);
       if(b) applyBundle(b, mode !== "live");
-      if(manual) showBanner("Open Magister en tik op je Rooster-bladwijzer om te verversen.", ()=>openBookmarklet());
+      if(manual) showBanner("Open Magister en tik op je MCML-bladwijzer om te verversen.", ()=>openBookmarklet());
     }
     syncNow();
   }catch(e){
@@ -2329,7 +2340,7 @@ function renderToday(now, list, el){
   let html = large(greet, esc(cap(DOW_LONG[now.getDay()])+" "+now.getDate()+" "+MON_LONG[now.getMonth()]));
 
   if(!show){
-    html += `<div class="hero free" style="${heroVars("#30B57A")}"><span class="shine" aria-hidden="true"></span><div class="hero-top"><span>Rooster</span></div><div class="hero-subject">Vrij</div><div class="hero-meta"><span class="pill">Geen lessen in de komende twee weken</span></div></div>`;
+    html += `<div class="hero free" style="${heroVars("#30B57A")}"><span class="shine" aria-hidden="true"></span><div class="hero-top"><span>MCML</span></div><div class="hero-subject">Vrij</div><div class="hero-meta"><span class="pill">Geen lessen in de komende twee weken</span></div></div>`;
   } else {
     const sameDay = daysUntil(show.start, now)===0;
     const top = cur ? '<span class="live"><i></i>Nu</span>' : esc(sameDay ? "Volgende les" : "Eerste les · "+relDay(show.start, now).toLowerCase());
@@ -2903,7 +2914,7 @@ $("toast-undo").addEventListener("click", ()=>{ const a = toastAction; toastActi
 
 /* ================= screens ================= */
 function showWelcome(msg){
-  $("welcome").hidden = false; $("tabbar").hidden = true; $("open-settings").hidden = true; $("open-search").hidden = true; $("open-focus").hidden = true; $("focus-pill").classList.remove("show");
+  $("welcome").hidden = false; $("tabbar").hidden = true; $("open-settings").hidden = true; $("open-search").hidden = true; $("app-disclaimer").hidden = true; $("open-focus").hidden = true; $("focus-pill").classList.remove("show");
   for(const k of VIEWS) $("v-"+k).hidden = true;
   $("nav-left").textContent = ""; $("nav-title").textContent = "";
   $("welcome-text").textContent = msg || "Je lessen, huiswerk, toetsen en cijfers uit Magister, in één oogopslag.";
@@ -2917,7 +2928,7 @@ function layoutTabs(){
 }
 function showApp(animate){
   layoutTabs();
-  $("welcome").hidden = true; $("tabbar").hidden = false; $("open-settings").hidden = false; $("open-search").hidden = false; $("open-focus").hidden = false; focusUI();
+  $("welcome").hidden = true; $("tabbar").hidden = false; $("open-settings").hidden = false; $("open-search").hidden = false; $("app-disclaimer").hidden = false; $("open-focus").hidden = false; focusUI();
   setView(view, false);
   if(animate) render(true);
 }
@@ -4167,31 +4178,31 @@ function bookmarkletCode(){
   + `const J=JSON.stringify({updated:n.toISOString(),school:location.hostname.split(".")[0],afspraken:A,cijfers:C});let b,m="j";`
   + `if(window.CompressionStream){b=new Uint8Array(await new Response(new Blob([J]).stream().pipeThrough(new CompressionStream("gzip"))).arrayBuffer());m="z"}else b=new TextEncoder().encode(J);`
   + `let x="";for(let i=0;i<b.length;i+=32768)x+=String.fromCharCode.apply(null,b.subarray(i,i+32768));`
-  + `location.href=S+"#mdata="+m+"."+btoa(x).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=+$/,"")}catch(e){alert("Rooster: ophalen uit Magister lukte niet ("+e.message+").")}})()`;
+  + `location.href=S+"#mdata="+m+"."+btoa(x).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=+$/,"")}catch(e){alert("MCML: ophalen uit Magister lukte niet ("+e.message+").")}})()`;
 }
 const bookmarkletUrl = () => "javascript:" + encodeURIComponent(bookmarkletCode());
 function openBookmarklet(){
   const mag = magisterUrl();
   $("bm-body").innerHTML = `
-    <p class="footnote" style="margin:4px 4px 14px;font-size:15px;line-height:1.45;color:var(--label)">Een bladwijzer die je rooster, huiswerk, toetsen en cijfers rechtstreeks uit Magister naar Rooster stuurt. Je logt zelf in bij Magister. Rooster ziet je wachtwoord nooit.</p>
+    <p class="footnote" style="margin:4px 4px 14px;font-size:15px;line-height:1.45;color:var(--label)">Een bladwijzer die je rooster, huiswerk, toetsen en cijfers rechtstreeks uit Magister naar MCML stuurt. Je logt zelf in bij Magister. MCML ziet je wachtwoord nooit.</p>
     <div class="caption">Op je computer</div>
     <div class="list" style="padding:18px;display:grid;justify-items:center;gap:12px">
-      <a class="bm-link" id="bm-drag" href="${esc(bookmarkletUrl())}" draggable="true">↻ Naar Rooster</a>
+      <a class="bm-link" id="bm-drag" href="${esc(bookmarkletUrl())}" draggable="true">↻ Naar MCML</a>
       <span style="color:var(--label2);font-size:14px;text-align:center">Sleep deze knop naar je bladwijzerbalk (Ctrl ⇧ B laat hem zien).</span>
     </div>
     <div class="caption">Op je iPhone</div>
     <div class="list"><ol class="bm-steps" style="padding-top:14px">
       <li>Tik op <b>Kopieer de code</b> hieronder.</li>
-      <li>Tik in Safari op <b>Deel</b> en dan <b>Voeg bladwijzer toe</b>. Noem hem <b>↻ Rooster</b> en bewaar.</li>
-      <li>Open je bladwijzers, tik op <b>Wijzig</b>, tik op <b>↻ Rooster</b> en plak de code in het adresveld.</li>
+      <li>Tik in Safari op <b>Deel</b> en dan <b>Voeg bladwijzer toe</b>. Noem hem <b>↻ MCML</b> en bewaar.</li>
+      <li>Open je bladwijzers, tik op <b>Wijzig</b>, tik op <b>↻ MCML</b> en plak de code in het adresveld.</li>
     </ol>
     <div style="padding:0 16px 16px;display:grid;gap:10px"><textarea class="bm-code" id="bm-code" readonly rows="3">${esc(bookmarkletUrl())}</textarea>
       <button class="btn block press" type="button" id="bm-copy" style="justify-content:center">Kopieer de code</button></div></div>
     <div class="caption">Gebruiken</div>
     <div class="list"><ol class="bm-steps" style="padding-top:14px">
       <li>Open <a href="${esc(mag)}" target="_blank" rel="noopener">Magister</a> en log in zoals altijd.</li>
-      <li>Tik of klik op je bladwijzer <b>↻ Rooster</b>.</li>
-      <li>Rooster opent met je nieuwste rooster en cijfers.</li>
+      <li>Tik of klik op je bladwijzer <b>↻ MCML</b>.</li>
+      <li>MCML opent met je nieuwste rooster en cijfers.</li>
     </ol></div>
     <p class="footnote">Op een iPhone heeft de app op je beginscherm een eigen geheugen. Zet <b>Synchroniseren</b> aan, dan komt wat je in Safari ophaalt ook in de app.</p>`;
   $("bm-drag").addEventListener("click", e=>{ e.preventDefault(); toast("Sleep me naar je bladwijzerbalk"); });
@@ -4338,7 +4349,7 @@ function focusUI(){
       if(sigF() !== focusSig) renderFocus();
       else { $("fr-time").textContent = fmtMs(rem); const a = $("fr-arc"); a.style.strokeDashoffset = (2*Math.PI*104*(1-frac)).toFixed(2); }
     }
-  } else document.title = "Rooster";
+  } else document.title = "MCML";
 }
 function askNotify(){ try{ if("Notification" in window && Notification.permission === "default") Notification.requestPermission(); }catch{} }
 function notify(title, body){
@@ -4401,7 +4412,7 @@ async function boot(){
   if(r?.error && r.error !== "state"){
     store.del("ml-token");
     if(cache){ apply(cache.items, cache.at, true); askSignIn(); }
-    else showWelcome(r.error === "access_denied" ? "Je hebt geen toegang gegeven. Zonder toegang tot je agenda kan Rooster niets laten zien." : undefined);
+    else showWelcome(r.error === "access_denied" ? "Je hebt geen toegang gegeven. Zonder toegang tot je agenda kan MCML niets laten zien." : undefined);
     return;
   }
   if(token() || store.get("ml-signedin", false)){
