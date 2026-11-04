@@ -1617,6 +1617,20 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
   padding:9px 13px;border-radius:12px;background:color-mix(in srgb,var(--orange) 9%,transparent)}
 .app-disclaimer{margin:44px auto 0;max-width:42ch;text-align:center;font-size:12.5px;line-height:1.4;color:var(--label3)}
 .disclaimer-set{margin-top:16px}
+
+/* ---------- welcome: connect first ---------- */
+.connect-actions{display:grid;gap:10px}
+#connect-go{justify-content:center;background:var(--blue);color:#fff;text-decoration:none;box-shadow:0 10px 22px -10px color-mix(in srgb,var(--blue) 80%,transparent),inset 0 1px 0 rgba(255,255,255,.25)}
+.connect-again{justify-content:center;text-decoration:none;color:var(--blue)}
+.other-ways{display:grid;gap:10px}
+.welcome.connect .other-ways{display:none;margin-top:6px;padding-top:14px;border-top:.5px solid var(--sep)}
+.welcome.connect.ways-open .other-ways{display:grid;animation:rise .45s var(--out) both}
+.welcome.connect .other-ways #demo{display:none}
+.sync-line{display:flex;align-items:center;justify-content:center;gap:7px;margin:12px 0 0;font-size:13px;font-weight:500;color:var(--label2)}
+.sync-line i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.sync-line.stale i{background:var(--orange)}
+
+.connect-tip{margin:2px 6px 0;font-size:12.5px;line-height:1.4;color:var(--label2);text-align:center}
 </style>
 </head>
 <body>
@@ -1643,6 +1657,14 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
     <p class="welcome-sub" style="--i:1">Mark's custom Magister launcher</p>
     <p id="welcome-text" style="--i:2">Je lessen, huiswerk, toetsen en cijfers uit Magister, in één oogopslag.</p>
     <div class="actions" style="--i:3">
+      <div class="connect-actions" id="connect-actions" hidden>
+        <a class="btn block press" id="connect-go" href="#">Begin met Magister</a>
+        <a class="btn block press connect-again" id="connect-again" href="#">Ik heb het al gekoppeld</a>
+        <button class="btn block press" id="demo2" type="button" style="justify-content:center">Bekijk voorbeeld</button>
+        <p class="connect-tip">Zie je "Kan het bestand niet openen"? Je bent met meer Google-accounts ingelogd. Open de link in een privévenster.</p>
+        <button class="textlink" id="more-ways" type="button" aria-expanded="false">Andere manieren om in te loggen</button>
+      </div>
+      <div class="other-ways" id="other-ways">
       <form class="code-form" id="code-form" autocomplete="on">
         <input type="text" name="username" autocomplete="username" value="rooster" hidden>
         <label class="code-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
@@ -1657,6 +1679,7 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
       </button>
       <button class="btn block press" id="demo" type="button" style="justify-content:center">Bekijk voorbeeld</button>
       <button class="textlink" id="bm-open" type="button">Ik gebruik de Magister-bladwijzer</button>
+      </div>
     </div>
     <p class="disclaimer" style="--i:4">Controleer Magister voor alle belangrijke informatie. MCML is geen officiële app van Magister.</p>
     <p class="footnote" id="welcome-note" style="--i:4">Je gegevens gaan rechtstreeks van Google naar dit apparaat.</p>
@@ -1766,6 +1789,8 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
     <div class="caption">Magister</div>
     <div class="list">
       <div class="kv"><span>Gegevens</span><span id="set-source"></span></div>
+      <button class="linkrow" type="button" id="do-connect" hidden>Koppeling beheren</button>
+      <button class="linkrow" type="button" id="do-linkcopy" hidden>Inloglink voor een ander apparaat</button>
       <button class="linkrow" type="button" id="do-bookmarklet">Magister-bladwijzer instellen</button>
       <label class="field"><span>Schooladres</span><input id="set-magister" type="url" inputmode="url" autocomplete="off" placeholder="school.magister.net"></label>
     </div>
@@ -1824,6 +1849,10 @@ const BELL = {"08:30":1,"09:20":2,"10:10":3,"11:20":4,"12:10":5,"13:30":6,"14:20
 const CAL_SCOPE = "https://www.googleapis.com/auth/calendar.readonly";
 const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.appdata";
 const DATA_URL = "data.json";       // the encrypted file your sync puts next to this page
+// "Begin met Magister": the web-app address of your Google script (ends in /exec) and a Google API key (Drive API only)
+const CONNECT_URL = "https://script.google.com/macros/s/AKfycbxifxT6RCEivzFzZb7kqHwc1SrdlFerdlh6AeaA3dTeu3lxrCQid_1VeacIZG7ukW57Aw/exec";
+const DRIVE_KEY = "AIzaSyCFYzPS7oIDg-QGZEH8mPToHjkuRzBJ3gg";
+const connectReady = /^https:\/\/script\.google\.com\/.+\/exec$/.test(CONNECT_URL) && !/PLAK/.test(DRIVE_KEY);
 const REDIRECT = location.origin + location.pathname.replace(/index\.html$/, "").replace(/([^/])$/, "$1/");
 const configured = !CLIENT_ID.startsWith("PLAK");
 const SYS_REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1996,7 +2025,7 @@ function signOut(){
   const t = store.get("ml-token", null);
   if(t?.value){ fetch("https://oauth2.googleapis.com/revoke?token="+encodeURIComponent(t.value), {method:"POST",
     headers:{"Content-Type":"application/x-www-form-urlencoded"}}).catch(()=>{}); }
-  for(const k of ["ml-token","ml-signedin","ml-cache","ml-code","ml-bundle","ml-source","ml-grades","ml-synclinked"]) store.del(k);
+  for(const k of ["ml-token","ml-signedin","ml-cache","ml-code","ml-bundle","ml-source","ml-grades","ml-synclinked","ml-link"]) store.del(k);
   events = []; grades = null; source = null; mode = "none"; showWelcome();
 }
 
@@ -2059,7 +2088,7 @@ function fromBundle(x){
   const code = x.code || "";
   return {
     id:"m"+x.id, start, end, school:true, gone, test, hw: !test && !gone && (x.info === 1 || !!body),
-    code: (SUBJECTS[code] || x.lesson) ? code : null, label: SUBJECTS[code] || code || "Afspraak",
+    code: (SUBJECTS[code] || x.lesson) ? code : null, label: SUBJECTS[code] || (x.name ? x.name[0].toUpperCase() + x.name.slice(1) : "") || code || "Afspraak",
     change:null, room:x.room || "", teacher:x.teacher || "", body: gone ? "" : body,
     links:[...body.matchAll(/https?:\/\/[^\s)<>"]+/g)].map(m=>m[0].replace(/[.,;]+$/,"")),
     color: test ? GCOLORS["11"] : codeColor(code), hour: x.hour || BELL[hm(start)] || null
@@ -2070,7 +2099,7 @@ const htmlText = h => { const d = document.createElement("div"); d.innerHTML = S
 function rawAppt(a){
   const first = String(a.Omschrijving||"").split(" - ")[0].trim(), lesson = a.Type === 13;
   const code = lesson && !SUBJECTS[first] && a.Vak ? a.Vak : first;
-  return {id:String(a.Id), start:a.Start, end:a.Einde, code, lesson, room:a.Lokaal||"", teacher:a.Docent||"", hour:a.LesuurVan||null,
+  return {id:String(a.Id), start:a.Start, end:a.Einde, code, name:a.VakNaam||"", lesson, room:a.Lokaal||"", teacher:a.Docent||"", hour:a.LesuurVan||null,
     info:Number(a.InfoType)||0, gone:a.Status === 4 || a.Status === 5, body:htmlText(a.Inhoud)};
 }
 const gv = (o, ...keys) => { for(const k of keys){ for(const kk of [k, k[0].toUpperCase()+k.slice(1)]) if(o && o[kk] != null) return o[kk]; } return undefined; };
@@ -2091,6 +2120,36 @@ function rawGrades(items){
   }
   return out.sort((a,b)=> a.date < b.date ? 1 : -1);
 }
+/* ---------- "Begin met Magister": encrypted file in the user's own Google Drive ---------- */
+function rawToBundle(raw, via){
+  return {version:1, via, updated: raw.updated || new Date().toISOString(), school: raw.school || "", name: raw.name || "",
+    events: (raw.afspraken || []).map(rawAppt), grades: raw.cijfers ? rawGrades(raw.cijfers) : null};
+}
+async function openLinkFile(file, key){
+  const r = await fetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(file)}?alt=media&key=${encodeURIComponent(DRIVE_KEY)}&t=${Date.now()}`, {cache:"no-store"});
+  if(r.status === 404 || r.status === 403) throw Object.assign(new Error("gone"), {kind:"gone", status:r.status});
+  if(!r.ok) throw Object.assign(new Error("http"), {kind:"net"});
+  const env = await r.json();
+  if(env.mcml !== 1) throw Object.assign(new Error("format"), {kind:"gone"});
+  const master = b64bytes(key.replace(/-/g,"+").replace(/_/g,"/").padEnd(Math.ceil(key.length/4)*4, "="));
+  const hk = await crypto.subtle.importKey("raw", master, {name:"HMAC", hash:"SHA-256"}, false, ["sign"]);
+  const enc = new Uint8Array(await crypto.subtle.sign("HMAC", hk, new TextEncoder().encode("mcml-enc")));
+  const mac = new Uint8Array(await crypto.subtle.sign("HMAC", hk, new TextEncoder().encode("mcml-mac")));
+  const iv = b64bytes(env.iv), ct = b64bytes(env.data), tag = b64bytes(env.mac);
+  const mk = await crypto.subtle.importKey("raw", mac, {name:"HMAC", hash:"SHA-256"}, false, ["verify"]);
+  const both = new Uint8Array(iv.length + ct.length); both.set(iv); both.set(ct, iv.length);
+  if(!await crypto.subtle.verify("HMAC", mk, tag, both)) throw Object.assign(new Error("key"), {kind:"key"});
+  const ak = await crypto.subtle.importKey("raw", enc, "AES-CBC", false, ["decrypt"]);
+  const plain = await crypto.subtle.decrypt({name:"AES-CBC", iv}, ak, ct);
+  return rawToBundle(JSON.parse(new TextDecoder().decode(plain)), "koppeling");
+}
+function readLinkHash(){
+  const m = location.hash.match(/^#link=([\w-]+)\.([\w-]+)$/); if(!m) return null;
+  history.replaceState(null, "", REDIRECT);     // the key should not stay in the address bar or history
+  return {file:m[1], key:m[2]};
+}
+function linkUrl(){ const l = store.get("ml-link", null); return l ? REDIRECT + "#link=" + l.file + "." + l.key : ""; }
+
 async function readHashImport(){
   const m = location.hash.match(/^#mdata=([zj])\.(.+)$/); if(!m) return null;
   history.replaceState(null, "", REDIRECT);
@@ -2134,7 +2193,14 @@ async function fetchBundle(code){
 async function loadBundle(manual){
   if(loading) return; loading = true;
   try{
-    if(source === "code"){
+    if(source === "link"){
+      const l = store.get("ml-link", null);
+      const b = await openLinkFile(l.file, l.key);
+      if(b.name && !prefs.name){ prefs.name = b.name; savePrefs(); }
+      applyBundle(keepBundle(b), mode !== "live");
+      clearBanner();
+      if(manual) toast(Date.now() - new Date(b.updated) < 90*60000 ? "Bijgewerkt" : "Dit is de nieuwste versie. Je koppeling werkt elk uur bij.");
+    } else if(source === "code"){
       const b = await fetchBundle(store.get("ml-code",""));
       applyBundle(keepBundle(b), mode !== "live");
       clearBanner();
@@ -2146,7 +2212,11 @@ async function loadBundle(manual){
     }
     syncNow();
   }catch(e){
-    if(e.kind === "code"){ store.del("ml-code"); source = null; store.del("ml-source"); mode = "none"; showWelcome("Je code klopt niet meer. Heb je hem veranderd? Log opnieuw in."); }
+    if(e.kind === "gone" || e.kind === "key"){
+      if(store.get("ml-bundle", null) && mode === "live") showBanner("Je koppeling werkt niet meer. Koppel opnieuw om weer bij te werken.", ()=>{ location.href = CONNECT_URL; });
+      else { store.del("ml-link"); source = null; store.del("ml-source"); mode = "none"; showWelcome("Je koppeling werkt niet meer. Tik op Begin met Magister om opnieuw te koppelen."); }
+    }
+    else if(e.kind === "code"){ store.del("ml-code"); source = null; store.del("ml-source"); mode = "none"; showWelcome("Je code klopt niet meer. Heb je hem veranderd? Log opnieuw in."); }
     else if(e.kind === "missing") showBanner("Er staat nog geen data.json op je site. Draait je sync al met ROOSTER_CODE?", ()=>load(true));
     else showBanner(navigator.onLine === false ? "Je bent offline. Je ziet het rooster van de laatste keer." : "Je gegevens konden niet geladen worden. Je ziet de laatste versie.", ()=>load(true));
   }finally{ loading = false; }
@@ -2359,6 +2429,10 @@ function renderToday(now, list, el){
       </div>
       ${dayBandHtml(now, dayLessons, cur, pct, el)}
     </div>`;
+    if(mode === "live" && (source === "link" || source === "code") && lastUpdated){
+      const age = Date.now() - lastUpdated;
+      html += `<p class="sync-line ${age > 3*3600e3 ? "stale" : ""}"><i></i>Bijgewerkt uit Magister ${dayKey(lastUpdated) === dayKey(now) ? "om " + hm(lastUpdated) : "op " + lastUpdated.getDate() + " " + MON[lastUpdated.getMonth()] + " " + hm(lastUpdated)}</p>`;
+    }
   }
 
   const nextTest = list.find(e=>e.test && !e.gone && e.end>now);
@@ -2919,7 +2993,10 @@ function showWelcome(msg){
   $("nav-left").textContent = ""; $("nav-title").textContent = "";
   $("welcome-text").textContent = msg || "Je lessen, huiswerk, toetsen en cijfers uit Magister, in één oogopslag.";
   $("signin").hidden = !configured;
-  $("welcome-note").textContent = "Je gegevens worden alleen op dit apparaat ontsleuteld. Je code verlaat je apparaat nooit.";
+  $("welcome").classList.toggle("connect", connectReady);
+  $("connect-actions").hidden = !connectReady;
+  if(connectReady){ $("connect-go").href = CONNECT_URL; $("connect-again").href = CONNECT_URL; }
+  $("welcome-note").textContent = connectReady ? "Je gegevens worden alleen op je eigen apparaat ontsleuteld." : "Je gegevens worden alleen op dit apparaat ontsleuteld. Je code verlaat je apparaat nooit.";
 }
 function layoutTabs(){
   const bar = $("tabbar"), anchor = $("side-extra"), vis = visibleViews();
@@ -2942,6 +3019,8 @@ function clearBanner(){ $("banner").innerHTML = ""; }
 $("signin").addEventListener("click", ()=> signIn(false, "login"));
 $("code-form").addEventListener("submit", e=>{ e.preventDefault(); signInWithCode($("code-input").value); });
 $("bm-open").addEventListener("click", ()=>openBookmarklet());
+$("more-ways").addEventListener("click", e=>{ const w = $("welcome"), on = !w.classList.contains("ways-open"); w.classList.toggle("ways-open", on); e.currentTarget.setAttribute("aria-expanded", on); });
+$("demo2").addEventListener("click", ()=>$("demo").click());
 $("demo").addEventListener("click", ()=>{ mode = "demo"; events = demoEvents(); lastUpdated = null; showApp(true); });
 
 /* ================= settings sheet ================= */
@@ -4181,7 +4260,10 @@ function renderSyncRow(){
   $("set-sync").textContent = st.text; $("set-sync").style.color = st.warn ? "var(--red)" : "";
   $("do-sync").textContent = !st.on ? "Koppelen" : st.warn || st.idle ? "Opnieuw inloggen bij Google" : "Nu synchroniseren";
   $("do-unsync").hidden = !st.on;
-  const srcText = mode === "demo" ? "Voorbeeld" : source === "google" ? "Google Agenda" : source === "code" ? "Code" : source === "bm" ? "Bladwijzer" : "–";
+  const srcText = mode === "demo" ? "Voorbeeld" : source === "link" ? "Koppeling" : source === "google" ? "Google Agenda" : source === "code" ? "Code" : source === "bm" ? "Bladwijzer" : "–";
+  $("do-connect").hidden = !connectReady || mode === "demo";
+  $("do-connect").textContent = source === "link" ? "Koppeling beheren" : "Koppel met Magister";
+  $("do-linkcopy").hidden = source !== "link";
   $("set-source").innerHTML = `<span class="src-badge"><i></i>${esc(srcText)}${lastUpdated && mode === "live" ? " · "+esc(relTime(lastUpdated)) : ""}</span>`;
 }
 $("do-sync").addEventListener("click", ()=>{
@@ -4194,6 +4276,11 @@ $("do-unsync").addEventListener("click", ()=>{
   store.del("ml-synclinked"); store.del("ml-lastsync"); store.del("ml-syncerr");
   if(source !== "google") store.del("ml-token");
   renderSyncRow(); toast("Synchroniseren staat uit");
+});
+$("do-connect").addEventListener("click", ()=>{ location.href = CONNECT_URL; });
+$("do-linkcopy").addEventListener("click", ()=>{
+  const u = linkUrl();
+  (navigator.clipboard?.writeText(u) || Promise.reject()).then(()=>toast("Inloglink gekopieerd. Deel hem met niemand."), ()=>{ window.prompt("Kopieer je inloglink:", u); });
 });
 $("do-bookmarklet").addEventListener("click", ()=>{ closeSheet(dlg); setTimeout(()=>openBookmarklet(), 320); });
 
@@ -4422,6 +4509,19 @@ if(fRunning()) ensureLoop();
 
 /* ================= boot ================= */
 async function boot(){
+  const lk = readLinkHash();
+  if(lk){
+    try{
+      const b = await openLinkFile(lk.file, lk.key);
+      store.set("ml-link", lk); source = "link"; store.set("ml-source", "link");
+      if(b.name && !prefs.name){ prefs.name = b.name; savePrefs(); }
+      applyBundle(keepBundle(b), true); toast(b.name ? "Welkom, " + b.name + "!" : "Gekoppeld met Magister"); syncNow();
+      return;
+    }catch(e){
+      showWelcome(e.kind === "net" ? "Geen verbinding. Open je inloglink opnieuw als je online bent." : "Deze inloglink werkt niet (meer). Tik op Begin met Magister om opnieuw te koppelen.");
+      return;
+    }
+  }
   const imp = await readHashImport();
   if(imp && !imp.error){
     const b = keepBundle(imp);
