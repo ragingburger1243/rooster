@@ -2295,7 +2295,7 @@ function applyTint(){
   r.setProperty("--blue", c); r.setProperty("--hero1", c); r.setProperty("--hero2", k.h2 || t.h2);
   const pal = k.l || k.d ? (isDark() ? k.d : k.l) : null;
   for(const v of ["--bg","--bg2","--bg3","--bg-sunk","--glass","--glass-strong","--skeleton","--skeleton-hi"]) r.removeProperty(v);
-  document.documentElement.dataset.skin = pal ? prefs.skin : "";
+  document.documentElement.dataset.theme = pal ? prefs.skin : "";
   if(!pal) return;
   const [bg, bg2, bg3] = pal, dk = isDark();
   r.setProperty("--bg", bg); r.setProperty("--bg2", bg2); r.setProperty("--bg3", bg3); r.setProperty("--bg-sunk", bg3);
@@ -3632,7 +3632,8 @@ function renderPrefControls(){
   $("set-name").value = prefs.name || "";
   $("set-start").innerHTML = [["last","Laatst geopend"], ...visibleViews().map(v=>[v, TITLES[v]])].map(([v,l])=>`<option value="${v}" ${prefs.start===v?"selected":""}>${l}</option>`).join("");
   renderTabEditor(); renderTodayEditor(); renderSwatches(); renderSkins();
-  document.querySelector('[data-pref="theme"]')?.classList.toggle("off", !!skin().dark);
+  // with an always-dark theme (Middernacht, Zwart) the light/dark buttons show "Donker"
+  if(skin().dark) document.querySelectorAll('[data-pref="theme"] [data-v]').forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.v === "dark")));
 }
 function renderTabEditor(){
   const n = prefs.tabs.length;
@@ -3646,7 +3647,7 @@ function renderTodayEditor(){
 }
 function prefChanged(rerender){ savePrefs(); haptic(); if(rerender !== false && (mode==="live"||mode==="demo")) render(); }
 dlg.addEventListener("click", e=>{
-  const sk = e.target.closest("[data-skin]");
+  const sk = e.target.closest("button.skin[data-skin]");
   if(sk){ const k = sk.dataset.skin; prefs.skin = k; const v = SKINS[k];
     if(v.tint != null){ tint = v.tint; store.set("ml-tint", tint); touch("tint"); }
     if(!reduced && document.startViewTransition) document.startViewTransition(()=>{ applyLook(); renderSkins(); renderSwatches(); renderPrefControls(); });
@@ -3655,7 +3656,11 @@ dlg.addEventListener("click", e=>{
   const opt = e.target.closest("[data-pref] [data-v]");
   if(opt){ const k = opt.closest("[data-pref]").dataset.pref; prefs[k] = opt.dataset.v;
     opt.parentElement.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed", String(b===opt)));
-    applyLook(); renderSwatches(); prefChanged(); return; }
+    // an always-dark theme can't be light: choosing Licht or Automatisch goes back to the standard theme
+    if(k === "theme" && opt.dataset.v !== "dark" && skin().dark){ toast(`${skin().n} is alleen donker, dus het thema is nu Standaard.`); prefs.skin = "standard"; }
+    const run = () => { applyLook(); renderSwatches(); renderSkins(); };
+    if(k === "theme" && !reduced && document.startViewTransition) document.startViewTransition(run); else run();
+    prefChanged(); return; }
   const mv = e.target.closest("[data-move]");
   if(mv){ const row = mv.closest("[data-tab]"), v = row.dataset.tab, i = prefs.tabs.indexOf(v), j = i + Number(mv.dataset.move);
     if(j < 0 || j >= prefs.tabs.length) return;
@@ -4721,11 +4726,11 @@ function renderGrades(now, list, el){
 /* the panel next to (computer) or under (phone) the overview, like Magister's detail pane */
 function cellDetailHtml(k, subs, effects){
   const s = k && subs.find(x=>x.all.some(g=>gkey(g) === k)), g = s && s.all.find(x=>gkey(x) === k);
-  if(!g) return `<div class="cd-empty"><b>Details</b><span>Tik op een cijfer om te zien waar het voor was, de weging en wat het met je gemiddelde deed.</span>
+  if(!g) return `<div class="cd-empty"><b>Details</b><span>Tik op een cijfer om te zien waar het voor was, wanneer en hoe zwaar het telt.</span>
     <div class="cd-legend"><span><i class="g-bad"></i>Onvoldoende</span><span><i class="mm">M</i>Uit Magister</span><span><i class="nc"></i>Telt niet mee</span>${prefs.gr.newDot ? `<span><i class="nw"></i>Nieuw</span>` : ""}</div></div>`;
   const e = effects.get(k), c = s.code ? subjectColor(s.code) : "#8E8E93";
   const rows = [["Omschrijving", g.desc || "–"], g.colName ? ["Kolom", g.colName] : null, g.period ? ["Periode", g.period] : null, ["Datum", g.date ? new Date(g.date + "T12:00").toLocaleDateString("nl-NL", {weekday:"short", day:"numeric", month:"long"}) : "–"],
-    ["Weging", g.weight > 0 ? String(g.weight).replace(".", ",") + "×" : "–"], ["Telt mee", g.counts === false ? "Nee" : "Ja"], e != null ? ["Effect op gemiddelde", (e >= 0 ? "+" : "−") + nl1(Math.abs(e))] : null].filter(Boolean);
+    ["Weging", g.weight > 0 ? String(g.weight).replace(".", ",") + "×" : "–"], ["Telt mee", g.counts === false ? "Nee" : "Ja"]].filter(Boolean);
   if(isTextGrade(g)) rows.unshift(["Beoordeling", g.value]);
   return `<div class="cd-card" style="--c:${c}"><div class="cd-top"><span class="cd-val ${gclsG(g)}">${esc(gval(g))}</span><span class="cd-sub"><b>${esc(s.name)}</b><small>${esc(g.desc || "Cijfer")}</small></span>
       <button type="button" class="cd-x" data-cellclose aria-label="Sluiten">✕</button></div>
