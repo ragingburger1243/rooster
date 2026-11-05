@@ -1921,6 +1921,178 @@ html.calm .cl-ph,html.calm .cl-pa{animation:none!important}
 @media (hover:hover){ .skin:hover .sk-prev{transform:translateY(-2px)} }
 .seg-opts.off{opacity:.4;pointer-events:none}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
+/* =================== text size =================== */
+#main,.sheet-body{zoom:var(--z,1)}
+
+/* =================== tab bar: Meer + smaller while scrolling =================== */
+.tabbar{transform-origin:50% 100%;transition:scale .45s var(--spring),translate .45s var(--spring),width .45s var(--spring)}
+.tabbar > button span{transition:opacity .25s,max-height .3s var(--out);max-height:14px}
+.bar-min .tabbar{scale:.88;translate:0 6px}
+.bar-min .tabbar > button span{opacity:0;max-height:0}
+.bar-min .tabbar > button{gap:0}
+#tab-more[aria-current]{color:var(--blue)}
+#tab-more[aria-current] .fillable{fill:currentColor;fill-opacity:.18}
+@media (min-width:1024px){ #tab-more{display:none!important} .bar-min .tabbar{scale:1;translate:none} }
+@media (prefers-reduced-motion:reduce){ .tabbar{transition:none} }
+.more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.more-tile{border:0;background:var(--bg2);border-radius:20px;padding:16px 8px 13px;display:grid;justify-items:center;gap:9px;font:inherit;font-size:13.5px;font-weight:600;color:var(--label);cursor:pointer;box-shadow:var(--card-shadow)}
+.more-tile .ti{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff}
+.more-tile .ti svg{width:23px;height:23px}
+.more-tile.cur{box-shadow:0 0 0 2px var(--blue),var(--card-shadow)}
+
+/* =================== sync line + sheet =================== */
+button.sync-line{border:0;background:none;font:inherit;font-size:13px;font-weight:500;color:var(--label2);cursor:pointer;width:100%;padding:4px 0}
+.sync-line .sl-more{opacity:.5;margin-left:2px;font-size:15px}
+.sync-hero{display:grid;justify-items:center;gap:4px;text-align:center;padding:14px 0 6px}
+.sync-hero b{font-size:19px;font-weight:700}
+.sync-hero small{font-size:14px;color:var(--label2)}
+.sync-orb{position:relative;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;margin-bottom:8px;background:color-mix(in srgb,var(--green) 14%,transparent)}
+.sync-orb.old{background:color-mix(in srgb,var(--orange) 16%,transparent)}
+.sync-orb i{width:20px;height:20px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 60%,transparent);animation:orbPulse 2.4s var(--out) infinite}
+.sync-orb.old i{background:var(--orange);animation:none}
+@keyframes orbPulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 55%,transparent)}80%,100%{box-shadow:0 0 0 22px transparent}}
+.sync-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 4px}
+.sync-stats div{background:var(--bg2);border-radius:18px;padding:13px 10px;text-align:center;box-shadow:var(--card-shadow)}
+.sync-stats b{display:block;font-family:var(--round);font-size:24px;font-weight:750}
+.sync-stats small{display:block;font-size:11.5px;color:var(--label2);line-height:1.25;margin-top:2px}
+#sync-body .kv span:last-child{text-align:right;color:var(--label2);max-width:62%}
+.sp-row{padding:11px 16px;display:grid;gap:2px}
+.sp-row + .sp-row{border-top:.5px solid var(--sep)}
+.sp-row b{font-size:15.5px;font-weight:600}
+.sp-row small{font-size:13.5px;color:var(--label2);line-height:1.35}
+
+/* =================== widgets =================== */
+.wgrid{grid-auto-flow:row dense}
+.wg{position:relative;text-align:left;overflow:hidden;isolation:isolate}
+.wg::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120% 90% at 0 0,color-mix(in srgb,var(--wc) 13%,transparent),transparent 62%);pointer-events:none}
+.wg .w-label{color:var(--wc)}
+.wg .w-big{color:var(--label)}
+.wg.wide{grid-column:span 2}
+.wg[role="button"]{cursor:pointer}
+.wg[role="button"]:active{transform:scale(.97);transition:transform .2s}
+.w-big.g-bad{color:var(--red)} .w-big.g-mid{color:var(--orange)} .w-big.g-good{color:var(--green)}
+.w-list{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:7px}
+.w-list li{display:flex;align-items:center;gap:10px;min-width:0}
+.w-list li > b{flex:none;min-width:32px;height:32px;padding:0 6px;border-radius:10px;display:grid;place-items:center;font-family:var(--round);font-size:15px;font-weight:750;background:color-mix(in srgb,var(--wc) 14%,transparent);color:var(--wc)}
+.w-list li > span{min-width:0;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w-list li small{display:block;font-size:12.5px;font-weight:500;color:var(--label2)}
+.w-check{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid color-mix(in srgb,var(--wc) 60%,transparent);background:none;color:#fff;display:grid;place-items:center;padding:0;cursor:pointer}
+.w-check svg{width:15px;height:15px;opacity:0}
+.w-check.done{background:var(--wc);border-color:var(--wc)}
+.w-check.done svg{opacity:1}
+.w-ring{--p:0;width:64px;height:64px;border-radius:50%;margin:6px 0 4px;display:grid;place-items:center;background:conic-gradient(var(--wc) calc(var(--p) * 1%),color-mix(in srgb,var(--wc) 16%,transparent) 0)}
+.w-ring b{width:50px;height:50px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;font-family:var(--round);font-size:15px;font-weight:750}
+.w-spark{display:block;margin-top:6px;color:var(--wc)}
+.w-spark svg{width:100%;height:34px}
+.w-tip{color:var(--label);font-weight:600}
+.w-note{width:100%;flex:1;min-height:70px;margin-top:6px;border:0;border-radius:12px;padding:9px 10px;resize:none;font:inherit;font-size:15px;line-height:1.35;color:var(--label);background:color-mix(in srgb,var(--wc) 10%,var(--bg2))}
+.w-note:focus{outline:2px solid color-mix(in srgb,var(--wc) 60%,transparent)}
+.w-place{display:flex;gap:6px;margin-top:8px}
+.w-place input{flex:1;min-width:0;border:0;border-radius:10px;padding:8px 10px;font:inherit;font-size:15px;background:var(--fill);color:var(--label)}
+.w-place button{border:0;border-radius:10px;padding:0 12px;font:inherit;font-weight:700;background:var(--wc);color:#fff}
+.w-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.w-chips button,.ai-sugg button{border:0;border-radius:999px;padding:7px 12px;font:inherit;font-size:13.5px;font-weight:600;background:color-mix(in srgb,var(--wc,var(--blue)) 12%,transparent);color:var(--wc,var(--blue));cursor:pointer;text-align:left}
+.wg-bar{display:flex;justify-content:center;margin:10px 0 2px}
+.wg-edit{border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--blue);padding:6px 12px;cursor:pointer}
+.wgrid.editing .wg{animation:wiggle .5s ease-in-out infinite alternate;animation-delay:calc(var(--i) * -90ms)}
+@keyframes wiggle{from{rotate:-.7deg}to{rotate:.7deg}}
+.wg-x{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;border:0;background:var(--label2);color:var(--bg2);font-size:20px;font-weight:700;line-height:1;display:grid;place-items:center;cursor:pointer;z-index:2}
+.wg-tools{position:absolute;left:8px;right:8px;bottom:8px;display:flex;justify-content:center;gap:6px;z-index:2}
+.wg-tools button{border:0;border-radius:999px;min-width:32px;height:28px;padding:0 10px;font:inherit;font-size:13px;font-weight:700;background:color-mix(in srgb,var(--label) 82%,transparent);color:var(--bg2);cursor:pointer}
+.wgrid.editing .wg .w-note,.wgrid.editing .wg .w-place,.wgrid.editing .wg .w-chips{pointer-events:none}
+.wg-add{display:grid!important;place-items:center;align-content:center;gap:6px;color:var(--blue)!important;font-weight:650;border:2px dashed color-mix(in srgb,var(--blue) 35%,transparent)!important;background:color-mix(in srgb,var(--blue) 5%,transparent)!important;box-shadow:none!important}
+.wg-add span{font-size:30px;line-height:1}
+@media (prefers-reduced-motion:reduce){ .wgrid.editing .wg{animation:none} }
+html.calm .wgrid.editing .wg{animation:none}
+.wgal{display:grid;gap:10px}
+.wgal-item{display:grid;grid-template-columns:116px minmax(0,1fr) 30px;gap:14px;align-items:center;border:0;background:var(--bg2);border-radius:20px;padding:10px 14px 10px 10px;font:inherit;color:var(--label);text-align:left;cursor:pointer;box-shadow:var(--card-shadow)}
+.wgal-item .preview{min-height:0;height:118px;zoom:.62;width:187px;pointer-events:none;padding:12px 13px}
+.wgal-t b{display:block;font-size:16px}
+.wgal-t small{display:block;font-size:13.5px;color:var(--label2);line-height:1.3}
+.wgal-add{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;font-size:20px;font-weight:600}
+.wgal-item.have{opacity:.55;cursor:default}
+.wgal-item.have .wgal-add{background:var(--fill);color:var(--label2);font-size:15px}
+@media (min-width:1024px){ .dash-top .wgrid{grid-template-columns:1fr 1fr} }
+
+/* =================== install tip =================== */
+.install-tip{display:flex;align-items:center;gap:12px;margin:12px 0 0;padding:12px 12px 12px 12px;border-radius:20px;background:var(--bg2);box-shadow:var(--card-shadow)}
+.it-ic img{width:44px;height:44px;border-radius:11px;display:block}
+.it-t{flex:1;min-width:0}
+.it-t b{display:block;font-size:15px}
+.it-t small{display:block;font-size:13px;color:var(--label2);line-height:1.35}
+.it-share{display:inline-block;color:var(--blue);font-weight:700}
+.it-x{border:0;background:var(--fill);width:28px;height:28px;border-radius:50%;color:var(--label2);cursor:pointer;flex:none}
+.it-go{flex:none}
+
+/* =================== Samen vrij =================== */
+.fr-av{--c:#64D2FF;width:28px;height:28px;border-radius:50%;display:inline-grid;place-items:center;font-size:13px;font-weight:750;color:#fff;background:var(--c);box-shadow:0 0 0 2px var(--bg2);flex:none}
+.fr-row{display:flex;align-items:center;gap:12px;padding:11px 16px}
+.fr-row + .fr-row{border-top:.5px solid var(--sep)}
+.fr-row .fr-av{width:36px;height:36px;font-size:16px}
+.fr-n{min-width:0}
+.fr-n b{display:block;font-size:16px}
+.fr-n small{display:block;font-size:13.5px;color:var(--label2)}
+.fr-n .st-free{color:var(--green);font-weight:600}
+.fr-test{font-size:11px;font-weight:700;color:var(--orange);background:color-mix(in srgb,var(--orange) 14%,transparent);border-radius:6px;padding:1px 6px;vertical-align:2px}
+.fr-slot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 16px;font-size:15px}
+.fr-slot + .fr-slot{border-top:.5px solid var(--sep)}
+.fr-slot .num{font-weight:700}
+.fr-slot.out .num{color:var(--label2);font-weight:600}
+.fr-names{display:flex;align-items:center;gap:0;min-width:0}
+.fr-names .fr-av{margin-left:-6px;width:24px;height:24px;font-size:11px}
+.fr-names b{margin-left:8px;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gap-row{background:repeating-linear-gradient(135deg,transparent 0 7px,color-mix(in srgb,var(--label) 3.5%,transparent) 7px 14px)}
+.gap-row .lead{opacity:.6}
+.gap-row .t{color:var(--label2);font-weight:600}
+.gap-fr{display:flex;align-items:center;gap:0;margin-top:6px;border:0;background:color-mix(in srgb,#64D2FF 14%,transparent);border-radius:999px;padding:4px 12px 4px 10px;font:inherit;font-size:13.5px;font-weight:650;color:color-mix(in srgb,#32ADE6 85%,var(--label));cursor:pointer}
+.gap-fr .fr-av{width:22px;height:22px;font-size:11px;margin-right:-5px}
+.gap-fr > span:last-child{margin-left:12px}
+
+/* =================== assistant =================== */
+.ai-sheet .sheet-head h2{display:grid;justify-items:center;line-height:1.1}
+.ai-sheet .sheet-head h2 small{font-size:11.5px;font-weight:600;color:var(--label2)}
+.ai-gear{border:0;background:none;width:50px;height:34px;display:grid;place-items:center;color:var(--blue);cursor:pointer;border-radius:10px}
+.ai-gear svg{width:22px;height:22px}
+.ai-gear.on{background:color-mix(in srgb,var(--blue) 12%,transparent)}
+.ai-log{display:grid;gap:10px;padding-bottom:10px}
+.ai-msg{max-width:86%;padding:10px 14px;border-radius:20px;font-size:15.5px;line-height:1.42;overflow-wrap:anywhere;animation:msgIn .35s var(--out) both}
+.ai-msg.me{justify-self:end;background:var(--blue);color:#fff;border-bottom-right-radius:6px;white-space:pre-wrap}
+.ai-msg.bot{justify-self:start;background:var(--bg2);box-shadow:var(--card-shadow);border-bottom-left-radius:6px}
+.ai-msg.bot p{margin:0 0 6px}.ai-msg.bot p:last-child{margin:0}
+.ai-msg.bot ul,.ai-msg.bot ol{margin:4px 0 8px;padding-left:20px}
+.ai-msg.bot pre{white-space:pre-wrap;background:var(--fill);border-radius:10px;padding:8px 10px;font-size:13.5px}
+.ai-msg.bot code{background:var(--fill);border-radius:5px;padding:0 4px;font-size:.92em}
+.ai-msg.err{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--orange) 50%,transparent)}
+.ai-msg.handoff small{display:block;margin-top:8px;color:var(--label2);font-size:13px}
+.ai-hand{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.ai-hand .btn{height:38px;padding:0 16px;font-size:15px}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px) scale(.98)}}
+.ai-dots{display:inline-flex;gap:4px;padding:4px 0}
+.ai-dots i{width:7px;height:7px;border-radius:50%;background:var(--label3);animation:dot 1.1s infinite ease-in-out}
+.ai-dots i:nth-child(2){animation-delay:.15s}.ai-dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+.ai-hello{display:grid;justify-items:center;text-align:center;gap:6px;padding:26px 10px 14px}
+.ai-hello b{font-size:19px}
+.ai-hello small{font-size:14px;color:var(--label2);max-width:320px}
+.ai-orb{width:58px;height:58px;border-radius:50%;margin-bottom:8px;background:conic-gradient(from 0deg,#AF52DE,#5E5CE6,#0A84FF,#64D2FF,#AF52DE);filter:saturate(1.2);animation:orbSpin 6s linear infinite;box-shadow:0 8px 30px -8px #AF52DE}
+@keyframes orbSpin{to{rotate:360deg}}
+.ai-sugg{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 4px}
+.ai-bar{position:sticky;bottom:0;display:flex;align-items:flex-end;gap:8px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px) + var(--kb,0px));background:var(--glass-strong,var(--bg));-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-top:.5px solid var(--sep)}
+.ai-bar[hidden]{display:none}
+.ai-bar textarea{flex:1;min-width:0;border:0;border-radius:20px;padding:10px 14px;font:inherit;font-size:16px;line-height:1.3;resize:none;max-height:140px;background:var(--bg2);color:var(--label);box-shadow:inset 0 0 0 .5px var(--sep)}
+.ai-bar textarea:focus{outline:2px solid color-mix(in srgb,var(--blue) 50%,transparent)}
+.ai-bar button{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .25s var(--spring)}
+.ai-bar button:active{transform:scale(.9)}
+.ai-bar button svg{width:21px;height:21px}
+.ai-bar button.stop svg{display:none}
+.ai-bar button.stop::before{content:"";width:13px;height:13px;border-radius:3px;background:#fff}
+.ai-sheet{height:88vh;overflow:hidden}
+.ai-sheet[open]{display:flex;flex-direction:column}
+.ai-sheet .sheet-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.ai-sheet .ai-bar{position:static;flex:none}
+@media (min-width:640px){ .ai-sheet{height:min(760px,calc(100vh - 120px))} }
+.danger-t{color:var(--red)!important}
+
 </style>
 </head>
 <body>
@@ -2012,6 +2184,9 @@ html.calm .cl-ph,html.calm .cl-pa{animation:none!important}
   <button type="button" data-view="items">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect class="fillable" x="3.5" y="4" width="4.5" height="16" rx="1.2"/><rect class="fillable" x="8" y="6" width="4.5" height="14" rx="1.2"/><path class="fillable" d="M13.6 7.4l3.6-1.1a1 1 0 0 1 1.25.66l3.2 10.6a1 1 0 0 1-.66 1.25l-3.6 1.1a1 1 0 0 1-1.25-.66L12.94 8.65a1 1 0 0 1 .66-1.25z"/><path d="M3.5 7.5H8M8 9.5h4.5"/></svg>
     <span>Kast</span></button>
+  <button type="button" data-more id="tab-more" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect class="fillable" x="3.5" y="3.5" width="7" height="7" rx="2"/><rect class="fillable" x="13.5" y="3.5" width="7" height="7" rx="2"/><rect class="fillable" x="3.5" y="13.5" width="7" height="7" rx="2"/><rect class="fillable" x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>
+    <span>Meer</span></button>
   <div class="side-extra" id="side-extra"></div>
   <div class="side-foot"><span id="side-status"></span>
     <button class="icon-btn press" type="button" data-settings aria-label="Instellingen">
@@ -2033,6 +2208,33 @@ html.calm .cl-ph,html.calm .cl-pa{animation:none!important}
   <div class="grabber" aria-hidden="true"></div>
   <div class="sheet-head"><span style="min-width:50px"></span><h2 id="grade-title">Vak</h2><button type="button" class="sheet-close">Klaar</button></div>
   <div class="sheet-body" id="grade-body"></div>
+</dialog>
+
+<dialog class="sheet" id="syncsheet">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head"><span style="min-width:50px"></span><h2>Synchronisatie</h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-body" id="sync-body"></div>
+</dialog>
+<dialog class="sheet" id="friendsheet">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head"><span style="min-width:50px"></span><h2>Samen vrij</h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-body" id="friends-body"></div>
+</dialog>
+<dialog class="sheet" id="wsheet">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head"><span style="min-width:50px"></span><h2>Widgets</h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-body" id="w-body"></div>
+</dialog>
+<dialog class="sheet" id="moresheet">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head"><span style="min-width:50px"></span><h2>Meer</h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-body" id="more-body"></div>
+</dialog>
+<dialog class="sheet ai-sheet" id="aisheet">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head"><button type="button" class="ai-gear" id="ai-gear" aria-label="Instellingen assistent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button><h2>Assistent<small id="ai-mode"></small></h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-body"><div id="ai-log" class="ai-log"></div><div id="ai-set" hidden></div></div>
+  <form class="ai-bar" id="ai-form"><textarea id="ai-in" rows="1" placeholder="Vraag iets…" enterkeyhint="send" aria-label="Je vraag"></textarea><button type="submit" id="ai-send" aria-label="Versturen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></form>
 </dialog>
 
 <dialog class="sheet" id="abssheet">
@@ -2083,7 +2285,24 @@ html.calm .cl-ph,html.calm .cl-pa{animation:none!important}
       <div class="opt-block"><span>Dichtheid</span><div class="seg-opts" data-pref="density" role="group" aria-label="Dichtheid"></div></div>
       <label class="field sw"><span>Minder beweging<small class="field-sub">Zet animaties uit</small></span><span class="switch"><input id="set-calm" type="checkbox" role="switch"><span></span></span></label>
       <label class="field sw"><span>Vegen om te wisselen<small class="field-sub">Op je telefoon: veeg opzij voor een andere dag of tab</small></span><span class="switch"><input id="set-swipe" type="checkbox" role="switch"><span></span></span></label>
+      <div class="opt-block"><span>Tekstgrootte</span><div class="seg-opts" data-pref="zoom" role="group" aria-label="Tekstgrootte"></div></div>
       <button class="linkrow" type="button" id="do-grprefs">Cijferlijst aanpassen</button>
+    </div>
+    <div class="caption">Telefoon</div>
+    <div class="list">
+      <label class="field sw"><span>Meer-knop in de tabbalk<small class="field-sub">Maximaal 5 tabs onderaan, de rest onder Meer</small></span><span class="switch"><input id="set-more" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Tabbalk kleiner bij scrollen<small class="field-sub">Meer ruimte voor je rooster</small></span><span class="switch"><input id="set-barmin" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Trillen bij tikken</span><span class="switch"><input id="set-haptics" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Melding bij uitval<small class="field-sub">Als een les vandaag of morgen uitvalt</small></span><span class="switch"><input id="set-uitval" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Tussenuren in je rooster<small class="field-sub">Met wie van je vrienden ook vrij is</small></span><span class="switch"><input id="set-gaps" type="checkbox" role="switch"><span></span></span></label>
+      <div class="opt-block"><span>Vakantieregio</span><div class="seg-opts" data-pref="region" role="group" aria-label="Vakantieregio"></div></div>
+    </div>
+    <div class="caption">Extra</div>
+    <div class="list">
+      <button class="linkrow" type="button" id="do-sync">Synchronisatie</button>
+      <button class="linkrow" type="button" id="do-ai">AI-assistent</button>
+      <button class="linkrow" type="button" id="do-friends">Samen vrij</button>
+      <button class="linkrow" type="button" id="do-widgets">Widgets op Vandaag</button>
     </div>
     <div class="caption">Jij</div>
     <div class="list">
@@ -2217,6 +2436,16 @@ const PREF_DEFAULTS = {
   gr:{style:"magister", pass:5.5, avgDec:1, weight:true, newDot:true, trend:true, periods:true, heads:"kop", avgSource:"official", compact:false, summary:true, hiddenSubs:[]},
   swipe:true,            // swipe left/right on a phone: other day in the rooster, other tab elsewhere
   bookSize:2,            // index in BOOK_SIZES
+  widgets:null,          // widgets on Vandaag: [{t, s}] (null = the standard two)
+  moreTab:true,          // phone: max 5 tabs, the rest under "Meer"
+  barMin:true,           // phone: tab bar gets smaller while you scroll down
+  haptics:true,
+  zoom:"1",              // text size
+  uitvalToast:true,      // say so when a lesson is newly cancelled
+  showGaps:true,         // free periods in the day list
+  region:"zuid",         // school holiday region
+  note:"",               // the Notitie widget
+  wxPlace:null,          // the Weer widget: {name, lat, lon}
   focusMin:25,           // focus session length
   breakMin:5,
 };
@@ -2313,6 +2542,7 @@ const DARK_RULES = [];
   }
 })([...document.styleSheets].flatMap(sh=>{ try{ return [...sh.cssRules]; }catch{ return []; } }));
 function applyLook(){
+  applyZoom();
   const mode_ = skin().dark ? "dark" : prefs.theme;
   for(const {r, orig} of DARK_RULES) r.media.mediaText = mode_ === "auto" ? orig : mode_ === "dark" ? "all" : "not all";
   const root = document.documentElement;
@@ -2409,7 +2639,7 @@ async function load(manual){
 }
 function apply(items, at, animate){
   const wasLive = mode === "live";
-  mode = "live"; events = items.map(toEvent).filter(Boolean); lastUpdated = new Date(at);
+  mode = "live"; events = items.map(toEvent).filter(Boolean); lastUpdated = new Date(at); lastFetched = new Date();
   noteUitval();
   if(!wasLive) showApp(animate !== false); else render();
 }
@@ -2474,6 +2704,7 @@ function rawToBundle(raw, via){
     materials: raw.materialen ? raw.materialen.map(rawMaterial).filter(Boolean) : null,
     averages: raw.gemiddelden ? raw.gemiddelden.map(rawAverage).filter(Boolean) : null,
     columns: Array.isArray(raw.kolommen) ? raw.kolommen.map(rawColumn).filter(Boolean) : null,
+    friends: Array.isArray(raw.vrienden) ? raw.vrienden.filter(f=>f && f.name).map(f=>({name:String(f.name).slice(0, 24), test:!!f.test, days:f.days || {}})) : null,
     magisterUrl: raw.magister || ""};
 }
 /* absences: late, sick, absent — with whether the school counts it as excused */
@@ -2506,6 +2737,8 @@ function rawAverage(g){
   return {code:g.code || "", subject:g.subject || "", label:g.label || "Gemiddelde", column:g.column || "", period:g.period || "", value:String(g.value), num: n >= 1 && n <= 10 ? n : null};
 }
 async function openLinkFile(file, key){
+  // the file's properties say when the script last checked Magister (it only rewrites the file when something changed)
+  const metaP = fetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(file)}?fields=properties&key=${encodeURIComponent(DRIVE_KEY)}&t=${Date.now()}`, {cache:"no-store"}).then(r=>r.ok ? r.json() : null).catch(()=>null);
   const r = await fetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(file)}?alt=media&key=${encodeURIComponent(DRIVE_KEY)}&t=${Date.now()}`, {cache:"no-store"});
   if(r.status === 404 || r.status === 403) throw Object.assign(new Error("gone"), {kind:"gone", status:r.status});
   if(!r.ok) throw Object.assign(new Error("http"), {kind:"net"});
@@ -2521,7 +2754,10 @@ async function openLinkFile(file, key){
   if(!await crypto.subtle.verify("HMAC", mk, tag, both)) throw Object.assign(new Error("key"), {kind:"key"});
   const ak = await crypto.subtle.importKey("raw", enc, "AES-CBC", false, ["decrypt"]);
   const plain = await crypto.subtle.decrypt({name:"AES-CBC", iv}, ak, ct);
-  return rawToBundle(JSON.parse(new TextDecoder().decode(plain)), "koppeling");
+  const b = rawToBundle(JSON.parse(new TextDecoder().decode(plain)), "koppeling");
+  const m = await metaP; if(m && m.properties) b.meta = m.properties;
+  lastFetched = new Date();
+  return b;
 }
 function readLinkHash(){
   const m = location.hash.match(/^#link=([\w-]+)\.([\w-]+)$/); if(!m) return null;
@@ -2559,13 +2795,14 @@ function applyBundle(b, animate){
   mode = "live"; events = (b.events || []).map(fromBundle).filter(Boolean).sort((a,c)=>a.start-c.start);
   lastUpdated = new Date(b.updated || Date.now());
   if(b.grades){ grades = {at:b.gradesAt || b.updated, list:b.grades}; store.set("ml-grades", grades); }
-  extra = {absences: b.absences || null, averages: b.averages || null, columns: b.columns || null, magisterUrl: b.magisterUrl || "", materials: Array.isArray(b.materials) ? b.materials.length : null, matList: Array.isArray(b.materials) ? b.materials : null};
+  extra = {absences: b.absences || null, averages: b.averages || null, columns: b.columns || null, magisterUrl: b.magisterUrl || "", materials: Array.isArray(b.materials) ? b.materials.length : null, matList: Array.isArray(b.materials) ? b.materials : null,
+    friends: b.friends || null, meta: b.meta || null};
   noteUitval();
   if(b.materials) mergeMaterials(b.materials, b.magisterUrl);
   if(b.school && !store.get("ml-magister","")) store.set("ml-magister", b.school + ".magister.net");
   if(!wasLive) showApp(animate !== false); else render();
 }
-let extra = {absences:null, averages:null, columns:null, magisterUrl:"", materials:null};
+let extra = {absences:null, averages:null, columns:null, magisterUrl:"", materials:null, friends:null, meta:null};
 /* a lesson that newly dropped out today or tomorrow: say so straight away */
 function noteUitval(){
   const now = new Date(), key = e => e.id + "|" + dayKey(e.start);
@@ -2573,7 +2810,7 @@ function noteUitval(){
   const had = store.get("ml-goneseen", null), seen = new Set(had || []);
   const fresh = soon.filter(e=>!seen.has(key(e)));
   store.set("ml-goneseen", soon.map(key));
-  if(!had || !fresh.length) return;
+  if(!had || !fresh.length || prefs.uitvalToast === false) return;
   const when = e => daysUntil(e.start, now) === 0 ? "vandaag" : "morgen";
   const first = fresh[0];
   setTimeout(()=> toast(fresh.length === 1 ? `Uitval: ${first.label}${first.hour ? ", " + first.hour + "e uur" : ""} (${when(first)})` : `${fresh.length} lessen vallen uit (${[...new Set(fresh.map(when))].join(" en ")})`,
@@ -2755,7 +2992,7 @@ function linkify(text){
 }
 const schoolList = () => events.filter(e=>e.school).sort((a,b)=>a.start-b.start);
 const ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-const haptic = () => { try{ navigator.vibrate?.(8); }catch{} };
+const haptic = () => { if(prefs.haptics === false) return; try{ navigator.vibrate?.(8); }catch{} };
 
 /* stagger index for entrance animation */
 function stagger(el){ [...el.children].forEach((c,i)=> c.style.setProperty("--i", Math.min(i,10))); }
@@ -2827,6 +3064,470 @@ function renderSkeleton(){
     <div class="sk" style="height:58px;margin-top:28px;border-radius:14px"></div><div class="sk" style="height:58px;margin-top:8px;border-radius:14px"></div>`;
 }
 
+/* =====================================================================
+   Sync overview, Samen vrij, widgets on Vandaag
+   ===================================================================== */
+const minOf = t => { const [h, m] = String(t).split(":").map(Number); return h * 60 + m; };
+const tOf = m => pad(Math.floor(m / 60)) + ":" + pad(m % 60);
+const nowMin = d => d.getHours() * 60 + d.getMinutes();
+
+/* ---------- how often MCML syncs ---------- */
+let lastFetched = null;            // when this device last pulled fresh data
+const SYNC_PLAN = {
+  link: [["Rooster (uitval, lokaal)", "Elke 10 minuten op schooldagen, 6:30 – 17:00"], ["Alles (cijfers, absenties …)", "Elk uur van 6 tot 19 uur, in het weekend om 9 uur"], ["Avond", "Zondag t/m donderdag tussen 19 en 22 uur, voor morgen"]],
+  code: [["Alles", "Elk uur via je GitHub-sync"]],
+  google: [["Rooster en huiswerk", "Elk uur via je GitHub-sync naar Google Agenda"]],
+  bm: [["Alles", "Alleen als jij de Magister-bladwijzer gebruikt"]],
+};
+function nextCheckAt(now){
+  // the script runs every 10 minutes in the school window; otherwise on the hour
+  const d = new Date(now), dow = (d.getDay() + 6) % 7, m = nowMin(d);
+  if(dow <= 4 && m >= 390 && m < 1020){ const n = new Date(d); n.setMinutes(Math.ceil((m + 1) / 10) * 10 - d.getHours() * 60, 0, 0); return n; }
+  const n = new Date(d); n.setHours(d.getHours() + 1, 0, 0, 0); return n;
+}
+function syncInfo(){
+  const meta = extra.meta || {}, today = dayKey(new Date());
+  const checked = meta.checked ? new Date(meta.checked) : null;
+  const sameDay = meta.cday === today;
+  return {checked: checked && (!lastUpdated || checked > lastUpdated) ? checked : lastUpdated, updated: lastUpdated, checks: sameDay ? Number(meta.cn) || 0 : 0, fulls: sameDay ? Number(meta.fn) || 0 : 0, fetched: lastFetched};
+}
+function syncSheetHtml(){
+  const s = syncInfo(), now = new Date(), plan = SYNC_PLAN[source] || [];
+  const ago = t => t ? (Math.round((now - t) / 60000) < 1 ? "zojuist" : relTime(t)) : "–";
+  const nx = source === "link" ? nextCheckAt(now) : null;
+  return `<div class="sync-hero"><span class="sync-orb ${s.checked && now - s.checked < 3 * 36e5 ? "ok" : "old"}"><i></i></span>
+      <b>${s.checked ? "Gecontroleerd " + esc(ago(s.checked)) : "Nog niet bijgewerkt"}</b>
+      <small>${source === "link" ? "MCML kijkt zelf of er iets veranderd is in Magister" : source === "demo" ? "Voorbeeld" : "Via " + esc({code:"je GitHub-sync", google:"Google Agenda", bm:"de Magister-bladwijzer"}[source] || "Magister")}</small></div>
+    ${source === "link" ? `<div class="sync-stats"><div><b class="num">${s.checks}</b><small>Keer gecontroleerd vandaag</small></div><div><b class="num">${s.fulls}</b><small>Keer alles bijgewerkt vandaag</small></div><div><b class="num">${nx ? hm(nx) : "–"}</b><small>Volgende controle (ongeveer)</small></div></div>` : ""}
+    <div class="caption">Wanneer</div><div class="list">${[...plan, ["Dit apparaat", "Haalt elke 5 minuten nieuwe gegevens als MCML open is, en meteen als je de app opent"]].map(([a, b])=>`<div class="sp-row"><b>${esc(a)}</b><small>${esc(b)}</small></div>`).join("")}</div>
+    <div class="caption">Laatst</div><div class="list">
+      <div class="kv"><span>Rooster gecontroleerd</span><span>${esc(ago(s.checked))}</span></div>
+      <div class="kv"><span>Alles bijgewerkt uit Magister</span><span>${esc(ago(s.updated))}</span></div>
+      <div class="kv"><span>Opgehaald op dit apparaat</span><span>${esc(ago(s.fetched))}</span></div>
+      ${store.get("ml-synclinked", false) ? `<div class="kv"><span>Vinkjes en Kast tussen je apparaten</span><span>${store.get("ml-lastsync", 0) ? esc(ago(new Date(store.get("ml-lastsync", 0)))) : "–"} · via Google Drive</span></div>` : ""}</div>
+    ${source === "link" && connectReady ? `<div class="list"><button class="linkrow" type="button" id="sync-now">Magister nu bijwerken</button></div>
+      <p class="footnote">Uitval of een ander lokaal staat er meestal binnen 10 minuten in. Alles bijwerken duurt even, daarom gebeurt dat elk uur, of meteen als je rooster verandert.</p>` : ""}`;
+}
+function openSync(src){ $("sync-body").innerHTML = syncSheetHtml(); openSheet(syncDlg, src); }
+
+/* ---------- Samen vrij ---------- */
+/** Your own free gaps on a day (between lessons, dropped lessons count as free), like the script computes them. */
+function myFreeDay(k){
+  const L = schoolList().filter(e=>!e.gone && dayKey(e.start) === k && e.end - e.start < 10 * 36e5).map(e=>[nowMin(e.start), nowMin(e.end)]).sort((a,b)=>a[0]-b[0]);
+  if(!L.length) return null;
+  const m = []; for(const x of L){ const l = m[m.length-1]; if(l && x[0] <= l[1]) l[1] = Math.max(l[1], x[1]); else m.push([...x]); }
+  const f = []; for(let i = 1; i < m.length; i++) if(m[i][0] - m[i-1][1] >= 15) f.push([m[i-1][1], m[i][0]]);
+  return {s: m[0][0], e: m[m.length-1][1], f};
+}
+function friendsList(){
+  if(mode === "demo") return demoFriends();
+  return (extra.friends || []).map(fr=>({name: fr.name || "Vriend", test: !!fr.test, days: fr.days || {}}));
+}
+function demoFriends(){
+  const out = [["Sanne", [["10:10","11:05"]], "15:15"], ["Daan", [["12:25","13:15"]], "14:25"], ["Noor", [], "12:40"]];
+  return out.map(([name, f, e])=>{ const days = {}; for(let i = 0; i < 14; i++){ const d = new Date(); d.setDate(d.getDate() + i); if(d.getDay() % 6 === 0) continue;
+    const me = myFreeDay(dayKey(d)); days[dayKey(d)] = {s:"08:30", e, f: me && me.f.length && name !== "Noor" ? [[tOf(me.f[0][0]), tOf(me.f[0][1])], ...f] : f}; } return {name, days}; });
+}
+/** Overlaps between you and each friend on a day: [{from, to, names}], plus when you're both out. */
+function togetherOn(k){
+  const me = myFreeDay(k); if(!me) return {slots:[], out:null, me:null};
+  const slots = [];
+  let lastEnd = me.e;
+  for(const fr of friendsList()){
+    const d = fr.days[k]; if(!d) continue;
+    lastEnd = Math.max(lastEnd, minOf(d.e));
+    for(const [a, b] of d.f.map(([x, y])=>[minOf(x), minOf(y)])) for(const [c, e] of me.f){
+      const from = Math.max(a, c), to = Math.min(b, e);
+      if(to - from >= 15){ const ex = slots.find(s=>s.from === from && s.to === to); if(ex) ex.names.push(fr.name); else slots.push({from, to, names:[fr.name]}); }
+    }
+  }
+  slots.sort((a,b)=>a.from-b.from);
+  const outAll = friendsList().filter(fr=>fr.days[k]).length ? lastEnd : null;
+  return {slots, out: outAll, me};
+}
+function friendStatus(fr, now){
+  const d = fr.days[dayKey(now)], m = nowMin(now);
+  if(!d) return ["Niet op school vandaag", "off"];
+  const s = minOf(d.s), e = minOf(d.e);
+  if(m < s) return ["Begint om " + d.s, "off"];
+  if(m >= e) return ["Uit sinds " + d.e, "out"];
+  const g = d.f.map(([a, b])=>[minOf(a), minOf(b)]).find(([a, b])=>m >= a && m < b);
+  if(g) return ["Vrij tot " + tOf(g[1]), "free"];
+  const nf = d.f.map(([a])=>minOf(a)).find(a=>a > m);
+  return ["In de les tot " + tOf(nf ?? e), "busy"];
+}
+function friendsSheetHtml(){
+  const F = friendsList(), now = new Date();
+  if(!F.length) return `<div class="gr-empty">${IC.people || ""}<h3 style="margin:0">Nog geen vrienden</h3>
+    <p>Voeg vrienden toe op je koppelpagina. Je ziet dan wanneer jullie allebei een tussenuur of uitval hebben. Jullie delen alleen wanneer je vrij bent, niets anders.</p>
+    ${source === "link" && connectReady ? `<a class="btn press" href="${esc(CONNECT_URL)}" target="_blank" rel="noopener">Vrienden toevoegen</a>` : ""}</div>`;
+  const days = upcomingDays(now, schoolList()).slice(0, 5);
+  const avatar = n => `<span class="fr-av" style="--c:${subjectColor(n.toLowerCase().slice(0,4))}">${esc(n.slice(0,1).toUpperCase())}</span>`;
+  let html = `<div class="caption">Nu</div><div class="list">${F.map(fr=>{ const [t, k] = friendStatus(fr, now); return `<div class="fr-row">${avatar(fr.name)}<span class="fr-n"><b>${esc(fr.name)}${fr.test ? ' <small class="fr-test">test</small>' : ""}</b><small class="st-${k}">${esc(t)}</small></span></div>`; }).join("")}</div>`;
+  for(const k of days){
+    const {slots, out, me} = togetherOn(k); if(!me) continue;
+    const d = new Date(k + "T12:00");
+    html += `<div class="caption">${esc(cap(relDay(d, now)))}</div><div class="list">` +
+      (slots.length ? slots.map(s=>`<div class="fr-slot"><span class="num">${tOf(s.from)} – ${tOf(s.to)}</span><span class="fr-names">${s.names.map(avatar).join("")}<b>${esc(s.names.join(", "))}</b></span></div>`).join("") : `<div class="empty-row">Geen tussenuur samen.</div>`) +
+      (out != null ? `<div class="fr-slot out"><span class="num">vanaf ${tOf(out)}</span><span class="fr-names"><b>Iedereen uit</b></span></div>` : "") + `</div>`;
+  }
+  html += `<p class="footnote">Je vrienden zien alleen wanneer jij vrij bent en hoe laat je begint en uit bent. ${F.some(f=>f.test) ? "De testvriend is nep, om het uit te proberen. " : ""}Bijgewerkt met je gegevens uit Magister.</p>`;
+  if(source === "link" && connectReady) html += `<div class="list"><a class="linkrow" href="${esc(CONNECT_URL)}" target="_blank" rel="noopener">Vrienden beheren ↗</a></div>`;
+  return html;
+}
+function openFriends(src){ $("friends-body").innerHTML = friendsSheetHtml(); openSheet(friendsDlg, src); }
+
+/* ---------- school holidays (advisory dates, rijksoverheid.nl) ---------- */
+const HOLIDAYS = {
+  noord: [["Herfstvakantie","2026-10-10","2026-10-18"],["Kerstvakantie","2026-12-19","2027-01-03"],["Voorjaarsvakantie","2027-02-20","2027-02-28"],["Meivakantie","2027-04-24","2027-05-02"],["Zomervakantie","2027-07-10","2027-08-22"]],
+  midden:[["Herfstvakantie","2026-10-17","2026-10-25"],["Kerstvakantie","2026-12-19","2027-01-03"],["Voorjaarsvakantie","2027-02-20","2027-02-28"],["Meivakantie","2027-04-24","2027-05-02"],["Zomervakantie","2027-07-17","2027-08-29"]],
+  zuid:  [["Herfstvakantie","2026-10-17","2026-10-25"],["Kerstvakantie","2026-12-19","2027-01-03"],["Voorjaarsvakantie","2027-02-13","2027-02-21"],["Meivakantie","2027-04-24","2027-05-02"],["Zomervakantie","2027-07-24","2027-09-05"]],
+};
+function nextHoliday(now){
+  const L = HOLIDAYS[prefs.region] || HOLIDAYS.zuid, k = dayKey(now);
+  const cur = L.find(([, a, b])=>k >= a && k <= b); if(cur) return {name:cur[0], now:true, to:new Date(cur[2] + "T12:00")};
+  const n = L.find(([, a])=>a > k); if(!n) return null;
+  const start = new Date(n[1] + "T00:00"); let school = 0;
+  for(const d = new Date(now); d < start; d.setDate(d.getDate() + 1)) if(d.getDay() % 6) school++;
+  return {name:n[0], start, days: Math.ceil((start - new Date(dayKey(now) + "T00:00")) / 864e5), school};
+}
+
+/* ---------- weather (open-meteo.com, no key) ---------- */
+let wxCache = (()=>{ try{ return JSON.parse(localStorage.getItem("ml-wx") || "null"); }catch{ return null; } })();
+async function loadWeather(){
+  const pl = prefs.wxPlace; if(!pl) return null;
+  if(wxCache && wxCache.k === pl.lat + "," + pl.lon && Date.now() - wxCache.at < 30 * 60000) return wxCache.d;
+  try{
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pl.lat}&longitude=${pl.lon}&current=temperature_2m,weather_code,precipitation&hourly=precipitation_probability&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=Europe%2FAmsterdam&forecast_days=2`);
+    if(!r.ok) return wxCache?.d || null;
+    const d = await r.json(); wxCache = {k: pl.lat + "," + pl.lon, at: Date.now(), d};
+    try{ localStorage.setItem("ml-wx", JSON.stringify(wxCache)); }catch{}
+    return d;
+  }catch{ return wxCache?.d || null; }
+}
+async function findPlace(q){
+  const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?count=1&language=nl&name=${encodeURIComponent(q)}`);
+  const j = await r.json(); const p = j.results && j.results[0];
+  return p ? {name:p.name, lat: Math.round(p.latitude*100)/100, lon: Math.round(p.longitude*100)/100} : null;
+}
+const WX = c => c === 0 ? ["☀️","Zonnig"] : c <= 2 ? ["🌤️","Licht bewolkt"] : c === 3 ? ["☁️","Bewolkt"] : c <= 48 ? ["🌫️","Mist"] : c <= 57 ? ["🌦️","Motregen"] : c <= 67 ? ["🌧️","Regen"] : c <= 77 ? ["🌨️","Sneeuw"] : c <= 82 ? ["🌧️","Buien"] : c <= 86 ? ["🌨️","Sneeuwbuien"] : ["⛈️","Onweer"];
+
+/* ---------- widgets ---------- */
+const WSVG = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const WIDGETS = {
+  toets:  {n:"Volgende toets", d:"Hoeveel dagen tot je volgende toets", c:"#FF453A", ic:WSVG('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>'), sizes:["s","m"], go:"tests"},
+  hw:     {n:"Huiswerk", d:"Wat je nog moet doen, afvinken kan hier", c:"#0A84FF", ic:WSVG('<path d="M5 12.5l4.5 4.5L19 7.5"/>'), sizes:["s","m"], go:"hw"},
+  gem:    {n:"Gemiddelde", d:"Je gemiddelde met het verloop", c:"#30D158", ic:WSVG('<path d="M4 18l5-6 4 3 7-9"/>'), sizes:["s","m"], go:"grades"},
+  cijfer: {n:"Laatste cijfer", d:"Je nieuwste cijfer", c:"#BF5AF2", ic:WSVG('<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>'), sizes:["s"], go:"grades"},
+  dag:    {n:"Schooldag", d:"Hoe ver je bent en wanneer je uit bent", c:"#FF9F0A", ic:WSVG('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'), sizes:["s","m"], go:"rooster"},
+  uitval: {n:"Uitval", d:"Lessen die vandaag of morgen uitvallen", c:"#FF375F", ic:WSVG('<circle cx="12" cy="12" r="9"/><path d="M8 8l8 8"/>'), sizes:["s","m"], go:"rooster"},
+  vrij:   {n:"Samen vrij", d:"Wanneer je vrienden ook vrij zijn", c:"#64D2FF", ic:WSVG('<circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.6"/><path d="M3.5 19c.6-3.2 3-5 5.5-5s4.9 1.8 5.5 5M15 14.2c2.3 0 4.3 1.5 4.9 4.3"/>'), sizes:["s","m"], act:"friends"},
+  vakantie:{n:"Vakantie", d:"Aftellen naar de volgende vakantie", c:"#FFD60A", ic:WSVG('<path d="M12 3v3M5 12H2M22 12h-3M6 6l-2-2M18 6l2-2"/><circle cx="12" cy="13" r="5"/>'), sizes:["s","m"]},
+  focus:  {n:"Focus", d:"Start meteen een focusronde", c:"#5E5CE6", ic:WSVG('<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5"/>'), sizes:["s"], act:"focus"},
+  abs:    {n:"Absenties", d:"Te laat, ziek en afwezig dit jaar", c:"#8E8E93", ic:WSVG('<circle cx="12" cy="12" r="9"/><path d="M12 7v5h4"/>'), sizes:["s"], go:"absences"},
+  notitie:{n:"Notitie", d:"Een briefje voor jezelf", c:"#FFCC00", ic:WSVG('<path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/>'), sizes:["s","m"]},
+  weer:   {n:"Weer", d:"Moet je een jas of paraplu mee?", c:"#32ADE6", ic:WSVG('<path d="M7 18a4 4 0 1 1 .6-7.95A5.5 5.5 0 0 1 18 11.5a3.25 3.25 0 0 1-.5 6.5z"/>'), sizes:["s","m"]},
+  ai:     {n:"Assistent", d:"Vraag de AI iets over je rooster of leren", c:"#AF52DE", ic:WSVG('<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>'), sizes:["s","m"], act:"ai"},
+  sync:   {n:"Synchronisatie", d:"Wanneer MCML Magister heeft gecontroleerd", c:"#34C759", ic:WSVG('<path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/>'), sizes:["s"], act:"sync"},
+};
+const WDEF = [{t:"toets", s:"s"}, {t:"hw", s:"s"}];
+let wEdit = false;
+function wList(){ return (Array.isArray(prefs.widgets) ? prefs.widgets : WDEF).filter(w=>WIDGETS[w.t]); }
+function wBody(t, size, now, list){
+  const big = (v, sub, cls = "") => `<span class="w-big num ${cls}">${v}</span>${sub ? `<span class="w-sub">${sub}</span>` : ""}`;
+  switch(t){
+    case "toets": {
+      const T = list.filter(e=>e.test && !e.gone && e.end > now);
+      if(!T.length) return big("–", "Geen toetsen gepland");
+      if(size === "m") return `<ul class="w-list">${T.slice(0,3).map(e=>{ const n = daysUntil(e.start, now); return `<li><b class="num">${n === 0 ? "Nu" : n}</b><span>${esc(e.label)}<small>${n === 0 ? "vandaag" : esc(relDay(e.start, now).toLowerCase())}</small></span></li>`; }).join("")}</ul>`;
+      const n = daysUntil(T[0].start, now);
+      return big(n === 0 ? "Vandaag" : `${n}<small> ${n === 1 ? "dag" : "dagen"}</small>`, `${esc(T[0].label)} · ${esc(relDay(T[0].start, now).toLowerCase())}`);
+    }
+    case "hw": {
+      const H = list.filter(e=>e.hw && e.body && e.end > now && !done[e.id]);
+      if(size === "m") return H.length ? `<ul class="w-list hw">${H.slice(0,3).map(e=>`<li>${checkBtn(e, "w-check")}<span>${esc(e.label)}<small>${esc(relDay(e.start, now).toLowerCase())}</small></span></li>`).join("")}</ul>${H.length > 3 ? `<span class="w-sub">en nog ${H.length - 3}</span>` : ""}` : big("✓", "Alles af");
+      return big(H.length, H[0] ? `${esc(H[0].label)} · ${esc(relDay(H[0].start, now).toLowerCase())}` : "Alles af");
+    }
+    case "gem": {
+      const subs = subjectsWithOfficial(gradeList()).filter(s=>!prefs.gr.hiddenSubs.includes(s.key)), sc = subs.map(subjAvg).filter(v=>v != null);
+      const oo = prefs.gr.avgSource !== "own" ? overallOfficial() : null, avg = oo ? oo.num : sc.length ? sc.reduce((a,b)=>a+b, 0) / sc.length : null;
+      const G = gradeList().filter(g=>g.num != null).slice(0, 12).reverse();
+      return big(nlA(avg), `${sc.length} vakken${subs.some(s=>subjAvg(s) != null && subjAvg(s) < prefs.gr.pass) ? ` · <em class="g-bad">${subs.filter(s=>subjAvg(s) != null && subjAvg(s) < prefs.gr.pass).length} onvoldoende</em>` : ""}`, gcls(avg)) + (size === "m" && G.length > 1 ? `<span class="w-spark">${spark(G)}</span>` : "");
+    }
+    case "cijfer": {
+      const g = gradeList()[0]; if(!g) return big("–", "Nog geen cijfers");
+      return big(esc(gval(g)), `${esc(SUBJECTS[g.code] || g.subject)} · ${esc(shortDate(g.date))}`, gclsG(g));
+    }
+    case "dag": {
+      const today = schoolList().filter(e=>dayKey(e.start) === dayKey(now) && !e.gone);
+      if(!today.length){ const nx = schoolList().find(e=>e.start > now && !e.gone); return big("Vrij", nx ? `Volgende les ${esc(relDay(nx.start, now).toLowerCase())} om ${hm(nx.start)}` : "Geen lessen gepland"); }
+      const s = today[0].start, e = today[today.length-1].end;
+      if(now < s) return big(hm(s), `Begint ${now.getHours() < 12 ? "straks" : ""} · uit om ${hm(e)}`.replace("  ", " "));
+      if(now >= e) return big("Klaar", `Uit sinds ${hm(e)} 🎉`);
+      const pct = Math.round((now - s) / (e - s) * 100), left = today.filter(x=>x.start > now).length;
+      return `<span class="w-ring" style="--p:${pct}"><b class="num">${pct}%</b></span><span class="w-sub">Nog ${dur(e - now)} · uit om ${hm(e)}${size === "m" ? ` · ${left} ${left === 1 ? "les" : "lessen"} te gaan` : ""}</span>`;
+    }
+    case "uitval": {
+      const U = schoolList().filter(e=>e.gone && e.end > now && daysUntil(e.start, now) <= 1);
+      if(!U.length) return big("0", "Geen uitval vandaag of morgen");
+      if(size === "m") return `<ul class="w-list">${U.slice(0,3).map(e=>`<li><b class="num">${e.hour || "–"}</b><span>${esc(e.label)}<small>${daysUntil(e.start, now) === 0 ? "vandaag" : "morgen"} · ${hm(e.start)}</small></span></li>`).join("")}</ul>`;
+      return big(U.length, `${esc(U[0].label)} · ${daysUntil(U[0].start, now) === 0 ? "vandaag" : "morgen"}`);
+    }
+    case "vrij": {
+      const F = friendsList(); if(!F.length) return big("–", "Voeg vrienden toe op je koppelpagina");
+      const k = upcomingDays(now, schoolList()).find(k=>togetherOn(k).slots.some(s=>k !== dayKey(now) || s.to > nowMin(now)));
+      if(!k) return big("–", "Deze week geen tussenuur samen");
+      const sl = togetherOn(k).slots.filter(s=>k !== dayKey(now) || s.to > nowMin(now));
+      const when = k === dayKey(now) ? "Vandaag" : cap(relDay(new Date(k + "T12:00"), now));
+      if(size === "m") return `<span class="w-sub">${esc(when)}</span><ul class="w-list">${sl.slice(0,3).map(s=>`<li><b class="num">${tOf(s.from)}</b><span>${esc(s.names.join(", "))}<small>tot ${tOf(s.to)}</small></span></li>`).join("")}</ul>`;
+      return big(tOf(sl[0].from), `${esc(when)} · ${esc(sl[0].names.join(", "))}`);
+    }
+    case "vakantie": {
+      const h = nextHoliday(now); if(!h) return big("–", "Geen vakantie bekend");
+      if(h.now) return big("🌴", `${esc(h.name)} tot ${h.to.getDate()} ${MON[h.to.getMonth()]}`);
+      return big(`${h.days}<small> ${h.days === 1 ? "dag" : "dagen"}</small>`, `tot de ${esc(h.name.toLowerCase())}${size === "m" ? ` · nog ${h.school} schooldagen` : ""}`);
+    }
+    case "focus": {
+      const st = focusStats();
+      return `<span class="w-big num">${fRunning() ? fmtMs(fRemaining()) : prefs.focusMin + "<small> min</small>"}</span><span class="w-sub">${st.today ? fmtMin(st.today) + " vandaag" : "Tik om te starten"}</span>`;
+    }
+    case "abs": {
+      const A = absenceList(); if(!A) return big("–", "Geen gegevens");
+      const c = k => A.filter(a=>absKind(a) === k).length;
+      return big(A.length, `${c("late")} te laat · ${c("sick")} ziek · ${c("absent")} afwezig`);
+    }
+    case "notitie":
+      return `<textarea class="w-note" data-wnote placeholder="Typ hier…" rows="${size === "m" ? 3 : 4}" aria-label="Notitie">${esc(prefs.note || "")}</textarea>`;
+    case "weer": {
+      if(!prefs.wxPlace) return `<span class="w-sub">Kies je plaats</span><form class="w-place" data-wplace><input name="q" placeholder="Bijv. Eindhoven" autocomplete="address-level2"><button type="submit">OK</button></form>`;
+      const d = wxCache?.k === prefs.wxPlace.lat + "," + prefs.wxPlace.lon ? wxCache.d : null;
+      if(!d){ loadWeather().then(x=>{ if(x) refreshWidgets(); }); return big("…", esc(prefs.wxPlace.name)); }
+      if(Date.now() - wxCache.at > 30 * 60000) loadWeather().then(()=>refreshWidgets());
+      const [ic, txt] = WX(d.current.weather_code), rain = d.daily.precipitation_probability_max[0];
+      const tip = rain >= 60 ? "Neem een paraplu mee ☔" : d.daily.temperature_2m_max[0] < 8 ? "Trek een warme jas aan 🧥" : rain >= 35 ? "Misschien een buitje" : "Droog";
+      return `<span class="w-big num">${ic} ${Math.round(d.current.temperature_2m)}°</span><span class="w-sub">${esc(prefs.wxPlace.name)} · ${txt}${size === "m" ? ` · ${Math.round(d.daily.temperature_2m_min[0])}° / ${Math.round(d.daily.temperature_2m_max[0])}°` : ""}</span><span class="w-sub w-tip">${tip}${size === "m" ? ` · ${rain}% kans op regen` : ""}</span>`;
+    }
+    case "ai":
+      return size === "m" ? `<span class="w-sub">Vraag iets over je rooster, toetsen of leren</span><span class="w-chips">${aiSuggestions().slice(0,3).map(q=>`<button type="button" data-aiq="${esc(q)}">${esc(q)}</button>`).join("")}</span>`
+        : big("Vraag", "iets aan de AI");
+    case "sync": {
+      const s = syncInfo();
+      return big(s.checked ? hm(s.checked) : "–", source === "link" ? `gecontroleerd${s.checks ? ` · ${s.checks}× vandaag` : ""}` : "laatst bijgewerkt");
+    }
+  }
+  return "";
+}
+function widgetsHtml(now, list){
+  const L = wList();
+  const tiles = L.map((w, i)=>{ const W = WIDGETS[w.t], size = W.sizes.includes(w.s) ? w.s : W.sizes[0];
+    return `<div class="widget wg wg-${w.t} ${size === "m" ? "wide" : ""}" data-wg="${i}" ${W.go ? `data-wgo="${W.go}"` : ""} ${W.act ? `data-wact="${W.act}"` : ""} role="${W.go || W.act ? "button" : "group"}" tabindex="${W.go || W.act ? 0 : -1}" style="--wc:${W.c};--i:${i}" aria-label="${esc(W.n)}">
+      <span class="w-label">${W.ic}${esc(W.n)}</span>${wBody(w.t, size, now, list)}
+      ${wEdit ? `<button type="button" class="wg-x" data-wdel="${i}" aria-label="${esc(W.n)} weghalen">−</button>
+        <span class="wg-tools">${i > 0 ? `<button type="button" data-wmove="${i}" data-d="-1" aria-label="Naar voren">‹</button>` : ""}${W.sizes.length > 1 ? `<button type="button" data-wsize="${i}" aria-label="Grootte">${size === "m" ? "Klein" : "Breed"}</button>` : ""}${i < L.length - 1 ? `<button type="button" data-wmove="${i}" data-d="1" aria-label="Naar achteren">›</button>` : ""}</span>` : ""}</div>`; }).join("");
+  return `<div class="widgets wgrid ${wEdit ? "editing" : ""}" id="wgrid">${tiles}${wEdit ? `<button type="button" class="widget wg-add press" data-wadd><span>+</span>Widget toevoegen</button>` : ""}</div>
+    <div class="wg-bar"><button type="button" class="wg-edit" data-wedit>${wEdit ? "Klaar" : L.length ? "Widgets aanpassen" : "Widgets toevoegen"}</button></div>`;
+}
+function refreshWidgets(){
+  const g = $("wgrid"); if(!g || view !== "today") return;
+  const tmp = document.createElement("div"); tmp.innerHTML = widgetsHtml(new Date(), schoolList().length ? events.filter(e=>e.school).sort((a,b)=>a.start-b.start) : []);
+  g.replaceWith(tmp.firstElementChild);
+}
+function saveWidgets(L){ prefs.widgets = L; savePrefs(); haptic(); }
+function widgetGalleryHtml(){
+  const have = new Set(wList().map(w=>w.t)), now = new Date(), list = schoolList();
+  return `<p class="footnote" style="margin-top:4px">Tik op een widget om hem op Vandaag te zetten.</p><div class="wgal">${Object.entries(WIDGETS).map(([t, W])=>`<button type="button" class="wgal-item ${have.has(t) ? "have" : ""}" data-wpick="${t}" ${have.has(t) ? "disabled" : ""} style="--wc:${W.c}">
+      <span class="widget wg wg-${t} preview" aria-hidden="true"><span class="w-label">${W.ic}${esc(W.n)}</span>${wBody(t, W.sizes[0], now, list)}</span>
+      <span class="wgal-t"><b>${esc(W.n)}</b><small>${esc(W.d)}</small></span><span class="wgal-add">${have.has(t) ? "✓" : "+"}</span></button>`).join("")}</div>`;
+}
+
+/* =====================================================================
+   AI-assistent: chat about your rooster, homework, tests and grades.
+   Your key stays in this browser only. Without a key, MCML opens Claude or ChatGPT with your question.
+   ===================================================================== */
+const AI_DEF = {provider:"none", key:"", model:"", ctx:{rooster:true, hw:true, tests:true, grades:true, abs:false}};
+let aiCfg = (()=>{ try{ return {...AI_DEF, ...JSON.parse(localStorage.getItem("ml-ai") || "{}")}; }catch{ return {...AI_DEF}; } })();
+aiCfg.ctx = {...AI_DEF.ctx, ...(aiCfg.ctx || {})};
+const saveAi = () => { try{ localStorage.setItem("ml-ai", JSON.stringify(aiCfg)); }catch{} };
+const AI_MODELS = {gemini:"gemini-flash-latest", claude:"claude-haiku-5-5"};
+let aiMsgs = (()=>{ try{ return JSON.parse(sessionStorage.getItem("ml-aichat") || "[]"); }catch{ return []; } })();
+let aiBusy = null;
+const saveChat = () => { try{ sessionStorage.setItem("ml-aichat", JSON.stringify(aiMsgs.slice(-30))); }catch{} };
+
+function aiSuggestions(){
+  const now = new Date(), t = schoolList().find(e=>e.test && !e.gone && e.end > now);
+  const low = subjectsWithOfficial(gradeList()).filter(s=>subjAvg(s) != null).sort((a,b)=>subjAvg(a)-subjAvg(b))[0];
+  return ["Wat heb ik morgen?", t ? `Overhoor me voor ${t.label}` : "Hoe kan ik het beste leren?", "Maak een leerplanning voor mijn toetsen",
+    low ? `Wat moet ik halen om ${low.name} omhoog te krijgen?` : "Hoe sta ik ervoor?", "Wat moet ik vandaag nog doen?"];
+}
+/** Everything the assistant may know, as plain text. Only what you switched on in the settings. */
+function aiContext(){
+  const now = new Date(), c = aiCfg.ctx, L = schoolList(), out = [];
+  out.push(`Nu: ${DOW_LONG[now.getDay()]} ${now.getDate()} ${MON_LONG[now.getMonth()]} ${now.getFullYear()}, ${hm(now)}.${prefs.name ? " Naam leerling: " + prefs.name + "." : ""}`);
+  if(c.rooster){
+    const days = upcomingDays(now, L).slice(0, 6);
+    out.push("ROOSTER:\n" + days.map(k=>{ const d = new Date(k + "T12:00"); return `${cap(DOW_LONG[d.getDay()])} ${d.getDate()} ${MON[d.getMonth()]}: ` + L.filter(e=>dayKey(e.start) === k).map(e=>`${hm(e.start)}-${hm(e.end)} ${e.label}${e.room ? " (" + e.room + ")" : ""}${e.gone ? " [VALT UIT]" : ""}${e.test ? " [TOETS]" : ""}`).join("; "); }).join("\n"));
+  }
+  if(c.hw){ const H = L.filter(e=>e.hw && e.body && e.end > now).slice(0, 15);
+    out.push("HUISWERK:\n" + (H.length ? H.map(e=>`- ${e.label}, ${relDay(e.start, now).toLowerCase()}${done[e.id] ? " (al af)" : ""}: ${String(e.body).replace(/\s+/g, " ").slice(0, 300)}`).join("\n") : "geen")); }
+  if(c.tests){ const T = L.filter(e=>e.test && !e.gone && e.end > now).slice(0, 10);
+    out.push("TOETSEN:\n" + (T.length ? T.map(e=>`- ${e.label}, ${relDay(e.start, now).toLowerCase()} (${e.start.getDate()} ${MON[e.start.getMonth()]})${e.body ? ": " + String(e.body).replace(/\s+/g, " ").slice(0, 300) : ""}`).join("\n") : "geen")); }
+  if(c.grades){ const subs = subjectsWithOfficial(gradeList());
+    out.push(`CIJFERS (voldoende vanaf ${String(prefs.gr.pass).replace(".", ",")}):\n` + (subs.length ? subs.map(s=>`- ${s.name}: gemiddelde ${nlA(subjAvg(s))}; cijfers: ${s.all.slice(-6).map(g=>`${gval(g)}${g.weight !== 1 ? " (weging " + g.weight + ")" : ""}${g.desc ? " " + g.desc : ""}`).join(", ") || "geen"}`).join("\n") : "geen")); }
+  if(c.abs){ const A = absenceList(); if(A) out.push(`ABSENTIES dit jaar: ${A.length} (${A.filter(a=>absKind(a) === "late").length} te laat, ${A.filter(a=>a.allowed === false).length} ongeoorloofd).`); }
+  return out.join("\n\n").slice(0, 12000);
+}
+function aiSystem(){
+  return `Je bent de assistent in MCML, een app met het Magister-rooster van een middelbare scholier in Nederland. Antwoord in het Nederlands, vriendelijk, kort en duidelijk (gebruik korte lijstjes als dat helpt).
+Gebruik de gegevens hieronder om vragen over rooster, huiswerk, toetsen en cijfers te beantwoorden. Staat iets er niet in, zeg dat dan eerlijk en verzin niets. Bij twijfel: laat de leerling het in Magister controleren.
+Help met leren: leg stof uit, overhoor met één vraag tegelijk, maak haalbare planningen en reken uit wat iemand moet halen (gewogen gemiddelde).
+
+${aiContext()}`;
+}
+function mdLite(t){
+  let h = esc(t).replace(/```([\s\S]*?)```/g, (m, c)=>`<pre>${c.trim()}</pre>`).replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<i>$2</i>").replace(/^#{1,4}\s*(.+)$/gm, "<b>$1</b>");
+  const lines = h.split("\n"), out = []; let list = null;
+  for(const l of lines){
+    const m = l.match(/^\s*(?:[-•*]|\d+[.)])\s+(.*)$/);
+    if(m){ if(!list){ list = /^\s*\d/.test(l) ? "ol" : "ul"; out.push(`<${list}>`); } out.push(`<li>${m[1]}</li>`); continue; }
+    if(list){ out.push(`</${list}>`); list = null; }
+    out.push(l.trim() ? `<p>${l}</p>` : "");
+  }
+  if(list) out.push(`</${list}>`);
+  return out.join("");
+}
+function aiBubbles(){
+  if(!aiMsgs.length) return `<div class="ai-hello"><span class="ai-orb"></span><b>Hoi${prefs.name ? " " + esc(prefs.name) : ""}! Waar kan ik mee helpen?</b>
+      <small>${aiCfg.provider === "none" ? "Zonder sleutel open ik je vraag in Claude of ChatGPT. Stel een gratis sleutel in om hier te chatten." : "Ik ken je rooster, huiswerk, toetsen en cijfers (wat jij aanzet)."}</small></div>
+    <div class="ai-sugg">${aiSuggestions().map(q=>`<button type="button" data-aiq="${esc(q)}">${esc(q)}</button>`).join("")}</div>`;
+  return aiMsgs.map((m, i)=> m.role === "user" ? `<div class="ai-msg me">${esc(m.text)}</div>`
+    : m.role === "handoff" ? `<div class="ai-msg bot handoff"><p>Open je vraag, samen met je gegevens, in een AI-app:</p><div class="ai-hand"><a class="btn press" href="${esc(handoffUrl("claude", m.q))}" target="_blank" rel="noopener">Claude</a><a class="btn press sec" href="${esc(handoffUrl("chatgpt", m.q))}" target="_blank" rel="noopener">ChatGPT</a><button type="button" class="btn sec press" data-aicopy="${i}">Kopieer</button></div><small>Of stel in Instellingen een gratis sleutel in, dan chat je hier.</small></div>`
+    : `<div class="ai-msg bot ${m.err ? "err" : ""}">${m.text ? mdLite(m.text) : `<span class="ai-dots"><i></i><i></i><i></i></span>`}</div>`).join("");
+}
+function handoffText(q){ return `${q}\n\n(Gegevens uit mijn schoolapp MCML:)\n${aiContext()}`.slice(0, 6000); }
+function handoffUrl(app, q){ const t = encodeURIComponent(handoffText(q)); return app === "claude" ? "https://claude.ai/new?q=" + t : "https://chatgpt.com/?q=" + t; }
+function renderAi(scroll){
+  const b = $("ai-log"); if(!b) return;
+  b.innerHTML = aiBubbles();
+  $("ai-mode").textContent = aiCfg.provider === "gemini" ? "Gemini" : aiCfg.provider === "claude" ? "Claude" : "Zonder sleutel";
+  if(scroll !== false) requestAnimationFrame(()=>{ const s = aiDlg.querySelector(".sheet-body"); s.scrollTop = s.scrollHeight; });
+}
+function openAi(q, src){
+  renderAi(); openSheet(aiDlg, src);
+  if(q) setTimeout(()=>aiSend(q), 250); else setTimeout(()=>{ if(!matchMedia("(pointer:coarse)").matches) $("ai-in").focus(); }, 350);
+}
+async function aiSend(q){
+  q = String(q || "").trim(); if(!q || aiBusy) return;
+  $("ai-in").value = ""; autoGrow($("ai-in"));
+  aiMsgs.push({role:"user", text:q});
+  if(aiCfg.provider === "none" || !aiCfg.key){ aiMsgs.push({role:"handoff", q}); saveChat(); renderAi(); return; }
+  const bot = {role:"bot", text:""}; aiMsgs.push(bot); renderAi();
+  const hist = aiMsgs.filter(m=>m.role === "user" || (m.role === "bot" && m.text && !m.err)).slice(-12);
+  aiBusy = new AbortController();
+  $("ai-send").classList.add("stop");
+  const onText = t => { bot.text += t; const last = $("ai-log").lastElementChild; if(last){ last.innerHTML = mdLite(bot.text); const s = aiDlg.querySelector(".sheet-body"); if(s.scrollHeight - s.scrollTop - s.clientHeight < 140) s.scrollTop = s.scrollHeight; } };
+  try{
+    if(aiCfg.provider === "claude") await streamClaude(hist, onText, aiBusy.signal);
+    else await streamGemini(hist, onText, aiBusy.signal);
+    if(!bot.text) bot.text = "(Geen antwoord gekregen. Probeer het nog eens.)";
+  }catch(e){
+    if(e.name === "AbortError"){ if(!bot.text) bot.text = "(Gestopt)"; }
+    else { bot.err = true; bot.text = (bot.text ? bot.text + "\n\n" : "") + "⚠️ " + aiError(e); }
+  }finally{
+    aiBusy = null; $("ai-send").classList.remove("stop"); saveChat(); renderAi();
+  }
+}
+function aiError(e){
+  const m = String(e.message || e);
+  if(/401|403|API key|invalid.*key|authentication/i.test(m)) return "Je sleutel klopt niet of is verlopen. Controleer hem in Instellingen → AI-assistent.";
+  if(/429|quota|rate/i.test(m)) return "Even te veel vragen. Wacht een minuutje en probeer het opnieuw.";
+  if(/Failed to fetch|NetworkError|Load failed/i.test(m)) return "Geen verbinding met de AI. Check je internet.";
+  return "Dat lukte niet: " + m.slice(0, 160);
+}
+async function readSSE(r, onData){
+  const rd = r.body.getReader(), dec = new TextDecoder(); let buf = "";
+  for(;;){ const {done: d, value} = await rd.read(); if(d) break; buf += dec.decode(value, {stream:true});
+    let i; while((i = buf.indexOf("\n")) >= 0){ const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
+      if(line.startsWith("data:")){ const j = line.slice(5).trim(); if(!j || j === "[DONE]") continue; let o; try{ o = JSON.parse(j); }catch{ continue; } onData(o); } } }
+}
+async function streamClaude(hist, onText, signal){
+  const r = await fetch("https://api.anthropic.com/v1/messages", {method:"POST", signal,
+    headers:{"content-type":"application/json", "x-api-key":aiCfg.key, "anthropic-version":"2023-06-01", "anthropic-dangerous-direct-browser-access":"true"},
+    body: JSON.stringify({model: aiCfg.model || AI_MODELS.claude, max_tokens:1200, stream:true, system: aiSystem(), messages: hist.map(m=>({role: m.role === "user" ? "user" : "assistant", content: m.text}))})});
+  if(!r.ok){ let msg = r.status + ""; try{ const j = await r.json(); msg = r.status + " " + (j.error?.message || ""); }catch{} throw new Error(msg); }
+  await readSSE(r, j=>{ if(j.type === "content_block_delta" && j.delta?.type === "text_delta") onText(j.delta.text); if(j.type === "error") throw new Error(j.error?.message || "fout"); });
+}
+async function streamGemini(hist, onText, signal, model){
+  model = model || aiCfg.model || AI_MODELS.gemini;
+  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:streamGenerateContent?alt=sse&key=${encodeURIComponent(aiCfg.key)}`, {method:"POST", signal,
+    headers:{"content-type":"application/json"},
+    body: JSON.stringify({systemInstruction:{parts:[{text: aiSystem()}]}, contents: hist.map(m=>({role: m.role === "user" ? "user" : "model", parts:[{text: m.text}]})), generationConfig:{maxOutputTokens:1200}})});
+  if(r.status === 404 && !aiCfg.model && model !== "gemini-2.5-flash") return streamGemini(hist, onText, signal, "gemini-2.5-flash");
+  if(!r.ok){ let msg = r.status + ""; try{ const j = await r.json(); msg = r.status + " " + (j.error?.message || ""); }catch{} throw new Error(msg); }
+  await readSSE(r, j=>{ const parts = j.candidates?.[0]?.content?.parts || []; for(const p of parts) if(p.text) onText(p.text); });
+}
+function autoGrow(t){ if(!t) return; t.style.height = "auto"; t.style.height = Math.min(140, t.scrollHeight) + "px"; }
+function aiSettingsHtml(){
+  const P = [["none","Zonder sleutel"],["gemini","Gemini (gratis)"],["claude","Claude"]];
+  return `<div class="list"><div class="opt-block"><span>AI</span><div class="seg-opts" data-aiprov>${P.map(([k,l])=>`<button type="button" data-v="${k}" aria-pressed="${aiCfg.provider===k}"><span>${l}</span></button>`).join("")}</div></div>
+      ${aiCfg.provider !== "none" ? `<label class="field"><span>Sleutel</span><input id="ai-key" type="password" autocomplete="off" spellcheck="false" placeholder="${aiCfg.provider === "gemini" ? "AIza…" : "sk-ant-…"}" value="${esc(aiCfg.key)}"></label>
+      <label class="field"><span>Model</span><input id="ai-model" spellcheck="false" autocapitalize="off" placeholder="${AI_MODELS[aiCfg.provider]}" value="${esc(aiCfg.model)}"></label>` : ""}</div>
+    <p class="footnote">${aiCfg.provider === "gemini" ? `Gratis sleutel: ga naar <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>, log in met Google en tik "Create API key". Gratis met een daglimiet.`
+      : aiCfg.provider === "claude" ? `Maak een sleutel op <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>. Je betaalt per gebruik.`
+      : "Je vraag gaat met je gegevens naar Claude of ChatGPT in een nieuw tabblad. Je hebt daar een eigen account nodig."} Je sleutel blijft alleen in deze browser en gaat nergens anders heen. Deel hem met niemand.</p>
+    <div class="caption">Wat mag de AI zien</div><div class="list">${[["rooster","Rooster"],["hw","Huiswerk"],["tests","Toetsen"],["grades","Cijfers"],["abs","Absenties"]].map(([k,l])=>`<label class="field sw"><span>${l}</span><span class="switch"><input type="checkbox" role="switch" data-aictx="${k}" ${aiCfg.ctx[k]?"checked":""}><span></span></span></label>`).join("")}</div>
+    <p class="footnote">Wat je aanzet, stuurt MCML mee met je vraag naar ${aiCfg.provider === "claude" ? "Anthropic" : aiCfg.provider === "gemini" ? "Google" : "de AI-app"}. Controleer belangrijke antwoorden altijd in Magister.</p>
+    ${aiMsgs.length ? `<div class="list"><button class="linkrow danger-t" type="button" id="ai-clear">Gesprek wissen</button></div>` : ""}`;
+}
+
+/* =====================================================================
+   Phone: "Meer" tab, smaller tab bar while scrolling, text size, install tip
+   ===================================================================== */
+const MORE_MAX = 5;
+const useMore = () => !WIDE.matches && prefs.moreTab !== false && visibleViews().length > MORE_MAX;
+const barViews = () => useMore() ? visibleViews().slice(0, MORE_MAX - 1) : visibleViews();
+const moreViews = () => useMore() ? visibleViews().slice(MORE_MAX - 1) : [];
+function tabSlot(v){ const b = barViews(), i = b.indexOf(v); return i >= 0 ? i : useMore() ? MORE_MAX - 1 : 0; }
+function moreSheetHtml(){
+  const M = TAB_META_FN();
+  const tile = (attr, c, ic, l, cur) => `<button type="button" class="more-tile press ${cur ? "cur" : ""}" ${attr}><span class="ti" style="background:${c}">${ic}</span><span>${l}</span></button>`;
+  return `<div class="more-grid">${moreViews().map(v=>tile(`data-mview="${v}"`, M[v][0], M[v][1], TITLES[v], v === view)).join("")}</div>
+    <div class="caption">Handig</div><div class="more-grid">
+      ${tile("data-mact=\"search\"", "#8E8E93", WSVG('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'), "Zoeken")}
+      ${tile("data-mact=\"focus\"", "#5E5CE6", WIDGETS.focus.ic, "Focus")}
+      ${tile("data-mact=\"ai\"", "#AF52DE", WIDGETS.ai.ic, "Assistent")}
+      ${tile("data-mact=\"friends\"", "#64D2FF", WIDGETS.vrij.ic, "Samen vrij")}
+      ${tile("data-mact=\"sync\"", "#34C759", WIDGETS.sync.ic, "Synchronisatie")}
+      ${tile("data-mact=\"settings\"", "#636366", WSVG('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'), "Instellingen")}
+    </div>
+    <p class="footnote">Welke tabs onderaan staan, kies je in Instellingen → Tabs.</p>`;
+}
+function openMore(src){ $("more-body").innerHTML = moreSheetHtml(); openSheet(moreDlg, src); }
+/* the tab bar shrinks while you scroll down and comes back when you scroll up */
+(() => {
+  let lastY = scrollY, acc = 0;
+  addEventListener("scroll", ()=>{
+    const y = scrollY, dy = y - lastY; lastY = y;
+    if(WIDE.matches || prefs.barMin === false){ document.documentElement.classList.remove("bar-min"); return; }
+    acc = Math.sign(dy) === Math.sign(acc) ? acc + dy : dy;
+    const bottom = innerHeight + y >= document.documentElement.scrollHeight - 40;
+    if(y < 80 || acc < -24 || bottom) document.documentElement.classList.remove("bar-min");
+    else if(acc > 36) document.documentElement.classList.add("bar-min");
+  }, {passive:true});
+})();
+function applyZoom(){ document.documentElement.style.setProperty("--z", String(prefs.zoom || 1)); }
+/* add-to-home-screen tip (phones only, until dismissed or installed) */
+let installEvt = null;
+addEventListener("beforeinstallprompt", e=>{ e.preventDefault(); installEvt = e; });
+const standalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+function installTipHtml(){
+  if(WIDE.matches || standalone() || store.get("ml-notip", false) || mode !== "live") return "";
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  return `<div class="install-tip"><span class="it-ic"><img src="icon-180.png" alt=""></span><span class="it-t"><b>Zet MCML op je beginscherm</b>
+      <small>${ios ? "Tik in Safari op Deel <span class=\"it-share\">⬆︎</span> en dan op <b>Zet op beginscherm</b>. Dan opent MCML als een echte app." : installEvt ? "Dan opent MCML als een echte app, zonder adresbalk." : "Open het menu van je browser en kies <b>App installeren</b> of <b>Toevoegen aan startscherm</b>."}</small></span>
+    ${!ios && installEvt ? `<button type="button" class="btn press it-go" data-install>Installeer</button>` : ""}<button type="button" class="it-x" data-notip aria-label="Niet meer tonen">✕</button></div>`;
+}
+
 function renderToday(now, list, el){
   const live = list.filter(e=>!e.gone && e.end>now);
   const cur = live.find(e=>e.start<=now), next = live.find(e=>e.start>now);
@@ -2857,27 +3558,13 @@ function renderToday(now, list, el){
     </div>`;
     if(mode === "live" && (source === "link" || source === "code") && lastUpdated){
       const age = Date.now() - lastUpdated;
-      html += `<p class="sync-line ${age > 3*3600e3 ? "stale" : ""}"><i></i>Bijgewerkt uit Magister ${dayKey(lastUpdated) === dayKey(now) ? "om " + hm(lastUpdated) : "op " + lastUpdated.getDate() + " " + MON[lastUpdated.getMonth()] + " " + hm(lastUpdated)}</p>`;
+      const si = syncInfo(), shown = si.checked || lastUpdated;
+      html += `<button type="button" class="sync-line ${age > 3*3600e3 ? "stale" : ""}" data-syncinfo><i></i>${si.checked && si.checked > lastUpdated ? "Gecontroleerd" : "Bijgewerkt uit Magister"} ${dayKey(shown) === dayKey(now) ? "om " + hm(shown) : "op " + shown.getDate() + " " + MON[shown.getMonth()] + " " + hm(shown)}${source === "link" ? " · elke 10 min" : ""}<span class="sl-more">›</span></button>`;
     }
   }
 
-  const nextTest = list.find(e=>e.test && !e.gone && e.end>now);
-  const openHw = list.filter(e=>e.hw && e.body && e.end>now && !done[e.id]);
-  const firstHw = openHw[0];
-  const nt = nextTest ? daysUntil(nextTest.start, now) : null;
-  if(prefs.today.widgets) html += `<div class="widgets">
-    <button class="widget w-red press" type="button" data-go="tests">
-      <span class="w-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>Volgende toets</span>
-      ${nextTest ? (nt===0 ? `<span class="w-big">Vandaag</span>` : `<span class="w-big num" data-count="${nt}">${nt}<small> ${nt===1?"dag":"dagen"}</small></span>`)
-                   + `<span class="w-sub">${esc(nextTest.label)} · ${esc(relDay(nextTest.start,now).toLowerCase())}</span>`
-                 : `<span class="w-big">–</span><span class="w-sub">Geen toetsen gepland</span>`}
-    </button>
-    <button class="widget w-blue press" type="button" data-go="hw">
-      <span class="w-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Huiswerk</span>
-      <span class="w-big num" data-count="${openHw.length}">${openHw.length}</span>
-      <span class="w-sub">${firstHw ? esc(firstHw.label)+" · "+esc(relDay(firstHw.start,now).toLowerCase()) : "Alles af"}</span>
-    </button>
-  </div>`;
+  html += installTipHtml();
+  if(prefs.today.widgets) html += widgetsHtml(now, list);
 
   const apps = prefs.today.apps ? `<div class="section-h"><h2>Snel naar</h2></div>` + appsHtml(list) : "";
   const fcard = (prefs.today.focus ? focusCardHtml() : "") + (prefs.today.plan ? planTodayHtml(now, list) : "");
@@ -2889,7 +3576,7 @@ function renderToday(now, list, el){
     const k = show ? dayKey(show.start) : dayKey(now);
     const dayLabel = show ? relDay(show.start, now) : "Vandaag";
     const mid = prefs.today.next ? `<div class="section-h"><h2>${esc(dayLabel)}</h2><button type="button" data-go="rooster" data-day="${k}">Hele rooster</button></div>` + timelineHtml(now, list, k, 62) : "";
-    const hwOpen = openHw.slice(0, 6);
+    const hwOpen = list.filter(e=>e.hw && e.body && e.end>now && !done[e.id]).slice(0, 6);
     let right = fcard + (prefs.today.pack ? packingHtml(now, list) : "");
     if(prefs.today.hw) right += `<div class="section-h"><h2>Huiswerk</h2><button type="button" data-go="hw">Alles</button></div>` + (hwOpen.length ? `<ul class="list">${hwOpen.map(e=>`<li class="row todo" data-hwid="${esc(e.id)}">${checkBtn(e,"check")}
         <div class="body"><div class="title"><span class="dot" style="background:${e.color}"></span><span class="t strike">${esc(e.label)}</span><span class="sub" style="margin:0 0 0 auto">${esc(relDay(e.start,now).toLowerCase())}</span></div>
@@ -2914,6 +3601,46 @@ function renderToday(now, list, el){
   }
   el.innerHTML = html + apps;
 }
+/* ---------- widget interactions ---------- */
+function widgetClick(e){
+  const t = e.target;
+  if(t.closest("[data-syncinfo]")){ openSync(t.closest("[data-syncinfo]")); return true; }
+  if(t.closest("[data-friends]")){ openFriends(t.closest("[data-friends]")); return true; }
+  if(t.closest("[data-notip]")){ store.set("ml-notip", true); t.closest(".install-tip")?.remove(); return true; }
+  if(t.closest("[data-install]")){ installEvt?.prompt(); installEvt?.userChoice.then(()=>{ installEvt = null; render(); }); return true; }
+  const q = t.closest("[data-aiq]"); if(q){ openAi(q.dataset.aiq, q); return true; }
+  if(t.closest("[data-wedit]")){ wEdit = !wEdit; haptic(); render(); return true; }
+  if(t.closest("[data-wadd]")){ $("w-body").innerHTML = widgetGalleryHtml(); openSheet(wDlg, t.closest("[data-wadd]")); return true; }
+  const del = t.closest("[data-wdel]"); if(del){ const L = [...wList()]; const i = +del.dataset.wdel, node = del.closest(".wg");
+    const go = () => { L.splice(i, 1); saveWidgets(L); render(); };
+    if(node && !reduced) node.animate([{opacity:1, transform:"scale(1)"},{opacity:0, transform:"scale(.6)"}], {duration:220, easing:"ease-in"}).onfinish = go; else go(); return true; }
+  const mv = t.closest("[data-wmove]"); if(mv){ const L = [...wList()], i = +mv.dataset.wmove, j = i + Number(mv.dataset.d); if(j < 0 || j >= L.length) return true;
+    const before = new Map([...document.querySelectorAll("#wgrid .wg")].map(n=>[n.dataset.wg, n.getBoundingClientRect()]));
+    [L[i], L[j]] = [L[j], L[i]]; saveWidgets(L); render();
+    if(!reduced){ const map = {[i]: j, [j]: i}; document.querySelectorAll("#wgrid .wg").forEach(n=>{ const from = before.get(String(map[n.dataset.wg] ?? n.dataset.wg)); if(!from) return; const to = n.getBoundingClientRect();
+      n.animate([{transform:`translate(${from.left - to.left}px,${from.top - to.top}px)`},{transform:"none"}], {duration:380, easing:"cubic-bezier(.2,1.2,.4,1)"}); }); }
+    return true; }
+  const sz = t.closest("[data-wsize]"); if(sz){ const L = wList().map(w=>({...w})), w = L[+sz.dataset.wsize]; w.s = w.s === "m" ? "s" : "m"; saveWidgets(L); render(); return true; }
+  if(t.closest(".w-note, .w-place, [data-check]")) return false;
+  const wg = t.closest(".wg[data-wgo], .wg[data-wact]");
+  if(wg && !wEdit){
+    if(wg.dataset.wgo){ setView(wg.dataset.wgo, true); return true; }
+    const a = wg.dataset.wact;
+    if(a === "friends") openFriends(wg); else if(a === "sync") openSync(wg); else if(a === "ai") openAi(null, wg);
+    else if(a === "focus"){ if(fRunning()) openFocus(); else { focusStart("focus"); openFocus(); } }
+    return true;
+  }
+  return false;
+}
+/* long-press a widget to edit (like on a phone's home screen) */
+(() => {
+  let timer = null, x = 0, y = 0;
+  addEventListener("pointerdown", e=>{ const w = e.target.closest?.("#wgrid .wg"); if(!w || wEdit || e.target.closest("textarea,input,button[data-check]")) return;
+    x = e.clientX; y = e.clientY; timer = setTimeout(()=>{ timer = null; wEdit = true; haptic(); render(); }, 550); }, {passive:true});
+  const stop = () => { if(timer){ clearTimeout(timer); timer = null; } };
+  addEventListener("pointerup", stop, {passive:true}); addEventListener("pointercancel", stop, {passive:true});
+  addEventListener("pointermove", e=>{ if(timer && Math.hypot(e.clientX - x, e.clientY - y) > 8) stop(); }, {passive:true});
+})();
 /* ---------- empty states ---------- */
 const EMPTY_IC = {
   done:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="19"/><path d="M15.5 24.5l6 6 11-12"/></svg>',
@@ -3157,9 +3884,22 @@ function toggleInPlace(id, btn){
   updateBadges();
   if(nowDone) toast("Afgevinkt");
 }
+function gapRowHtml(g, slots){
+  const with_ = slots.filter(s=>s.from < g[1] && g[0] < s.to).flatMap(s=>s.names);
+  const names = [...new Set(with_)];
+  return `<li class="row gap-row"><div class="lead"><b>${tOf(g[0])}</b>${tOf(g[1])}</div><div class="body"><div class="title"><span class="t">Tussenuur</span><span class="sub" style="margin:0 0 0 auto">${g[1] - g[0]} min</span></div>
+    ${names.length ? `<button type="button" class="gap-fr" data-friends>${names.map(n=>`<span class="fr-av" style="--c:${subjectColor(n.toLowerCase().slice(0,4))}">${esc(n.slice(0,1).toUpperCase())}</span>`).join("")}<span>Samen vrij met ${esc(names.join(", "))}</span></button>` : ""}</div></li>`;
+}
 function dayListHtml(now, list){
   const items = list.filter(e=>dayKey(e.start)===selectedDay);
-  let html = items.length ? `<ul class="list">${items.map(rowHtml(now)).join("")}</ul>` : `<div class="list"><div class="empty-row">Geen lessen op deze dag.</div></div>`;
+  const fd = prefs.showGaps !== false ? myFreeDay(selectedDay) : null, slots = fd ? togetherOn(selectedDay).slots : [];
+  let rows = "", gi = 0;
+  for(const e of items){
+    while(fd && gi < fd.f.length && nowMin(e.start) >= fd.f[gi][0]){ rows += gapRowHtml(fd.f[gi], slots); gi++; }
+    rows += rowHtml(now)(e);
+  }
+  if(fd) while(gi < fd.f.length){ rows += gapRowHtml(fd.f[gi], slots); gi++; }
+  let html = items.length ? `<ul class="list">${rows}</ul>` : `<div class="list"><div class="empty-row">Geen lessen op deze dag.</div></div>`;
   if(items.length){ const real = items.filter(e=>!e.gone); html += `<p class="footnote">${real.length} lessen · ${hm(items[0].start)} tot ${hm(items[items.length-1].end)}</p>`; }
   const others = events.filter(e=>!e.school && dayKey(e.start)===selectedDay && !/^sleep$/i.test(e.label));
   if(others.length){ html += `<div class="caption">Ook in je agenda</div><ul class="list">${others.map(e=>`<li class="row"><div class="lead"><b>${hm(e.start)}</b>${hm(e.end)}</div><div class="body"><div class="title"><span class="t">${esc(e.label)}</span></div></div><div class="trail"></div></li>`).join("")}</ul>`; }
@@ -3286,7 +4026,8 @@ function setView(v, animate){
   if(view !== "items") kastEdit = false;
   for(const k of VIEWS) $("v-"+k).hidden = k!==view;
   const order = visibleViews(), idx = order.indexOf(view);
-  const ind = $("tab-ind"); ind.style.setProperty("--ti", idx);
+  const ind = $("tab-ind"); ind.style.setProperty("--ti", tabSlot(view));
+  $("tab-more").toggleAttribute("aria-current", useMore() && !barViews().includes(view));
   if(animate && prev !== view && !reduced){ ind.classList.remove("stretch"); void ind.offsetWidth; ind.classList.add("stretch"); }
   document.querySelectorAll(".tabbar > button[data-view]").forEach(b=>{
     if(b.dataset.view===view){ b.setAttribute("aria-current","page"); if(animate && prev!==view){ b.classList.remove("bounce"); void b.offsetWidth; b.classList.add("bounce"); } }
@@ -3303,8 +4044,13 @@ $("tabbar").addEventListener("click", e=>{
   if(e.target.closest("[data-search]")){ openSpot(); return; }
   const cal = e.target.closest("[data-cal]"); if(cal){ if(!cal.disabled) goToDay(cal.dataset.cal); return; }
   const ev = e.target.closest("[data-ev]"); if(ev){ openDetail(ev.dataset.ev, ev); return; }
+  if(e.target.closest("[data-more]")){ haptic(); openMore(e.target.closest("[data-more]")); return; }
   const b = e.target.closest("button[data-view]"); if(!b) return; haptic();
-  if(b.dataset.view===view){ window.scrollTo({top:0,behavior:"smooth"}); return; }
+  if(b.dataset.view===view){
+    // tap the tab you're on: back to the top, and in the rooster back to today
+    if(scrollY > 4) window.scrollTo({top:0, behavior: reduced ? "auto" : "smooth"});
+    else if(view === "rooster"){ const t = upcomingDays(new Date(), schoolList())[0]; if(t && t !== selectedDay) selectDay(t); }
+    return; }
   setView(b.dataset.view, true);
 });
 // sidebar: put the highlight exactly on the active button (it springs there via transform)
@@ -3319,6 +4065,7 @@ function changeWeek(delta){
   const w = body.querySelector(".wk"); if(w && !reduced){ w.animate([{opacity:0, transform:`translateX(${delta>0?24:-24}px)`},{opacity:1, transform:"none"}], {duration:380, easing:"cubic-bezier(.16,1,.3,1)"}); }
 }
 $("main").addEventListener("click", e=>{
+  if(widgetClick(e)) return;
   const pk = e.target.closest("[data-pack]"); if(pk){ togglePack(pk.dataset.pack, pk.dataset.day, pk); return; }
   if(e.target.closest("[data-add]")){ openItemSheet(null); return; }
   const q = e.target.closest("[data-quick]"); if(q){ openItemSheet(null, {title:q.dataset.quick, type:q.dataset.qtype, subject:q.dataset.qsub || ""}); return; }
@@ -3489,10 +4236,12 @@ function showWelcome(msg){
   $("welcome-note").textContent = connectReady ? "Je gegevens worden alleen op je eigen apparaat ontsleuteld." : "Je gegevens worden alleen op dit apparaat ontsleuteld. Je code verlaat je apparaat nooit.";
 }
 function layoutTabs(){
-  const bar = $("tabbar"), anchor = $("side-extra"), vis = visibleViews();
-  for(const v of prefs.tabs){ const b = bar.querySelector(`:scope > button[data-view="${v}"]`); if(b){ bar.insertBefore(b, anchor); b.hidden = !vis.includes(v); } }
-  bar.style.setProperty("--tabs", vis.length);
+  const bar = $("tabbar"), anchor = $("tab-more"), vis = visibleViews(), onBar = barViews();
+  for(const v of prefs.tabs){ const b = bar.querySelector(`:scope > button[data-view="${v}"]`); if(b){ bar.insertBefore(b, anchor); b.hidden = !onBar.includes(v); } }
+  $("tab-more").hidden = !useMore();
+  bar.style.setProperty("--tabs", useMore() ? MORE_MAX : vis.length);
 }
+WIDE.addEventListener?.("change", ()=>{ if(mode === "live" || mode === "demo"){ layoutTabs(); setView(view, false); } });
 function showApp(animate){
   layoutTabs();
   $("welcome").hidden = true; $("tabbar").hidden = false; $("open-settings").hidden = false; $("open-search").hidden = false; $("app-disclaimer").hidden = false; $("open-focus").hidden = false; focusUI();
@@ -3514,7 +4263,8 @@ $("demo2").addEventListener("click", ()=>$("demo").click());
 $("demo").addEventListener("click", ()=>{ mode = "demo"; events = demoEvents(); lastUpdated = null; showApp(true); });
 
 /* ================= settings sheet ================= */
-const dlg = $("settings"), detail = $("detail"), itemSheet = $("itemsheet"), focusDlg = $("focus"), bmDlg = $("bmsheet"), planDlg = $("plansheet"), gradeDlg = $("gradesheet"), grpDlg = $("grprefs"), absDlg = $("abssheet");
+const dlg = $("settings"), detail = $("detail"), itemSheet = $("itemsheet"), focusDlg = $("focus"), bmDlg = $("bmsheet"), planDlg = $("plansheet"), gradeDlg = $("gradesheet"), grpDlg = $("grprefs"), absDlg = $("abssheet"),
+  syncDlg = $("syncsheet"), friendsDlg = $("friendsheet"), wDlg = $("wsheet"), moreDlg = $("moresheet"), aiDlg = $("aisheet");
 const isPhoneSheet = () => !matchMedia("(min-width:640px)").matches;
 
 function openSheet(d, src){
@@ -3572,7 +4322,57 @@ function closeSheet(d){
   d.classList.add("closing");
   setTimeout(()=>{ d.classList.remove("closing"); d.style.transform = ""; d.close(); }, isPhoneSheet() ? 290 : 220);
 }
-for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg, grpDlg, absDlg]){
+/* ---------- widgets, Meer, sync, assistant: sheet wiring ---------- */
+let noteTimer = null;
+$("main").addEventListener("input", e=>{ if(e.target.matches("[data-wnote]")){ prefs.note = e.target.value.slice(0, 2000); clearTimeout(noteTimer); noteTimer = setTimeout(savePrefs, 600); } });
+$("main").addEventListener("submit", async e=>{
+  const f = e.target.closest("[data-wplace]"); if(!f) return; e.preventDefault();
+  const q = f.q.value.trim(); if(!q) return;
+  f.querySelector("button").textContent = "…";
+  try{ const p = await findPlace(q); if(!p){ toast("Die plaats kon ik niet vinden"); f.querySelector("button").textContent = "OK"; return; }
+    prefs.wxPlace = p; savePrefs(); await loadWeather(); render(); }catch{ toast("Geen verbinding met de weerdienst"); f.querySelector("button").textContent = "OK"; }
+});
+wDlg.addEventListener("click", e=>{
+  const p = e.target.closest("[data-wpick]"); if(!p || p.disabled) return;
+  const t = p.dataset.wpick, W = WIDGETS[t];
+  saveWidgets([...wList(), {t, s: W.sizes.includes("m") && ["vrij","ai","notitie","weer"].includes(t) ? "m" : "s"}]);
+  closeSheet(wDlg); if(view !== "today") setView("today", true); else render();
+  setTimeout(()=>{ const n = document.querySelector(`#wgrid .wg-${t}`); if(n){ n.scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"center"}); if(!reduced) n.animate([{transform:"scale(.6)", opacity:0},{transform:"scale(1.04)", opacity:1, offset:.7},{transform:"none"}], {duration:520, easing:"cubic-bezier(.2,1.2,.4,1)"}); } }, 320);
+});
+moreDlg.addEventListener("click", e=>{
+  const v = e.target.closest("[data-mview]"); if(v){ closeSheet(moreDlg); setTimeout(()=>setView(v.dataset.mview, true), 160); return; }
+  const a = e.target.closest("[data-mact]"); if(!a) return;
+  const act = a.dataset.mact; closeSheet(moreDlg);
+  setTimeout(()=>{ if(act === "search") openSpot(); else if(act === "focus") openFocus(); else if(act === "ai") openAi(); else if(act === "friends") openFriends(); else if(act === "sync") openSync(); else if(act === "settings") openSettings(); }, 280);
+});
+syncDlg.addEventListener("click", e=>{ if(e.target.closest("#sync-now")){ window.open(CONNECT_URL + "?sync=1", "_blank", "noopener"); toast("Je koppelpagina werkt Magister nu bij. Kom daarna terug."); } });
+friendsDlg.addEventListener("click", e=>{ if(e.target.closest("a")) closeSheet(friendsDlg); });
+/* assistant */
+function aiShowSettings(on){
+  $("ai-set").hidden = !on; $("ai-log").hidden = on; $("ai-form").hidden = on;
+  if(on) $("ai-set").innerHTML = aiSettingsHtml();
+  $("ai-gear").classList.toggle("on", on);
+}
+$("ai-gear").addEventListener("click", ()=>{ aiShowSettings($("ai-set").hidden); if($("ai-set").hidden) renderAi(); });
+$("ai-form").addEventListener("submit", e=>{ e.preventDefault(); if(aiBusy){ aiBusy.abort(); return; } aiSend($("ai-in").value); });
+$("ai-in").addEventListener("keydown", e=>{ if(e.key === "Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); $("ai-form").requestSubmit(); } });
+$("ai-in").addEventListener("input", e=>autoGrow(e.target));
+aiDlg.addEventListener("click", e=>{
+  const q = e.target.closest("[data-aiq]"); if(q){ aiSend(q.dataset.aiq); return; }
+  const c = e.target.closest("[data-aicopy]"); if(c){ const m = aiMsgs[+c.dataset.aicopy]; navigator.clipboard?.writeText(handoffText(m.q)).then(()=>toast("Gekopieerd. Plak het in je AI-app.")); return; }
+  const pv = e.target.closest("[data-aiprov] [data-v]"); if(pv){ aiCfg.provider = pv.dataset.v; aiCfg.model = ""; saveAi(); aiShowSettings(true); return; }
+  if(e.target.closest("#ai-clear")){ aiMsgs = []; saveChat(); aiShowSettings(false); renderAi(); toast("Gesprek gewist"); }
+});
+aiDlg.addEventListener("change", e=>{
+  const t = e.target;
+  if(t.id === "ai-key"){ aiCfg.key = t.value.trim(); saveAi(); toast(aiCfg.key ? "Sleutel bewaard op dit apparaat" : "Sleutel verwijderd"); }
+  if(t.id === "ai-model"){ aiCfg.model = t.value.trim(); saveAi(); }
+  if(t.dataset.aictx){ aiCfg.ctx[t.dataset.aictx] = t.checked; saveAi(); }
+});
+/* keep the chat input above the phone keyboard */
+if(window.visualViewport) visualViewport.addEventListener("resize", ()=>{ if(!aiDlg.open) return; const kb = Math.max(0, innerHeight - visualViewport.height - visualViewport.offsetTop); aiDlg.style.setProperty("--kb", kb + "px"); });
+
+for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg, grpDlg, absDlg, syncDlg, friendsDlg, wDlg, moreDlg, aiDlg]){
   d.addEventListener("cancel", e=>{ e.preventDefault(); closeSheet(d); });
   d.addEventListener("close", ()=>{ document.body.classList.remove("sheet-open","dragging"); if(d._src){ d._src.style.opacity = ""; d._src = null; } });
   d.addEventListener("click", e=>{
@@ -3616,10 +4416,12 @@ const PREF_OPTS = {
   theme:[["auto","Automatisch",AUTO],["light","Licht",SUN],["dark","Donker",MOON]],
   bg:[["glow","Gloed"],["mesh","Kleurrijk"],["plain","Effen"]],
   density:[["normal","Ruim"],["compact","Compact"]],
+  zoom:[["0.9","Klein"],["1","Normaal"],["1.1","Groot"],["1.2","Extra groot"]],
+  region:[["noord","Noord"],["midden","Midden"],["zuid","Zuid"]],
 };
 const TAB_META_FN = () => ({today:["#007AFF",'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg>'],
   rooster:["#5856D6",IC.cal], hw:["#34C759",IC.check], tests:["#FF3B30",IC.info], grades:["#AF52DE",GRADE_IC], absences:["#30B0C7",ABS_TAB_IC], items:["#FF9500",IC.book]});
-const TODAY_PARTS = [["widgets","Widgets","Volgende toets en huiswerk"],["focus","Focus","Studietimer en je focustijd"],["plan","Leren voor toetsen","Je studieplanning van vandaag"],["pack","Inpaklijst","Wat je mee moet nemen"],["next","Daarna / tijdlijn","De rest van je dag"],
+const TODAY_PARTS = [["widgets","Widgets","Kies ze zelf met Widgets aanpassen"],["focus","Focus","Studietimer en je focustijd"],["plan","Leren voor toetsen","Je studieplanning van vandaag"],["pack","Inpaklijst","Wat je mee moet nemen"],["next","Daarna / tijdlijn","De rest van je dag"],
   ["hw","Huiswerk","Alleen op de computer"],["tests","Toetsen","Alleen op de computer"],["apps","Snel naar","Magister, Agenda en links"]];
 const CHEV = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
 function renderPrefControls(){
@@ -3629,6 +4431,8 @@ function renderPrefControls(){
   });
   $("set-calm").checked = prefs.motion === "calm";
   $("set-swipe").checked = prefs.swipe !== false;
+  $("set-more").checked = prefs.moreTab !== false; $("set-barmin").checked = prefs.barMin !== false; $("set-haptics").checked = prefs.haptics !== false;
+  $("set-uitval").checked = prefs.uitvalToast !== false; $("set-gaps").checked = prefs.showGaps !== false;
   $("set-name").value = prefs.name || "";
   $("set-start").innerHTML = [["last","Laatst geopend"], ...visibleViews().map(v=>[v, TITLES[v]])].map(([v,l])=>`<option value="${v}" ${prefs.start===v?"selected":""}>${l}</option>`).join("");
   renderTabEditor(); renderTodayEditor(); renderSwatches(); renderSkins();
@@ -3677,6 +4481,11 @@ dlg.addEventListener("change", e=>{
   const t = e.target;
   if(t.id === "set-calm"){ prefs.motion = t.checked ? "calm" : "full"; applyLook(); prefChanged(false); return; }
   if(t.id === "set-swipe"){ prefs.swipe = t.checked; prefChanged(false); return; }
+  if(t.id === "set-more"){ prefs.moreTab = t.checked; prefChanged(false); layoutTabs(); setView(view, false); return; }
+  if(t.id === "set-barmin"){ prefs.barMin = t.checked; document.documentElement.classList.remove("bar-min"); prefChanged(false); return; }
+  if(t.id === "set-haptics"){ prefs.haptics = t.checked; prefChanged(false); return; }
+  if(t.id === "set-uitval"){ prefs.uitvalToast = t.checked; prefChanged(false); return; }
+  if(t.id === "set-gaps"){ prefs.showGaps = t.checked; prefChanged(); return; }
   if(t.id === "set-start"){ prefs.start = t.value; prefChanged(false); return; }
   if(t.dataset.showtab){ const v = t.dataset.showtab;
     prefs.hidden = t.checked ? prefs.hidden.filter(x=>x!==v) : [...new Set([...prefs.hidden, v])];
@@ -3731,6 +4540,11 @@ grpDlg.addEventListener("change", e=>{
   if(t.id === "grp-pass"){ const v = parseFloat(String(t.value).replace(",", ".")); if(!isNaN(v)){ prefs.gr.pass = Math.min(8, Math.max(4, Math.round(v*10)/10)); t.value = prefs.gr.pass; grChanged(); } }
 });
 $("do-grprefs").addEventListener("click", openGradePrefs);
+const fromSettings = fn => () => { closeSheet(dlg); setTimeout(fn, 280); };
+$("do-sync").addEventListener("click", fromSettings(()=>openSync()));
+$("do-ai").addEventListener("click", fromSettings(()=>{ openAi(); aiShowSettings(true); }));
+$("do-friends").addEventListener("click", fromSettings(()=>openFriends()));
+$("do-widgets").addEventListener("click", fromSettings(()=>{ if(view !== "today") setView("today", true); wEdit = true; render(); setTimeout(()=>$("wgrid")?.scrollIntoView({behavior:"smooth", block:"center"}), 300); }));
 function openSettings(){
   $("set-magister").value = store.get("ml-magister","");
   $("do-signout").textContent = mode==="demo" ? "Voorbeeld sluiten" : "Uitloggen";
