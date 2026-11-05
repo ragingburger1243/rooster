@@ -1641,6 +1641,25 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
 .abs-st.warn b{color:var(--red)}
 .abs-row{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 14px 11px 14px;min-height:58px}
 .abs-row + .abs-row{border-top:.5px solid var(--sep)}
+button.abs-row{width:100%;border:0;background:none;font:inherit;color:var(--label);text-align:left;cursor:pointer}
+@media (hover:hover){ button.abs-row:hover,button.abs-sub:hover{background:color-mix(in srgb,var(--fill) 55%,transparent)} }
+button.abs-sub{width:100%;border:0;background:none;font:inherit;color:var(--label);text-align:left;cursor:pointer}
+button.abs-sub.on{background:color-mix(in srgb,var(--blue) 10%,transparent)}
+button.abs-col{border:0;background:none;font:inherit;color:inherit;padding:0;cursor:pointer;transition:opacity .25s,transform .3s var(--spring)}
+button.abs-col:disabled{cursor:default}
+button.abs-col.dim{opacity:.35}
+button.abs-col.on{transform:translateY(-3px)}
+button.abs-col.on b{color:var(--blue)}
+.abs-chips .chip.x{background:var(--blue);color:#fff}
+.abs-hero{display:grid;justify-items:center;text-align:center;gap:4px;padding-top:22px}
+.abs-big{font-size:40px;width:74px;height:74px;border-radius:24px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,var(--bg2));margin-bottom:6px}
+.abs-hero h3{margin:0}
+.abs-tag.big{margin-top:8px;font-size:13px;padding:5px 12px}
+.abs-kv .kv span:last-child{text-align:right;font-weight:600}
+.abs-facts{padding:12px 16px;display:grid;gap:8px;font-size:15px}
+.abs-facts p{margin:0}
+.mat-btn{border:0;background:none;padding:0;font:inherit;font-weight:650;color:var(--blue);cursor:pointer}
+.abs-facts .warn-t{color:var(--orange);font-weight:600}
 .abs-row b{display:block;font-size:15px;font-weight:600}
 .abs-row small{display:block;font-size:13px;color:var(--label2)}
 .abs-ic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:17px;background:var(--fill)}
@@ -1705,7 +1724,7 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
 
 /* the table: subject column and average stay put while the grades scroll */
 .cl-scroll{overflow-x:auto;margin:0 -16px;padding:0 16px 6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
-.cl{display:grid;grid-template-columns:minmax(100px,130px) repeat(var(--n),46px) 0 60px;column-gap:6px;row-gap:6px;align-items:stretch;width:max-content;min-width:100%;
+.cl{--nw:minmax(100px,130px);--cw:46px;--pw:50px;--tw:0px;--aw:60px;display:grid;column-gap:6px;row-gap:6px;align-items:stretch;width:max-content;min-width:100%;
   background:var(--bg2);border-radius:var(--r-lg,22px);box-shadow:var(--card-shadow);padding:10px 10px 12px}
 .cl-h{font-size:11.5px;font-weight:650;color:var(--label3);text-align:center;padding:2px 0 4px}
 .cl-h.cl-name{text-align:left;padding-left:8px}
@@ -1768,7 +1787,9 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
 @media (max-width:420px){ .cl-sum{grid-template-columns:1fr 1fr} .cl-big{grid-column:1/-1} }
 @media (min-width:1024px){
   .cl-scroll{margin:0;padding:0 0 6px}
-  .cl{grid-template-columns:minmax(170px,220px) repeat(var(--n),56px) minmax(0,1fr) 80px;column-gap:8px;padding:14px 16px 16px}
+  .cl{--nw:minmax(170px,220px);--cw:56px;--pw:62px;--tw:minmax(110px,1fr);--aw:80px;column-gap:8px;padding:14px 16px 16px}
+  .cl.no-trend{--tw:0px}
+  .cl.no-trend .cl-h.cl-sp{visibility:hidden}
   .cl-trend{display:flex;align-items:center;padding:0 10px}
   .cl-trend svg{display:block}
   .cl-h.cl-sp{text-align:left;padding-left:8px}
@@ -1778,6 +1799,120 @@ html.calm .hero::before,html.calm .live i{animation:none!important}
 }
 @media (prefers-reduced-motion:reduce){ .cl-c,.cl-cell-name,.cl-cell-avg,.cl-row,.cl-cards .gr-card,.cl-c.new::after{animation:none!important} }
 html.calm .cl-c,html.calm .cl-cell-name,html.calm .cl-cell-avg,html.calm .cl-row,html.calm .cl-cards .gr-card{animation:none!important}
+/* --- rows, period headers, period averages (both styles) --- */
+.cl-r{display:contents}
+.cl-ph{grid-row:auto;font-size:12px;font-weight:750;letter-spacing:.02em;text-transform:uppercase;color:var(--blue);text-align:center;padding:6px 0 5px;border-radius:9px;
+  background:color-mix(in srgb,var(--blue) 10%,transparent)}
+.cl-ph0{padding:0}
+.cl-h.cl-pah{color:var(--label2)}
+.cl-pa{position:relative;display:grid;place-items:center;border-radius:12px;background:var(--fill)}
+.cl-pa b{font-family:var(--round);font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
+.cl-pa i{position:absolute;top:3px;right:4px;font-style:normal;font-size:8.5px;font-weight:800;color:var(--blue);line-height:1}
+.cl-c .cl-k{position:absolute;left:0;right:0;bottom:3px;font-size:8.5px;font-weight:650;color:var(--label3);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip;letter-spacing:0}
+.cl.lbl .cl-c b{transform:translateY(-4px)}
+.cl.lbl .cl-c sup{top:2px}
+.cl-c.sel{outline:2.5px solid var(--blue);outline-offset:-2.5px;z-index:1}
+.cl.cmp{row-gap:3px}
+.cl.cmp .cl-c,.cl.cmp .cl-pa{height:34px}
+.cl.cmp .cl-c b{font-size:14.5px}
+.cl.cmp .cl-cell-name span{font-size:13.5px}
+.cl.cmp .cl-cell-name i{height:18px}
+.cl.cmp.lbl .cl-c b{transform:translateY(-3px)}
+.cl.cmp .cl-c .cl-k{bottom:1px;font-size:8px}
+
+/* --- "Zoals Magister": a real table with lines, red for insufficient, plain numbers --- */
+.cl.mg{column-gap:0;row-gap:0;padding:0;overflow:clip}
+.cl.mg > .cl-h,.cl.mg > .cl-ph{border-bottom:1px solid var(--sep);background:color-mix(in srgb,var(--label) 4%,var(--bg2))}
+.cl.mg > .cl-h{padding:8px 0 7px;font-size:11.5px;color:var(--label2)}
+.cl.mg > .cl-h.cl-name{padding-left:14px}
+.cl.mg > .cl-ph{border-radius:0;background:color-mix(in srgb,var(--blue) 9%,var(--bg2));border-left:1px solid var(--sep)}
+.cl.mg > .cl-ph0{background:color-mix(in srgb,var(--blue) 9%,var(--bg2))}
+.cl.mg .cl-r > *{border-bottom:1px solid color-mix(in srgb,var(--sep) 70%,transparent);background:var(--bg2);transition:background-color .2s}
+.cl.mg .cl-r.z > *{background:color-mix(in srgb,var(--label) 2%,var(--bg2))}
+.cl.mg .cl-r:last-child > *{border-bottom:0}
+.cl.mg .cl-c,.cl.mg .cl-pa,.cl.mg .cl-cell-name,.cl.mg .cl-cell-avg{border-radius:0;height:44px}
+.cl.mg.cmp .cl-c,.cl.mg.cmp .cl-pa,.cl.mg.cmp .cl-cell-name,.cl.mg.cmp .cl-cell-avg{height:34px}
+.cl.mg .cl-c{background:transparent;color:var(--label)}
+.cl.mg .cl-c.g-bad{color:var(--red)}
+.cl.mg .cl-c.g-mid,.cl.mg .cl-c.g-good{color:var(--label)}
+.cl.mg .cl-c b{font-family:inherit;font-weight:600;font-size:15px;letter-spacing:0}
+.cl.mg .cl-c.g-bad b{font-weight:750}
+.cl.mg .cl-c.nc{box-shadow:none;color:var(--label3)}
+.cl.mg .cl-c.nc b{text-decoration:line-through;text-decoration-thickness:1.5px}
+.cl.mg .cl-c.new::after{top:5px;left:5px;right:auto;width:7px;height:7px}
+.cl.mg .cl-c sup{top:5px;right:4px;left:auto}
+.cl.mg .cl-pa{border-left:1px solid var(--sep);border-right:1px solid var(--sep)}
+.cl.mg .cl-r > .cl-pa{background:color-mix(in srgb,var(--label) 5%,var(--bg2))}
+.cl.mg .cl-pa.g-mid,.cl.mg .cl-pa.g-good{color:var(--label)}
+.cl.mg .cl-cell-name{padding-left:10px;box-shadow:1px 0 0 var(--sep)}
+.cl.mg .cl-cell-name i{width:3px;height:20px}
+.cl.mg .cl-cell-avg{box-shadow:-1px 0 0 var(--sep)}
+.cl.mg .cl-r > .cl-cell-avg{background:color-mix(in srgb,var(--blue) 6%,var(--bg2))}
+.cl.mg .cl-cell-avg.g-mid,.cl.mg .cl-cell-avg.g-good{color:var(--label)}
+.cl.mg .cl-c.sel{outline-offset:-3px;background:color-mix(in srgb,var(--blue) 12%,var(--bg2))}
+@media (hover:hover){
+  .cl.mg .cl-r:hover > *{background:color-mix(in srgb,var(--blue) 7%,var(--bg2))}
+  .cl.mg .cl-c:not(.empty):hover{transform:none;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--blue) 60%,transparent);background:color-mix(in srgb,var(--blue) 14%,var(--bg2))}
+}
+.cl.mg .cl-c:active{transform:none;background:color-mix(in srgb,var(--blue) 18%,var(--bg2))}
+.view.enter .cl.mg .cl-c:not(.empty),.view.enter .cl.mg .cl-pa{animation:clFade .5s var(--out) both;animation-delay:calc(var(--r) * 30ms + var(--i) * 18ms + 60ms)}
+.view.enter .cl .cl-pa{animation:clFade .5s var(--out) both;animation-delay:calc(var(--r) * 35ms + var(--i) * 22ms + 100ms)}
+.view.enter .cl-ph{animation:clFade .5s var(--out) both;animation-delay:calc(var(--i) * 60ms)}
+@keyframes clFade{from{opacity:0;transform:translateY(6px)}}
+
+/* --- top bar with the customize button --- */
+.cl-bar{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.cl-bar .cl-seg{flex:1;margin:0}
+.cl-cust{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:var(--fill);color:var(--label2);display:grid;place-items:center;cursor:pointer}
+.cl-cust svg{width:19px;height:19px}
+@media (hover:hover){ .cl-cust:hover{color:var(--blue)} }
+.grp-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:9px;vertical-align:-1px}
+
+/* --- detail panel: under the table on a phone, on the right on a computer --- */
+.cl-detail{margin-top:12px}
+.cd-empty{display:grid;gap:6px;padding:16px 18px;border-radius:var(--r-lg,22px);background:var(--bg2);box-shadow:var(--card-shadow);font-size:13.5px;color:var(--label2)}
+.cd-empty b{font-size:15px;color:var(--label)}
+.cd-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:4px;font-size:12.5px}
+.cd-legend span{display:inline-flex;align-items:center;gap:6px}
+.cd-legend i{width:12px;height:12px;border-radius:4px;background:var(--fill)}
+.cd-legend i.g-bad{background:var(--red)}
+.cd-legend i.nc{background:transparent;box-shadow:inset 0 0 0 1.5px var(--label3)}
+.cd-legend i.mm{width:auto;height:auto;background:none;font-style:normal;font-size:10px;font-weight:800;color:var(--blue)}
+.cd-legend i.nw{width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.cd-card{padding:16px 18px 18px;border-radius:var(--r-lg,22px);background:radial-gradient(120% 100% at 0 0,color-mix(in srgb,var(--c) 12%,transparent),transparent 60%),var(--bg2);box-shadow:var(--card-shadow)}
+.cd-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:13px;align-items:center}
+.cd-val{min-width:56px;height:56px;padding:0 8px;border-radius:16px;display:grid;place-items:center;font-family:var(--round);font-size:26px;font-weight:800;letter-spacing:-.03em;background:color-mix(in srgb,currentColor 12%,transparent)}
+.cd-val:not(.g-bad):not(.g-mid):not(.g-good){color:var(--label2)}
+.cd-sub b{display:block;font-size:16px;font-weight:700}
+.cd-sub small{display:block;font-size:13px;color:var(--label2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cd-x{width:30px;height:30px;border:0;border-radius:50%;background:var(--fill);color:var(--label2);font-size:13px;cursor:pointer}
+.cd-card dl{margin:14px 0 14px;display:grid;gap:0}
+.cd-card dl div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:.5px solid var(--sep);font-size:14px}
+.cd-card dt{color:var(--label2)}
+.cd-card dd{margin:0;font-weight:600;text-align:right}
+.cd-more{width:100%}
+@media (min-width:1024px){
+  .cl-wrap{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start}
+  .cl-detail{margin:0;position:sticky;top:20px}
+}
+@media (prefers-reduced-motion:reduce){ .cl-ph,.cl-pa{animation:none!important} }
+html.calm .cl-ph,html.calm .cl-pa{animation:none!important}
+
+/* ---------- colour themes ---------- */
+.skins{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;padding:4px 0 2px}
+.skin{border:0;background:none;padding:0;font:inherit;color:var(--label);cursor:pointer;display:grid;gap:6px;justify-items:center}
+.sk-prev{position:relative;width:100%;aspect-ratio:1.25;border-radius:14px;overflow:hidden;background:var(--s0);
+  box-shadow:0 0 0 1px var(--sep);transition:transform .35s var(--spring),box-shadow .25s}
+.sk-glow{position:absolute;inset:-30% -20% auto;height:90%;background:radial-gradient(60% 60% at 25% 20%,color-mix(in srgb,var(--sa) 45%,transparent),transparent 70%),radial-gradient(50% 50% at 85% 15%,color-mix(in srgb,var(--sh) 35%,transparent),transparent 70%)}
+.sk-card{position:absolute;left:10%;right:10%;top:34%;height:22%;border-radius:6px;background:var(--s1);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.sk-card.b{top:62%;right:38%;background:var(--s2)}
+.sk-dot{position:absolute;right:12%;top:66%;width:16%;aspect-ratio:1;border-radius:50%;background:var(--sa)}
+.sk-n{font-size:12.5px;font-weight:600;color:var(--label2);text-align:center;line-height:1.2}
+.skin[aria-pressed="true"] .sk-prev{box-shadow:0 0 0 2.5px var(--blue),0 6px 16px -6px color-mix(in srgb,var(--blue) 60%,transparent);transform:scale(1.03)}
+.skin[aria-pressed="true"] .sk-n{color:var(--label)}
+@media (hover:hover){ .skin:hover .sk-prev{transform:translateY(-2px)} }
+.seg-opts.off{opacity:.4;pointer-events:none}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
 </style>
 </head>
 <body>
@@ -1892,6 +2027,18 @@ html.calm .cl-c,html.calm .cl-cell-name,html.calm .cl-cell-avg,html.calm .cl-row
   <div class="sheet-body" id="grade-body"></div>
 </dialog>
 
+<dialog class="sheet" id="abssheet">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head"><span style="min-width:50px"></span><h2>Absentie</h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-body" id="abs-body"></div>
+</dialog>
+
+<dialog class="sheet" id="grprefs">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head"><span style="min-width:50px"></span><h2>Cijferlijst</h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-body" id="grp-body"></div>
+</dialog>
+
 <dialog class="sheet" id="bmsheet">
   <div class="grabber" aria-hidden="true"></div>
   <div class="sheet-head"><span style="min-width:50px"></span><h2>Magister-bladwijzer</h2><button type="button" class="sheet-close">Klaar</button></div>
@@ -1921,11 +2068,14 @@ html.calm .cl-c,html.calm .cl-cell-name,html.calm .cl-cell-avg,html.calm .cl-row
     <div class="set-preview" aria-hidden="true"><div class="ph"></div></div>
     <div class="caption">Weergave</div>
     <div class="list">
-      <div class="opt-block"><span>Thema</span><div class="seg-opts" data-pref="theme" role="group" aria-label="Thema"></div></div>
+      <div class="opt-block"><span>Thema</span><div class="skins" id="skins" role="group" aria-label="Thema"></div></div>
+      <div class="opt-block"><span>Licht of donker</span><div class="seg-opts" data-pref="theme" role="group" aria-label="Licht of donker"></div></div>
       <div class="opt-block"><span>Accentkleur</span><div class="swatches" id="swatches" role="group" aria-label="Accentkleur" style="padding:2px 0 0"></div></div>
       <div class="opt-block"><span>Achtergrond</span><div class="seg-opts" data-pref="bg" role="group" aria-label="Achtergrond"></div></div>
       <div class="opt-block"><span>Dichtheid</span><div class="seg-opts" data-pref="density" role="group" aria-label="Dichtheid"></div></div>
       <label class="field sw"><span>Minder beweging<small class="field-sub">Zet animaties uit</small></span><span class="switch"><input id="set-calm" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Vegen om te wisselen<small class="field-sub">Op je telefoon: veeg opzij voor een andere dag of tab</small></span><span class="switch"><input id="set-swipe" type="checkbox" role="switch"><span></span></span></label>
+      <button class="linkrow" type="button" id="do-grprefs">Cijferlijst aanpassen</button>
     </div>
     <div class="caption">Jij</div>
     <div class="list">
@@ -1940,6 +2090,7 @@ html.calm .cl-c,html.calm .cl-cell-name,html.calm .cl-cell-avg,html.calm .cl-row
     <div class="caption">Magister</div>
     <div class="list">
       <div class="kv"><span>Gegevens</span><span id="set-source"></span></div>
+      <button class="linkrow" type="button" id="do-magsync" hidden>Magister nu bijwerken</button>
       <button class="linkrow" type="button" id="do-connect" hidden>Koppeling beheren</button>
       <button class="linkrow" type="button" id="do-linkcopy" hidden>Inloglink voor een ander apparaat</button>
       <button class="linkrow" type="button" id="do-bookmarklet">Magister-bladwijzer instellen</button>
@@ -2043,6 +2194,7 @@ const store = {
 const VIEWS = ["today","rooster","hw","tests","grades","absences","items"];
 const PREF_DEFAULTS = {
   theme:"auto",          // auto | light | dark
+  skin:"standard",       // colour theme, see SKINS
   bg:"glow",             // glow | plain | mesh
   density:"normal",      // normal | compact
   motion:"full",         // full | calm
@@ -2054,6 +2206,8 @@ const PREF_DEFAULTS = {
   kastSort:"subject",    // subject | name | new | own
   gradesView:"grid",     // grid (like Magister) | cards | recent
   gradesSort:"subject",  // subject | low | new
+  gr:{style:"magister", pass:5.5, avgDec:1, weight:true, newDot:true, trend:true, periods:true, heads:"kop", avgSource:"official", compact:false, summary:true, hiddenSubs:[]},
+  swipe:true,            // swipe left/right on a phone: other day in the rooster, other tab elsewhere
   bookSize:2,            // index in BOOK_SIZES
   focusMin:25,           // focus session length
   breakMin:5,
@@ -2062,6 +2216,9 @@ const BOOK_SIZES = [.72, .86, 1, 1.18, 1.4, 1.7];
 const prefs = (() => {
   const p = {...PREF_DEFAULTS, ...(store.get("ml-prefs", {}) || {})};
   p.today = {...PREF_DEFAULTS.today, ...(p.today || {})};
+  p.gr = {...PREF_DEFAULTS.gr, ...(p.gr || {})};
+  if(!Array.isArray(p.gr.hiddenSubs)) p.gr.hiddenSubs = [];
+  p.gr.pass = Math.min(8, Math.max(4, Number(p.gr.pass) || 5.5));
   p.tabs = [...new Set([...(Array.isArray(p.tabs) ? p.tabs : []).filter(v=>VIEWS.includes(v)), ...VIEWS])];
   p.hidden = (Array.isArray(p.hidden) ? p.hidden : []).filter(v=>VIEWS.includes(v) && v !== "today");
   return p;
@@ -2108,11 +2265,34 @@ const TINTS = [
   {n:"Grafiet",   l:"#636366", d:"#8E8E93", h2:"#2C2C2E"},
 ];
 let tint = Math.min(TINTS.length-1, Math.max(0, Number(store.get("ml-tint", 0)) || 0));
+/* colour themes: the whole canvas (background, cards, glass) in one mood, each with a light and a dark side */
+const SKINS = {
+  standard:   {n:"Standaard"},
+  oceaan:     {n:"Oceaan",       tint:6, h2:"#0A84FF", l:["#E6F1F7","#FBFDFF","#D3E5EF"], d:["#03111B","#0B1E2B","#14303F"]},
+  zonsondergang:{n:"Zonsondergang", tint:4, h2:"#FF375F", l:["#FCEFE6","#FFFAF6","#F3DAC9"], d:["#160A06","#26130C","#382015"]},
+  bos:        {n:"Bos",          tint:5, h2:"#30B0C7", l:["#ECF3EA","#FBFDFA","#D6E5D2"], d:["#06110A","#0F2016","#193222"]},
+  lavendel:   {n:"Lavendel",     tint:2, h2:"#5E5CE6", l:["#F2EEFB","#FDFBFF","#E1D8F4"], d:["#0D0A17","#1B152D","#292143"]},
+  kersen:     {n:"Kersenbloesem", tint:3, h2:"#BF5AF2", l:["#FDEEF2","#FFFAFB","#F5D6DF"], d:["#15070B","#271019","#391925"]},
+  zand:       {n:"Zand",         tint:4, h2:"#AC8E68", l:["#F4EFE6","#FFFDF9","#E6DDCE"], d:["#12100C","#211D17","#322C23"]},
+  magister:   {n:"Magister",     tint:0, h2:"#40C8E0", l:["#ECF2F8","#FFFFFF","#D8E4F0"], d:["#060D16","#0F1B29","#1A2B3E"]},
+  middernacht:{n:"Middernacht",  tint:1, h2:"#BF5AF2", dark:true, d:["#05060F","#0F1326","#1A2040"]},
+  oled:       {n:"Zwart (OLED)", tint:7, h2:"#636366", dark:true, d:["#000000","#0B0B0D","#1A1A1D"]},
+};
+const skin = () => SKINS[prefs.skin] || SKINS.standard;
 const darkMQ = matchMedia("(prefers-color-scheme: dark)");
-const isDark = () => prefs.theme === "dark" || (prefs.theme === "auto" && darkMQ.matches);
+const isDark = () => !!skin().dark || prefs.theme === "dark" || (prefs.theme === "auto" && darkMQ.matches);
+const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n>>16},${(n>>8)&255},${n&255},${a})`; };
 function applyTint(){
-  const t = TINTS[tint], c = isDark() ? t.d : t.l, r = document.documentElement.style;
-  r.setProperty("--blue", c); r.setProperty("--hero1", c); r.setProperty("--hero2", t.h2);
+  const t = TINTS[tint], c = isDark() ? t.d : t.l, r = document.documentElement.style, k = skin();
+  r.setProperty("--blue", c); r.setProperty("--hero1", c); r.setProperty("--hero2", k.h2 || t.h2);
+  const pal = k.l || k.d ? (isDark() ? k.d : k.l) : null;
+  for(const v of ["--bg","--bg2","--bg3","--bg-sunk","--glass","--glass-strong","--skeleton","--skeleton-hi"]) r.removeProperty(v);
+  document.documentElement.dataset.skin = pal ? prefs.skin : "";
+  if(!pal) return;
+  const [bg, bg2, bg3] = pal, dk = isDark();
+  r.setProperty("--bg", bg); r.setProperty("--bg2", bg2); r.setProperty("--bg3", bg3); r.setProperty("--bg-sunk", bg3);
+  r.setProperty("--glass", rgba(bg2, dk ? .6 : .68)); r.setProperty("--glass-strong", rgba(bg2, dk ? .82 : .86));
+  r.setProperty("--skeleton", bg3); r.setProperty("--skeleton-hi", bg2);
 }
 // every "@media (prefers-color-scheme: dark)" block in the page: on = always, off = never, auto = follow the system
 const DARK_RULES = [];
@@ -2125,19 +2305,21 @@ const DARK_RULES = [];
   }
 })([...document.styleSheets].flatMap(sh=>{ try{ return [...sh.cssRules]; }catch{ return []; } }));
 function applyLook(){
-  for(const {r, orig} of DARK_RULES) r.media.mediaText = prefs.theme === "auto" ? orig : prefs.theme === "dark" ? "all" : "not all";
+  const mode_ = skin().dark ? "dark" : prefs.theme;
+  for(const {r, orig} of DARK_RULES) r.media.mediaText = mode_ === "auto" ? orig : mode_ === "dark" ? "all" : "not all";
   const root = document.documentElement;
-  root.style.colorScheme = prefs.theme === "auto" ? "" : prefs.theme;
+  root.style.colorScheme = mode_ === "auto" ? "" : mode_;
   root.classList.toggle("bg-plain", prefs.bg === "plain");
   root.classList.toggle("bg-mesh", prefs.bg === "mesh");
   root.classList.toggle("compact", prefs.density === "compact");
   root.classList.toggle("calm", prefs.motion === "calm");
   reduced = SYS_REDUCED || prefs.motion === "calm";
   document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{
-    if(prefs.theme === "auto") m.setAttribute("content", m.media.includes("dark") ? "#000000" : "#F2F2F7");
-    else m.setAttribute("content", prefs.theme === "dark" ? "#000000" : "#F2F2F7");
+    if(mode_ === "auto") m.setAttribute("content", m.media.includes("dark") ? "#000000" : "#F2F2F7");
+    else m.setAttribute("content", mode_ === "dark" ? "#000000" : "#F2F2F7");
   });
   applyTint();
+  const k = skin(); if(k.l || k.d) document.querySelectorAll('meta[name="theme-color"]').forEach(m=> m.setAttribute("content", (isDark() ? k.d : k.l)[0]));
 }
 darkMQ.addEventListener?.("change", ()=>{ applyTint(); if(typeof render === "function" && (mode==="live"||mode==="demo")) render(); });
 applyLook();
@@ -2220,6 +2402,7 @@ async function load(manual){
 function apply(items, at, animate){
   const wasLive = mode === "live";
   mode = "live"; events = items.map(toEvent).filter(Boolean); lastUpdated = new Date(at);
+  noteUitval();
   if(!wasLive) showApp(animate !== false); else render();
 }
 
@@ -2261,7 +2444,7 @@ function yearStart(d){ return new Date(d.getMonth() >= 7 ? d.getFullYear() : d.g
 function rawGrades(items){
   const start = yearStart(new Date()), out = [], seen = new Set();
   for(const it of items || []){
-    const vak = gv(it, "vak") || {}, kol = gv(it, "cijferKolom") || {};
+    const vak = gv(it, "vak") || {}, kol = gv(it, "cijferKolom", "kolom") || {};
     const code = gv(vak, "code", "afkorting") || "", value = String(gv(it, "waarde", "cijferStr") ?? "").trim();
     const when = new Date(gv(it, "ingevoerdOp", "datumIngevoerd", "behaaldOp") || Date.now());
     if(when < start) continue;
@@ -2270,7 +2453,8 @@ function rawGrades(items){
     const m = value.match(/^\s*(\d{1,2}(?:[.,]\d+)?)\s*$/), n = m ? parseFloat(m[1].replace(",", ".")) : null;
     const key = [code, value, dayKey(when), desc].join("|"); if(seen.has(key)) continue; seen.add(key);
     out.push({code, subject:gv(vak, "omschrijving") || code, desc, value, num: n != null && n >= 1 && n <= 10 ? n : null, weight,
-      counts: gv(it, "teltMee") !== false && weight > 0, date: dayKey(when), pass: gv(it, "isVoldoende") ?? null});
+      counts: gv(it, "teltMee") !== false && weight > 0, date: dayKey(when), pass: gv(it, "isVoldoende") ?? null,
+      col: String(gv(kol, "id") ?? ""), colName: String(gv(kol, "naam", "kolomNaam", "kolomKop") ?? "")});
   }
   return out.sort((a,b)=> a.date < b.date ? 1 : -1);
 }
@@ -2281,6 +2465,7 @@ function rawToBundle(raw, via){
     absences: raw.absenties ? raw.absenties.map(rawAbsence).filter(Boolean) : null,
     materials: raw.materialen ? raw.materialen.map(rawMaterial).filter(Boolean) : null,
     averages: raw.gemiddelden ? raw.gemiddelden.map(rawAverage).filter(Boolean) : null,
+    columns: Array.isArray(raw.kolommen) ? raw.kolommen.map(rawColumn).filter(Boolean) : null,
     magisterUrl: raw.magister || ""};
 }
 /* absences: late, sick, absent — with whether the school counts it as excused */
@@ -2295,6 +2480,16 @@ function rawAbsence(a){
 function rawMaterial(m){
   if(!m || !m.Titel) return null;
   return {id:String(m.Id ?? m.Titel), title:m.Titel, publisher:m.Uitgeverij || "", code:m.Vak || "", subject:m.VakNaam || "", url:m.Url || "", digital: m.Type === 1 || !!m.Url};
+}
+/* one cell of Magister's own grade overview: which period and column a grade sits in (or a calculated average column) */
+function rawColumn(k){
+  if(!k || !(k.vak || k.vakNaam)) return null;
+  const value = String(k.waarde ?? "").trim(), m = value.match(/^\s*(\d{1,2}(?:[.,]\d+)?)\s*$/), n = m ? parseFloat(m[1].replace(",", ".")) : null;
+  const soort = String(k.soort ?? "");
+  return {id:String(k.id ?? ""), code:k.vak || "", subject:k.vakNaam || "", head:String(k.kop || k.naam || "").slice(0,12), name:String(k.oms || k.naam || "").slice(0,120),
+    nr:Number(k.nr) || 0, period:String(k.per || ""), pnr:Number(k.pnr) || 0, value, num: n != null && n >= 1 && n <= 10 ? n : null,
+    avg: soort === "2" || /gemiddel|berekend/i.test(soort) || /^gem|gemiddeld|eind|rapport/i.test(String(k.kop || "") + " " + String(k.naam || "")),
+    retake: !!k.herk, counts: k.telt !== false, date: k.datum ? dayKey(new Date(k.datum)) : "", weight: k.weging != null && !isNaN(parseFloat(k.weging)) ? parseFloat(String(k.weging).replace(",", ".")) : null};
 }
 /* official averages from Magister */
 function rawAverage(g){
@@ -2356,17 +2551,36 @@ function applyBundle(b, animate){
   mode = "live"; events = (b.events || []).map(fromBundle).filter(Boolean).sort((a,c)=>a.start-c.start);
   lastUpdated = new Date(b.updated || Date.now());
   if(b.grades){ grades = {at:b.gradesAt || b.updated, list:b.grades}; store.set("ml-grades", grades); }
-  extra = {absences: b.absences || null, averages: b.averages || null, magisterUrl: b.magisterUrl || "", materials: Array.isArray(b.materials) ? b.materials.length : null};
+  extra = {absences: b.absences || null, averages: b.averages || null, columns: b.columns || null, magisterUrl: b.magisterUrl || "", materials: Array.isArray(b.materials) ? b.materials.length : null, matList: Array.isArray(b.materials) ? b.materials : null};
+  noteUitval();
   if(b.materials) mergeMaterials(b.materials, b.magisterUrl);
   if(b.school && !store.get("ml-magister","")) store.set("ml-magister", b.school + ".magister.net");
   if(!wasLive) showApp(animate !== false); else render();
 }
-let extra = {absences:null, averages:null, magisterUrl:"", materials:null};
+let extra = {absences:null, averages:null, columns:null, magisterUrl:"", materials:null};
+/* a lesson that newly dropped out today or tomorrow: say so straight away */
+function noteUitval(){
+  const now = new Date(), key = e => e.id + "|" + dayKey(e.start);
+  const soon = events.filter(e=>e.school && e.gone && e.end > now && daysUntil(e.start, now) <= 1);
+  const had = store.get("ml-goneseen", null), seen = new Set(had || []);
+  const fresh = soon.filter(e=>!seen.has(key(e)));
+  store.set("ml-goneseen", soon.map(key));
+  if(!had || !fresh.length) return;
+  const when = e => daysUntil(e.start, now) === 0 ? "vandaag" : "morgen";
+  const first = fresh[0];
+  setTimeout(()=> toast(fresh.length === 1 ? `Uitval: ${first.label}${first.hour ? ", " + first.hour + "e uur" : ""} (${when(first)})` : `${fresh.length} lessen vallen uit (${[...new Set(fresh.map(when))].join(" en ")})`,
+    ()=>{ selectedDay = dayKey(first.start); setView("rooster", true); }, "Bekijk"), 600);
+}
 /* Magister's learning materials appear in your Kast by themselves; your own colours, notes and "meenemen" stay */
+function uniqueMaterials(list){
+  // the same book can come through twice (for two subjects or two periods): keep it once
+  const seen = new Set();
+  return list.filter(m=>{ const k = String(m.title || "").trim().toLowerCase(); if(!k || seen.has(k)) return false; seen.add(k); return true; });
+}
 function mergeMaterials(list, magisterUrl){
   const hidden = store.get("ml-kasthide", []), ids = new Set(), fallback = (magisterUrl || "") + "#/leermiddelen";
   let changed = false;
-  for(const m of list){
+  for(const m of uniqueMaterials(list)){
     const id = "lm-" + m.id; ids.add(id);
     if(hidden.includes(id)) continue;
     const url = m.url || (magisterUrl ? fallback : "");
@@ -3102,6 +3316,11 @@ $("main").addEventListener("click", e=>{
   const q = e.target.closest("[data-quick]"); if(q){ openItemSheet(null, {title:q.dataset.quick, type:q.dataset.qtype, subject:q.dataset.qsub || ""}); return; }
   const fl = e.target.closest("[data-filter]"); if(fl){ setItemFilter(fl.dataset.filter); return; }
   const del = e.target.closest("[data-del]"); if(del){ deleteItem(del.dataset.del); return; }
+  if(e.target.closest("[data-kastunhide]")){
+    const ids = new Set((extra.matList || []).map(m=>"lm-" + m.id));
+    store.set("ml-kasthide", store.get("ml-kasthide", []).filter(x=>!ids.has(x)));
+    if(extra.matList) mergeMaterials(extra.matList, extra.magisterUrl);
+    haptic(); render(); toast("Boeken uit Magister teruggezet"); return; }
   if(e.target.closest("[data-kastedit]")){ setKastEdit(!kastEdit); return; }
   if(e.target.closest("[data-sortmenu]")){ openSortMenu(e.target.closest("[data-sortmenu]")); return; }
   if(e.target.closest("[data-zoom]")){ setBookSize(prefs.bookSize + Number(e.target.closest("[data-zoom]").dataset.zoom)); return; }
@@ -3111,9 +3330,15 @@ $("main").addEventListener("click", e=>{
   if(e.target.closest("[data-replan]")){ replanAll(); return; }
   const gvw = e.target.closest("[data-gview]"); if(gvw){ if(prefs.gradesView !== gvw.dataset.gview){ prefs.gradesView = gvw.dataset.gview; savePrefs(); haptic(); render(true); } return; }
   const gso = e.target.closest("[data-gsort]"); if(gso){ prefs.gradesSort = gso.dataset.gsort; savePrefs(); haptic(); flipGrades(()=>render()); return; }
+  const cell = e.target.closest("[data-cell]"); if(cell){ selectCell(cell.dataset.cell); return; }
+  if(e.target.closest("[data-cellclose]")){ selectCell(clSel); return; }
+  if(e.target.closest("[data-grprefs]")){ openGradePrefs(); return; }
   const gs = e.target.closest("[data-subj]"); if(gs){ openSubject(gs.dataset.subj, gs, gs.dataset.g); return; }
   if(e.target.closest("[data-bm]")){ openBookmarklet(); return; }
   const af = e.target.closest("[data-absf]"); if(af){ absFilter = af.dataset.absf; haptic(); render(); return; }
+  const am = e.target.closest("[data-absm]"); if(am){ absMonth = absMonth === am.dataset.absm ? null : am.dataset.absm; haptic(); render(); return; }
+  const as = e.target.closest("[data-abss]"); if(as){ absSubj = absSubj === as.dataset.abss ? null : as.dataset.abss; haptic(); render(); if(absSubj && !WIDE.matches) document.querySelector(".abs-chips")?.scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"start"}); return; }
+  const ab = e.target.closest("[data-abs]"); if(ab){ openAbsence(ab.dataset.abs, ab); return; }
   const itm = e.target.closest("[data-item]");
   if(itm){
     const it = stuff.find(x=>x.id===itm.dataset.item);
@@ -3154,6 +3379,56 @@ function toggleDone(id, row){
 let ticking = false;
 function updateScroll(){ const p = Math.min(1, Math.max(0, scrollY / 52)); document.documentElement.style.setProperty("--p", p.toFixed(3)); ticking = false; }
 addEventListener("scroll", ()=>{ if(!ticking){ ticking = true; requestAnimationFrame(updateScroll); } }, {passive:true});
+
+/* swipe sideways on a phone: another day in the rooster, otherwise the next or previous tab */
+(() => {
+  let x0 = null, y0 = 0, t0 = 0, dx = 0, decided = false, horiz = false, el = null;
+  const scrollsX = t => { for(let n = t; n && n !== document.body; n = n.parentElement){ const o = getComputedStyle(n).overflowX; if((o === "auto" || o === "scroll") && n.scrollWidth > n.clientWidth + 2) return true; } return false; };
+  const reset = (anim) => { if(!el) return; el.style.transition = anim && !reduced ? "transform .45s cubic-bezier(.2,1.25,.4,1), opacity .3s" : "none"; el.style.transform = ""; el.style.opacity = ""; };
+  function tab(d){
+    const order = visibleViews(), j = order.indexOf(view) + d;
+    if(j < 0 || j >= order.length) return false;
+    haptic(); setView(order[j], true); return true;
+  }
+  function day(d){
+    if(view !== "rooster") return false;
+    if(rmode === "week"){ const nw = weekOff + d; if(nw < 0 || nw > 2) return false; changeWeek(d); return true; }
+    const days = upcomingDays(new Date(), schoolList()), n = days[days.indexOf(selectedDay) + d];
+    if(!n) return false;
+    selectDay(n);
+    const dl = $("day-list"); if(dl && !reduced) dl.animate([{opacity:0, transform:`translateX(${d * 46}px)`},{opacity:1, transform:"none"}], {duration:360, easing:"cubic-bezier(.16,1,.3,1)"});
+    return true;
+  }
+  addEventListener("touchstart", e=>{
+    x0 = null;
+    if(prefs.swipe === false || WIDE.matches || !(mode === "live" || mode === "demo") || e.touches.length !== 1 || document.querySelector("dialog[open]") || kastEdit) return;
+    const t = e.touches[0], tg = e.target;
+    if(t.clientX < 20 || t.clientX > innerWidth - 20) return;          // leave the edges to the browser's own back gesture
+    if(!tg.closest || !tg.closest("#main") || tg.closest("input,textarea,select,[contenteditable],.days,#shelf-wrap") || scrollsX(tg)) return;
+    x0 = t.clientX; y0 = t.clientY; t0 = performance.now(); dx = 0; decided = false; horiz = false;
+    el = view === "rooster" && rmode !== "week" ? $("day-list") : $("v-" + view);
+  }, {passive:true});
+  addEventListener("touchmove", e=>{
+    if(x0 == null) return;
+    const t = e.touches[0]; dx = t.clientX - x0; const dy = t.clientY - y0;
+    if(!decided && (Math.abs(dx) > 10 || Math.abs(dy) > 10)){ decided = true; horiz = Math.abs(dx) > Math.abs(dy) * 1.4; if(!horiz){ x0 = null; return; } }
+    if(horiz && el && !reduced){ const k = Math.sign(dx) * Math.min(70, Math.abs(dx) * .35); el.style.transition = "none"; el.style.transform = `translateX(${k}px)`; el.style.opacity = String(1 - Math.min(.25, Math.abs(dx) / 900)); }
+  }, {passive:true});
+  const end = () => {
+    if(x0 == null){ return; } x0 = null;
+    if(!horiz){ reset(false); return; }
+    const v = Math.abs(dx) / Math.max(1, performance.now() - t0);
+    const go = Math.abs(dx) > 80 || (Math.abs(dx) > 40 && v > .45);
+    const d = dx < 0 ? 1 : -1, target = el;
+    if(go){
+      if(target) { target.style.transition = "none"; target.style.transform = ""; target.style.opacity = ""; }
+      if(day(d) || tab(d)) return;
+    }
+    reset(true);
+  };
+  addEventListener("touchend", end, {passive:true});
+  addEventListener("touchcancel", ()=>{ x0 = null; reset(true); }, {passive:true});
+})();
 
 /* pull to refresh (touch) */
 (() => {
@@ -3231,7 +3506,7 @@ $("demo2").addEventListener("click", ()=>$("demo").click());
 $("demo").addEventListener("click", ()=>{ mode = "demo"; events = demoEvents(); lastUpdated = null; showApp(true); });
 
 /* ================= settings sheet ================= */
-const dlg = $("settings"), detail = $("detail"), itemSheet = $("itemsheet"), focusDlg = $("focus"), bmDlg = $("bmsheet"), planDlg = $("plansheet"), gradeDlg = $("gradesheet");
+const dlg = $("settings"), detail = $("detail"), itemSheet = $("itemsheet"), focusDlg = $("focus"), bmDlg = $("bmsheet"), planDlg = $("plansheet"), gradeDlg = $("gradesheet"), grpDlg = $("grprefs"), absDlg = $("abssheet");
 const isPhoneSheet = () => !matchMedia("(min-width:640px)").matches;
 
 function openSheet(d, src){
@@ -3289,7 +3564,7 @@ function closeSheet(d){
   d.classList.add("closing");
   setTimeout(()=>{ d.classList.remove("closing"); d.style.transform = ""; d.close(); }, isPhoneSheet() ? 290 : 220);
 }
-for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg]){
+for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg, grpDlg, absDlg]){
   d.addEventListener("cancel", e=>{ e.preventDefault(); closeSheet(d); });
   d.addEventListener("close", ()=>{ document.body.classList.remove("sheet-open","dragging"); if(d._src){ d._src.style.opacity = ""; d._src = null; } });
   d.addEventListener("click", e=>{
@@ -3315,6 +3590,14 @@ for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg]){
 }
 
 /* settings */
+function renderSkins(){
+  const dk = isDark();
+  $("skins").innerHTML = Object.entries(SKINS).map(([k, v])=>{
+    const t = TINTS[v.tint ?? tint], pal = v.l || v.d ? ((dk && v.d) || v.l || v.d) : (dk ? ["#000000","#1C1C1E","#2C2C2E"] : ["#F2F3F6","#FFFFFF","#E9EAEF"]);
+    const acc = (dk || v.dark) ? t.d : t.l;
+    return `<button type="button" class="skin" data-skin="${k}" aria-pressed="${(prefs.skin || "standard") === k}" style="--s0:${pal[0]};--s1:${pal[1]};--s2:${pal[2]};--sa:${acc};--sh:${v.h2 || t.h2}">
+      <span class="sk-prev" aria-hidden="true"><i class="sk-glow"></i><i class="sk-card"></i><i class="sk-card b"></i><i class="sk-dot"></i></span><span class="sk-n">${v.n}${v.dark ? " ☾" : ""}</span></button>`; }).join("");
+}
 function renderSwatches(){
   $("swatches").innerHTML = TINTS.map((t,i)=>`<button class="swatch-btn" type="button" data-tint="${i}" aria-label="${t.n}" aria-pressed="${i===tint}" style="--sw:${isDark()?t.d:t.l}"></button>`).join("");
 }
@@ -3337,9 +3620,11 @@ function renderPrefControls(){
     g.innerHTML = PREF_OPTS[k].map(([v,l,ic])=>`<button type="button" data-v="${v}" aria-pressed="${prefs[k]===v}">${ic||""}<span>${l}</span></button>`).join("");
   });
   $("set-calm").checked = prefs.motion === "calm";
+  $("set-swipe").checked = prefs.swipe !== false;
   $("set-name").value = prefs.name || "";
   $("set-start").innerHTML = [["last","Laatst geopend"], ...visibleViews().map(v=>[v, TITLES[v]])].map(([v,l])=>`<option value="${v}" ${prefs.start===v?"selected":""}>${l}</option>`).join("");
-  renderTabEditor(); renderTodayEditor(); renderSwatches();
+  renderTabEditor(); renderTodayEditor(); renderSwatches(); renderSkins();
+  document.querySelector('[data-pref="theme"]')?.classList.toggle("off", !!skin().dark);
 }
 function renderTabEditor(){
   const n = prefs.tabs.length;
@@ -3353,6 +3638,12 @@ function renderTodayEditor(){
 }
 function prefChanged(rerender){ savePrefs(); haptic(); if(rerender !== false && (mode==="live"||mode==="demo")) render(); }
 dlg.addEventListener("click", e=>{
+  const sk = e.target.closest("[data-skin]");
+  if(sk){ const k = sk.dataset.skin; prefs.skin = k; const v = SKINS[k];
+    if(v.tint != null){ tint = v.tint; store.set("ml-tint", tint); touch("tint"); }
+    if(!reduced && document.startViewTransition) document.startViewTransition(()=>{ applyLook(); renderSkins(); renderSwatches(); renderPrefControls(); });
+    else { applyLook(); renderSkins(); renderSwatches(); }
+    prefChanged(); return; }
   const opt = e.target.closest("[data-pref] [data-v]");
   if(opt){ const k = opt.closest("[data-pref]").dataset.pref; prefs[k] = opt.dataset.v;
     opt.parentElement.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed", String(b===opt)));
@@ -3372,6 +3663,7 @@ dlg.addEventListener("click", e=>{
 dlg.addEventListener("change", e=>{
   const t = e.target;
   if(t.id === "set-calm"){ prefs.motion = t.checked ? "calm" : "full"; applyLook(); prefChanged(false); return; }
+  if(t.id === "set-swipe"){ prefs.swipe = t.checked; prefChanged(false); return; }
   if(t.id === "set-start"){ prefs.start = t.value; prefChanged(false); return; }
   if(t.dataset.showtab){ const v = t.dataset.showtab;
     prefs.hidden = t.checked ? prefs.hidden.filter(x=>x!==v) : [...new Set([...prefs.hidden, v])];
@@ -3387,6 +3679,45 @@ $("do-resetprefs").addEventListener("click", ()=>{
   Object.assign(prefs, JSON.parse(JSON.stringify(PREF_DEFAULTS)), {name:keepName});
   tint = 0; store.set("ml-tint", 0); touch("tint"); savePrefs(); applyLook(); applyTabs(); renderPrefControls(); render(); toast("Weergave teruggezet");
 });
+/* ---------- Cijferlijst aanpassen ---------- */
+const GR_OPTS = {
+  style:[["magister","Zoals Magister"],["color","Kleurvlakken"]],
+  heads:[["nr","Alleen cijfer"],["kop","Kolomnaam"],["date","Datum"]],
+  avgSource:[["official","Uit Magister"],["own","Zelf berekend"]],
+  avgDec:[[1,"6,8"],[2,"6,79"]],
+};
+const GR_SW = {
+  look:[["compact","Compact","Kleinere rijen, meer op je scherm"],["summary","Samenvatting bovenaan","Gemiddeld, laagste en nieuw"]],
+  grades:[["periods","Perioden","Cijfers per periode (P1, P2 …) met een gemiddelde per periode"],["weight","Weging tonen","Klein getal bij een cijfer dat zwaarder telt"],["newDot","Stip bij nieuw cijfer","Cijfers van de afgelopen 7 dagen"],["trend","Verloop","Lijntje per vak"]],
+};
+function grSeg(k, label){ return `<div class="opt-block"><span>${label}</span><div class="seg-opts" data-grp="${k}" role="group" aria-label="${label}">${GR_OPTS[k].map(([v,l])=>`<button type="button" data-v="${v}" aria-pressed="${String(prefs.gr[k])===String(v)}"><span>${l}</span></button>`).join("")}</div></div>`; }
+function grSw([k,l,sub]){ return `<label class="field sw"><span>${l}<small class="field-sub">${sub}</small></span><span class="switch"><input type="checkbox" role="switch" data-grsw="${k}" ${prefs.gr[k]?"checked":""}><span></span></span></label>`; }
+function renderGradePrefs(){
+  const subs = subjectsWithOfficial(gradeList()), hid = new Set(prefs.gr.hiddenSubs);
+  $("grp-body").innerHTML = `<div class="caption">Uiterlijk</div><div class="list">${grSeg("style","Stijl")}${grSeg("heads","In het vakje")}${GR_SW.look.map(grSw).join("")}</div>
+    <div class="caption">Cijfers</div><div class="list">${GR_SW.grades.map(grSw).join("")}</div>
+    <div class="caption">Gemiddelden</div><div class="list">${grSeg("avgSource","Gemiddelde")}${grSeg("avgDec","Decimalen")}
+      <label class="field"><span>Voldoende vanaf</span><input id="grp-pass" type="number" min="4" max="8" step="0.1" inputmode="decimal" value="${prefs.gr.pass}"></label></div>
+    <p class="footnote">Onder deze grens is een cijfer rood. "Uit Magister" gebruikt de officiële gemiddelden als die er zijn.</p>
+    ${subs.length ? `<div class="caption">Vakken</div><div class="list">${subs.map(s=>`<label class="field sw"><span><i class="grp-dot" style="background:${s.code ? subjectColor(s.code) : "#8E8E93"}"></i>${esc(s.name)}</span><span class="switch"><input type="checkbox" role="switch" data-grsub="${esc(s.key)}" ${hid.has(s.key)?"":"checked"}><span></span></span></label>`).join("")}</div>
+    <p class="footnote">Verborgen vakken tellen niet mee in je gemiddelde bovenaan.</p>` : ""}
+    <div class="list"><button class="linkrow" type="button" id="grp-reset">Standaard terugzetten</button></div>`;
+}
+function openGradePrefs(){ renderGradePrefs(); if(dlg.open){ closeSheet(dlg); setTimeout(()=>openSheet(grpDlg), 280); } else openSheet(grpDlg); }
+function grChanged(){ savePrefs(); haptic(); if(view === "grades" && (mode==="live"||mode==="demo")) render(); }
+grpDlg.addEventListener("click", e=>{
+  const opt = e.target.closest("[data-grp] [data-v]");
+  if(opt){ const k = opt.closest("[data-grp]").dataset.grp; prefs.gr[k] = k === "avgDec" ? Number(opt.dataset.v) : opt.dataset.v;
+    opt.parentElement.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed", String(b===opt))); grChanged(); return; }
+  if(e.target.closest("#grp-reset")){ prefs.gr = JSON.parse(JSON.stringify(PREF_DEFAULTS.gr)); renderGradePrefs(); grChanged(); toast("Cijferlijst teruggezet"); }
+});
+grpDlg.addEventListener("change", e=>{
+  const t = e.target;
+  if(t.dataset.grsw){ prefs.gr[t.dataset.grsw] = t.checked; grChanged(); return; }
+  if(t.dataset.grsub){ const k = t.dataset.grsub; prefs.gr.hiddenSubs = t.checked ? prefs.gr.hiddenSubs.filter(x=>x!==k) : [...new Set([...prefs.gr.hiddenSubs, k])]; grChanged(); return; }
+  if(t.id === "grp-pass"){ const v = parseFloat(String(t.value).replace(",", ".")); if(!isNaN(v)){ prefs.gr.pass = Math.min(8, Math.max(4, Math.round(v*10)/10)); t.value = prefs.gr.pass; grChanged(); } }
+});
+$("do-grprefs").addEventListener("click", openGradePrefs);
 function openSettings(){
   $("set-magister").value = store.get("ml-magister","");
   $("do-signout").textContent = mode==="demo" ? "Voorbeeld sluiten" : "Uitloggen";
@@ -3814,11 +4145,13 @@ function renderItems(now, list, el){
 /* tell plainly whether Magister's learning materials came through */
 function materialsNote(){
   if(mode !== "live" || source !== "link") return "";
-  const n = extra.materials, mine = stuff.filter(x=>x.src === "magister").length;
+  const L = extra.matList ? uniqueMaterials(extra.matList) : null, n = L ? L.length : extra.materials;
+  const hidden = store.get("ml-kasthide", []), nHid = L ? L.filter(m=>hidden.includes("lm-" + m.id)).length : 0;
   const txt = n == null ? "Je lesmateriaal uit Magister is nog niet opgehaald. Open je koppelpagina en tik op Nu bijwerken."
     : n === 0 ? "Magister heeft geen lesmateriaal voor je klaarstaan. Je school zet je boeken er misschien niet in."
-    : `${n} ${n === 1 ? "boek komt" : "boeken komen"} uit Magister${mine < n ? ` (${n - mine} verborgen)` : ""}. Tik erop om ze in Magister te openen.`;
-  return `<p class="footnote mat-note">${esc(txt)}</p>`;
+    : `${n} ${n === 1 ? "boek komt" : "boeken komen"} uit Magister${nHid ? `, waarvan ${nHid} verborgen omdat je ${nHid === 1 ? "hem" : "ze"} hebt weggehaald` : ""}. Tik erop om ze in Magister te openen.`;
+  const filt = itemFilter !== "all" ? ` <button type="button" class="mat-btn" data-filter="all">Toon alles</button>` : "";
+  return `<p class="footnote mat-note">${esc(txt)}${nHid ? ` <button type="button" class="mat-btn" data-kastunhide>Zet ${nHid === 1 ? "hem" : "ze"} terug</button>` : ""}${filt}</p>`;
 }
 /* book size: − / + buttons, ctrl+scroll or trackpad pinch, two-finger pinch on a phone */
 const bkVal = () => BOOK_SIZES[Math.max(0, Math.min(BOOK_SIZES.length-1, prefs.bookSize|0))];
@@ -4145,7 +4478,9 @@ $("import-file").addEventListener("change", async e=>{
 /* ================= Cijfers ================= */
 const GRADE_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="13" width="4" height="7.5" rx="1.2"/><rect x="10" y="8.5" width="4" height="12" rx="1.2"/><rect x="16.5" y="4" width="4" height="16.5" rx="1.2"/></svg>';
 const nl1 = n => n == null || isNaN(n) ? "–" : (Math.round(n*10)/10).toFixed(1).replace(".", ",");
-const gcls = n => n == null ? "" : n < 5.5 ? "g-bad" : n < 6.5 ? "g-mid" : "g-good";
+const gcls = n => { const p = prefs.gr.pass; return n == null ? "" : n < p ? "g-bad" : n < p + 1 ? "g-mid" : "g-good"; };
+/* averages with one or two decimals (your choice); single grades stay exactly as Magister writes them */
+const nlA = n => n == null || isNaN(n) ? "–" : prefs.gr.avgDec === 2 ? (Math.round(n*100)/100).toFixed(2).replace(".", ",") : nl1(n);
 function demoGrades(){
   const d = k => { const x = new Date(); x.setDate(x.getDate()-k); return dayKey(x); };
   const g = (code, subject, value, weight, desc, ago) => ({code, subject, desc, value:String(value).replace(".",","), num:value, weight, counts:true, date:d(ago)});
@@ -4155,7 +4490,29 @@ function demoGrades(){
     g("wisB","Wiskunde B",7.2,1,"SO H1",44), g("netl","Nederlands",5.8,2,"Leesvaardigheid",47), g("dutl","Duits",7.4,2,"Toets H1",49), g("gs","Geschiedenis",7.1,1,"Bronnen",52),
     g("beco","Bedrijfseconomie",6.1,2,"Toets H1",55), g("entl","Engels",8.0,1,"Words",3), g("nat","Natuurkunde",4.8,1,"SO H2",2)];
 }
-function gradeList(){ return mode === "demo" ? demoGrades() : (grades?.list || []); }
+/* your grades; with Magister's own overview (columns + periods) we put every grade in its period and column */
+let _glCache = null;
+function gradeList(){
+  if(mode === "demo"){
+    return demoGrades().map(g=>{ const old = (Date.now() - new Date(g.date + "T12:00")) / 864e5 > 28;
+      return {...g, period: old ? "P1" : "P2", pnr: old ? 1 : 2, colName: g.desc.split(" ")[0].slice(0,6)}; });
+  }
+  const list = grades?.list || [], cols = extra.columns;
+  if(!cols || !cols.length) return list;
+  if(_glCache && _glCache.list === list && _glCache.cols === cols) return _glCache.out;
+  const byCol = new Map(list.filter(g=>g.col).map(g=>[g.col, g])), used = new Set(), out = [];
+  for(const c of cols){
+    if(c.avg || (!c.value && c.num == null)) continue;
+    const g = c.id && byCol.get(c.id);
+    if(g) used.add(g);
+    out.push({code: c.code || g?.code || "", subject: c.subject || g?.subject || c.code, desc: g?.desc || c.name || c.head, value: c.value || g?.value || "", num: c.num ?? g?.num ?? null,
+      weight: g?.weight ?? c.weight ?? 1, counts: c.counts !== false && (g ? g.counts !== false : true), date: g?.date || c.date || "", col: c.id, colName: c.head, period: c.period, pnr: c.pnr, nr: c.nr});
+  }
+  for(const g of list) if(!used.has(g)) out.push(g);
+  out.sort((a,b)=> a.date < b.date ? 1 : -1);
+  _glCache = {list, cols, out};
+  return out;
+}
 function officialList(){
   if(mode === "demo") return [{code:"wisB",subject:"Wiskunde B",label:"Gemiddelde periode 1",period:"P1",value:"6,0",num:6.0},{code:"entl",subject:"Engels",label:"Gemiddelde periode 1",period:"P1",value:"7,3",num:7.3}];
   return extra.averages || [];
@@ -4210,84 +4567,156 @@ function gradeEffects(subs){
   }
   return eff;
 }
+/* which average you see for a subject: Magister's official one, or the one MCML works out from your grades */
+const subjAvg = s => prefs.gr.avgSource === "own" && s.w ? s.sum / s.w : s.avg;
+/* the period average Magister shows (when we have it), otherwise worked out from the grades in that period */
+function periodAvg(s, pname, cells){
+  if(prefs.gr.avgSource !== "own"){
+    const off = [...officialList(), ...((mode === "demo" ? [] : extra.columns) || []).filter(c=>c.avg)]
+      .filter(a=>a.num != null && a.period === pname && (a.code === s.key || a.code === s.code || (a.subject && a.subject.toLowerCase() === s.name.toLowerCase())));
+    if(off.length) return {num: off[off.length-1].num, official:true};
+  }
+  let sum = 0, w = 0;
+  for(const g of cells){ if(g.num == null || g.counts === false) continue; sum += g.num * g.weight; w += g.weight; }
+  return {num: w ? sum / w : null, official:false};
+}
+const shortHead = g => (g.colName || g.desc || "").replace(/^(toets|test)\s*/i, "T ").split(/\s+/).slice(0,2).join(" ").slice(0,6);
+function cellLabel(g){
+  const h = prefs.gr.heads;
+  if(h === "kop") return shortHead(g);
+  if(h === "date" && g.date){ const d = new Date(g.date + "T12:00"); return d.getDate() + "-" + (d.getMonth()+1); }
+  return "";
+}
+let clSel = null;   // the grade you tapped in the overview (shown in the detail panel)
 function renderGrades(now, list, el){
   const G = gradeList();
-  if(!G.length){
+  if(!G.length && !officialList().length){
     el.innerHTML = large("Cijfers", "") + `<div class="list"><div class="gr-empty">${GRADE_IC}<h3 style="margin:0">Nog geen cijfers</h3>
       <p>${source === "link" ? "Er staan nog geen cijfers in Magister voor dit schooljaar, of ze zijn nog niet opgehaald." : source === "google" ? "Je cijfers komen uit Magister via je sync. Draait die al met de nieuwste versie?" : "Je cijfers komen mee met je sync, of haal ze direct op met de Magister-bladwijzer."}</p>
       ${source === "link" ? "" : `<button class="btn press" type="button" data-bm>Magister-bladwijzer instellen</button>`}</div></div>`;
     return;
   }
-  const subs = subjectsWithOfficial(G);
-  const scored = subs.filter(s=>s.avg != null);
-  const overall = scored.length ? scored.reduce((a,s)=>a+s.avg, 0) / scored.length : null;
-  const bad = scored.filter(s=>s.avg < 5.5);
+  const GP = prefs.gr, hiddenSet = new Set(GP.hiddenSubs);
+  const all = subjectsWithOfficial(G);
+  const subs = all.filter(s=>!hiddenSet.has(s.key));
+  subs.forEach(s=>{ s.show = subjAvg(s); });
+  const VG = G.filter(g=>!hiddenSet.has(g.code || g.subject));
+  const scored = subs.filter(s=>s.show != null);
+  const overall = scored.length ? scored.reduce((a,s)=>a+s.show, 0) / scored.length : null;
+  const bad = scored.filter(s=>s.show < GP.pass);
   const at = mode === "demo" ? null : grades?.at;
-  const fresh = G.filter(g=>isNew(g, now));
-  const [g1, g2] = overall == null ? ["#AF52DE","#5E5CE6"] : overall < 5.5 ? ["#FF453A","#FF2D55"] : overall < 6.5 ? ["#FF9F0A","#FF6B00"] : ["#30D158","#00A86B"];
-  let html = large("Cijfers", `${G.length} ${G.length === 1 ? "cijfer" : "cijfers"} dit schooljaar${at ? " · bijgewerkt "+esc(relTime(at)) : ""}`);
+  const fresh = VG.filter(g=>isNew(g, now));
+  const [g1] = overall == null ? ["#AF52DE"] : overall < GP.pass ? ["#FF453A"] : overall < GP.pass + 1 ? ["#FF9F0A"] : ["#30D158"];
+  let html = large("Cijfers", `${VG.length} ${VG.length === 1 ? "cijfer" : "cijfers"} dit schooljaar${at ? " · bijgewerkt "+esc(relTime(at)) : ""}`);
 
-  // summary: average, lowest, newest
-  const lo = scored.length ? scored.reduce((a,s)=> s.avg < a.avg ? s : a) : null;
-  html += `<div class="cl-sum">
-    <div class="cl-big" style="--g1:${g1}"><small>Gemiddeld</small><b class="num" data-avg="${overall ?? ""}">${nl1(overall)}</b><span>${scored.length} vakken · ${bad.length ? `<em class="g-bad">${bad.length} onvoldoende</em>` : "geen onvoldoendes"}</span></div>
-    <div class="cl-mini"><small>Laagste</small>${lo ? `<b class="${gcls(lo.avg)} num">${nl1(lo.avg)}</b><span>${esc(lo.name)}</span>` : "<b>–</b>"}</div>
-    <div class="cl-mini"><small>${fresh.length ? "Nieuw deze week" : "Laatste cijfer"}</small><b class="${gcls(G[0].num)} num">${fresh.length > 1 ? fresh.length : esc(G[0].value || "–")}</b><span>${fresh.length > 1 ? "nieuwe cijfers" : esc(SUBJECTS[G[0].code] || G[0].subject)}</span></div>
-  </div>`;
+  if(GP.summary){
+    const lo = scored.length ? scored.reduce((a,s)=> s.show < a.show ? s : a) : null, last = VG[0];
+    html += `<div class="cl-sum">
+      <div class="cl-big" style="--g1:${g1}"><small>Gemiddeld</small><b class="num" data-avg="${overall ?? ""}">${nlA(overall)}</b><span>${scored.length} vakken · ${bad.length ? `<em class="g-bad">${bad.length} onvoldoende</em>` : "geen onvoldoendes"}</span></div>
+      <div class="cl-mini"><small>Laagste</small>${lo ? `<b class="${gcls(lo.show)} num">${nlA(lo.show)}</b><span>${esc(lo.name)}</span>` : "<b>–</b>"}</div>
+      <div class="cl-mini"><small>${fresh.length ? "Nieuw deze week" : "Laatste cijfer"}</small>${last ? `<b class="${gcls(last.num)} num">${fresh.length > 1 ? fresh.length : esc(last.value || "–")}</b><span>${fresh.length > 1 ? "nieuwe cijfers" : esc(SUBJECTS[last.code] || last.subject)}</span>` : "<b>–</b>"}</div>
+    </div>`;
+  }
 
-  // view switch + sort
   const v = ["grid","cards","recent"].includes(prefs.gradesView) ? prefs.gradesView : "grid";
-  html += `<div class="seg cl-seg" role="tablist" style="--n:3">${[["grid","Overzicht"],["cards","Per vak"],["recent","Laatste"]].map(([k,l],i)=>`<button type="button" role="tab" data-gview="${k}" aria-pressed="${v===k}">${l}</button>`).join("")}<span class="seg-thumb" style="transform:translateX(${["grid","cards","recent"].indexOf(v)*100}%)"></span></div>`;
+  html += `<div class="cl-bar"><div class="seg cl-seg" role="tablist" style="--n:3">${[["grid","Overzicht"],["cards","Per vak"],["recent","Laatste"]].map(([k,l])=>`<button type="button" role="tab" data-gview="${k}" aria-pressed="${v===k}">${l}</button>`).join("")}<span class="seg-thumb" style="transform:translateX(${["grid","cards","recent"].indexOf(v)*100}%)"></span></div>
+    <button type="button" class="cl-cust press" data-grprefs aria-label="Cijferlijst aanpassen">${IC.gear || "⚙"}</button></div>`;
 
   const sortKey = ["subject","low","new"].includes(prefs.gradesSort) ? prefs.gradesSort : "subject";
   const lastDate = s => s.all.length ? s.all[s.all.length-1].date : "";
-  const sorted = [...subs].sort(sortKey === "low" ? (a,b)=>(a.avg ?? 11) - (b.avg ?? 11) : sortKey === "new" ? (a,b)=> lastDate(a) < lastDate(b) ? 1 : -1 : (a,b)=>a.name.localeCompare(b.name, "nl"));
-  const effects = gradeEffects(subs);
+  const sorted = [...subs].sort(sortKey === "low" ? (a,b)=>(a.show ?? 11) - (b.show ?? 11) : sortKey === "new" ? (a,b)=> lastDate(a) < lastDate(b) ? 1 : -1 : (a,b)=>a.name.localeCompare(b.name, "nl"));
+  const effects = gradeEffects(all);
+  const sortBar = `<div class="cl-tools"><span>${[["subject","Vak"],["low","Laagste eerst"],["new","Nieuwste"]].map(([k,l])=>`<button type="button" class="cl-sort" data-gsort="${k}" aria-pressed="${sortKey===k}">${l}</button>`).join("")}</span></div>`;
 
   if(v === "grid"){
-    const maxN = Math.max(1, ...subs.map(s=>s.all.length));
-    html += `<div class="cl-tools"><span>${[["subject","Vak"],["low","Laagste eerst"],["new","Nieuwste"]].map(([k,l])=>`<button type="button" class="cl-sort" data-gsort="${k}" aria-pressed="${sortKey===k}">${l}</button>`).join("")}</span></div>`;
-    html += `<div class="cl-scroll"><div class="cl" style="--n:${maxN}" role="table" aria-label="Cijferoverzicht">
-      <div class="cl-h cl-name" role="columnheader">Vak</div>${Array.from({length:maxN},(_,i)=>`<div class="cl-h" role="columnheader">${i+1}</div>`).join("")}<div class="cl-h cl-sp" role="columnheader">Verloop</div><div class="cl-h cl-avg" role="columnheader">Gem.</div>`;
+    // periods like Magister: P1, P2, … each with its own grades and an average column
+    const usePer = GP.periods && VG.some(g=>g.period);
+    const pmap = new Map();
+    if(usePer) for(const g of VG){ const n = g.period || "Overig"; if(!pmap.has(n)) pmap.set(n, g.period ? (g.pnr || 50) : 99); }
+    const periods = usePer ? [...pmap.entries()].sort((a,b)=>a[1]-b[1] || a[0].localeCompare(b[0], "nl")).map(([n])=>n) : [""];
+    const cellsIn = (s, p) => s.all.filter(g=> !usePer || (g.period || "Overig") === p).sort((a,b)=> (a.nr || 0) - (b.nr || 0) || (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+    const widths = periods.map(p=>Math.max(1, ...sorted.map(s=>cellsIn(s, p).length)));
+    const tmpl = ["var(--nw)", ...periods.map((p,i)=> `repeat(${widths[i]},var(--cw))` + (usePer ? " var(--pw)" : "")), "var(--tw)", "var(--aw)"].join(" ");
+    const cls = ["cl", GP.style === "color" ? "col" : "mg", GP.compact ? "cmp" : "", GP.trend ? "" : "no-trend", GP.heads !== "nr" ? "lbl" : ""].join(" ");
+    html += sortBar;
+    html += `<div class="cl-wrap"><div class="cl-scroll"><div class="${cls}" style="grid-template-columns:${tmpl}" role="table" aria-label="Cijferoverzicht">`;
+    if(usePer){
+      html += `<div class="cl-h cl-name cl-ph0" aria-hidden="true"></div>` + periods.map((p,i)=>`<div class="cl-ph" style="grid-column:span ${widths[i]+1};--i:${i}">${esc(p)}</div>`).join("") + `<div class="cl-h cl-sp cl-ph0" aria-hidden="true"></div><div class="cl-h cl-avg cl-ph0" aria-hidden="true"></div>`;
+    }
+    html += `<div class="cl-h cl-name" role="columnheader">Vak</div>` + periods.map((p,i)=> Array.from({length:widths[i]},(_,j)=>`<div class="cl-h" role="columnheader">${j+1}</div>`).join("") + (usePer ? `<div class="cl-h cl-pah" role="columnheader">Gem</div>` : "")).join("")
+      + `<div class="cl-h cl-sp" role="columnheader">Verloop</div><div class="cl-h cl-avg" role="columnheader">${usePer ? "Eind" : "Gem."}</div>`;
     sorted.forEach((s, r)=>{
       const c = s.code ? subjectColor(s.code) : "#8E8E93";
-      html += `<button type="button" class="cl-name cl-cell-name" data-subj="${esc(s.key)}" style="--c:${c};--r:${r}" role="rowheader"><i></i><span>${esc(s.name)}</span></button>`;
-      for(let i = 0; i < maxN; i++){
-        const g = s.all[i];
-        if(!g){ html += `<div class="cl-c empty" style="--r:${r};--i:${i}"></div>`; continue; }
-        const e = effects.get(gkey(g));
-        html += `<button type="button" class="cl-c ${gcls(g.num)} ${g.counts === false ? "nc" : ""} ${isNew(g, now) ? "new" : ""}" data-subj="${esc(s.key)}" data-g="${esc(gkey(g))}" style="--r:${r};--i:${i}"
-          title="${esc((g.desc || "Cijfer") + " · " + shortDate(g.date) + (g.weight !== 1 ? " · weging " + g.weight : "") + (e != null ? " · " + (e >= 0 ? "+" : "") + nl1(e) : ""))}"><b>${esc(g.value || "–")}</b>${g.weight !== 1 ? `<sup>${String(g.weight).replace(".",",")}×</sup>` : ""}</button>`;
-      }
-      html += `<div class="cl-sp cl-trend" style="--c:${c};--r:${r}" aria-hidden="true">${spark(s.all)}</div>`;
-      html += `<button type="button" class="cl-avg cl-cell-avg ${gcls(s.avg)}" data-subj="${esc(s.key)}" style="--r:${r}"><b class="num" data-avg="${s.avg ?? ""}">${nl1(s.avg)}</b>${s.official ? `<small>Magister</small>` : ""}</button>`;
+      html += `<div class="cl-r ${r % 2 ? "z" : ""}" role="row" style="--r:${r};--c:${c}">`;
+      html += `<button type="button" class="cl-name cl-cell-name" data-subj="${esc(s.key)}" role="rowheader"><i></i><span>${esc(s.name)}</span></button>`;
+      let i = 0;
+      periods.forEach((p, pi)=>{
+        const cells = cellsIn(s, p);
+        for(let j = 0; j < widths[pi]; j++, i++){
+          const g = cells[j];
+          if(!g){ html += `<div class="cl-c empty" style="--i:${i}"></div>`; continue; }
+          const k = gkey(g), lab = cellLabel(g);
+          html += `<button type="button" class="cl-c ${gcls(g.num)} ${g.counts === false ? "nc" : ""} ${GP.newDot && isNew(g, now) ? "new" : ""} ${clSel === k ? "sel" : ""}" data-cell="${esc(k)}" data-subj="${esc(s.key)}" data-g="${esc(k)}" style="--i:${i}"
+            aria-label="${esc((SUBJECTS[g.code] || g.subject) + ": " + (g.value || "–") + (g.desc ? ", " + g.desc : ""))}"><b>${esc(g.value || "–")}</b>${GP.weight && g.weight !== 1 ? `<sup>${String(g.weight).replace(".",",")}×</sup>` : ""}${lab ? `<small class="cl-k">${esc(lab)}</small>` : ""}</button>`;
+        }
+        if(usePer){ const pa = periodAvg(s, p, cells);
+          html += `<div class="cl-pa ${gcls(pa.num)}" style="--i:${i++}" title="${pa.official ? "Gemiddelde uit Magister" : "Berekend uit je cijfers"}"><b class="num">${nlA(pa.num)}</b>${pa.official ? "<i>M</i>" : ""}</div>`; }
+      });
+      html += `<div class="cl-sp cl-trend" aria-hidden="true">${GP.trend ? spark(s.all) : ""}</div>`;
+      html += `<button type="button" class="cl-avg cl-cell-avg ${gcls(s.show)}" data-subj="${esc(s.key)}"><b class="num" data-avg="${s.show ?? ""}">${nlA(s.show)}</b>${s.official && GP.avgSource !== "own" ? `<small>Magister</small>` : ""}</button>`;
+      html += `</div>`;
     });
-    html += `</div></div><p class="footnote">Tik op een cijfer of vak voor details. Grijs omrand: telt niet mee. Het kleine getal is de weging.${officialList().length ? " Gemiddelden met Magister erbij zijn officieel; de rest is berekend." : " Gemiddelden zijn berekend uit je cijfers en wegingen."}</p>`;
+    html += `</div></div><aside class="cl-detail" id="cl-detail" aria-live="polite">${cellDetailHtml(clSel, all, effects)}</aside></div>`;
+    const hid = all.length - subs.length;
+    html += `<p class="footnote">Tik op een cijfer voor details.${GP.weight ? " Het kleine getal is de weging." : ""} ${GP.style === "color" ? "Omrand" : "Doorgestreept"}: telt niet mee.${hid ? ` ${hid} ${hid === 1 ? "vak" : "vakken"} verborgen.` : ""}</p>`;
   }
 
   if(v === "cards"){
     const cards = sorted.map((s,i)=>{ const c = s.code ? subjectColor(s.code) : "#8E8E93", lastG = s.all[s.all.length-1] || {value:"–"}, prev = s.all.filter(g=>g.num!=null);
       const trend = prev.length >= 2 ? (prev[prev.length-1].num >= prev[prev.length-2].num ? "▲" : "▼") : "";
       return `<button class="gr-card press" type="button" data-subj="${esc(s.key)}" style="--c:${c};--i:${i}"><span class="nm">${esc(s.name)}</span>
-        <span class="av"><b class="${gcls(s.avg)} num" data-avg="${s.avg ?? ""}">${nl1(s.avg)}</b>${trend ? `<small class="${trend==="▲"?"g-good":"g-bad"}">${trend}</small>` : ""}${s.official ? `<span class="off-tag" title="${esc(s.official.label)}">Magister</span>` : ""}</span>
-        <span class="meta">${s.all.length ? `${s.all.length} ${s.all.length===1?"cijfer":"cijfers"} · laatst ${esc(lastG.value)}` : esc(s.official?.label || "Officieel gemiddelde")}</span>${spark(s.all)}</button>`; }).join("");
-    html += `<div class="cl-tools"><span>${[["subject","Vak"],["low","Laagste eerst"],["new","Nieuwste"]].map(([k,l])=>`<button type="button" class="cl-sort" data-gsort="${k}" aria-pressed="${sortKey===k}">${l}</button>`).join("")}</span></div><div class="gr-grid cl-cards">${cards}</div>`;
+        <span class="av"><b class="${gcls(s.show)} num" data-avg="${s.show ?? ""}">${nlA(s.show)}</b>${trend ? `<small class="${trend==="▲"?"g-good":"g-bad"}">${trend}</small>` : ""}${s.official && GP.avgSource !== "own" ? `<span class="off-tag" title="${esc(s.official.label)}">Magister</span>` : ""}</span>
+        <span class="meta">${s.all.length ? `${s.all.length} ${s.all.length===1?"cijfer":"cijfers"} · laatst ${esc(lastG.value)}` : esc(s.official?.label || "Officieel gemiddelde")}</span>${GP.trend ? spark(s.all) : ""}</button>`; }).join("");
+    html += sortBar + `<div class="gr-grid cl-cards">${cards}</div>`;
   }
 
   if(v === "recent"){
     const groups = [];
-    for(const g of G){ const d = new Date(g.date + "T12:00"), k = d.getFullYear()+"-"+d.getMonth(); let gr = groups[groups.length-1];
+    for(const g of VG){ const d = new Date(g.date + "T12:00"), k = d.getFullYear()+"-"+d.getMonth(); let gr = groups[groups.length-1];
       if(!gr || gr.k !== k){ gr = {k, label: MONTHS_FULL[d.getMonth()], items:[]}; groups.push(gr); } gr.items.push(g); }
     let i = 0;
     html += groups.map(gr=>`<div class="caption">${esc(gr.label)}</div><div class="list">${gr.items.map(g=>{ const e = effects.get(gkey(g)), c = g.code ? subjectColor(g.code) : "#8E8E93";
       return `<button type="button" class="cl-row" data-subj="${esc(g.code || g.subject)}" data-g="${esc(gkey(g))}" style="--c:${c};--i:${i++}">
-        <span class="cl-pill ${gcls(g.num)} ${isNew(g, now) ? "new" : ""}"><b>${esc(g.value || "–")}</b></span>
-        <span class="cl-txt"><b>${esc(SUBJECTS[g.code] || g.subject)}</b><small>${esc(g.desc || "Cijfer")}${g.weight !== 1 ? " · weging " + String(g.weight).replace(".",",") : ""}${g.counts === false ? " · telt niet mee" : ""}</small></span>
+        <span class="cl-pill ${gcls(g.num)} ${GP.newDot && isNew(g, now) ? "new" : ""}"><b>${esc(g.value || "–")}</b></span>
+        <span class="cl-txt"><b>${esc(SUBJECTS[g.code] || g.subject)}</b><small>${esc(g.desc || "Cijfer")}${GP.weight && g.weight !== 1 ? " · weging " + String(g.weight).replace(".",",") : ""}${g.period ? " · " + esc(g.period) : ""}${g.counts === false ? " · telt niet mee" : ""}</small></span>
         <span class="cl-eff">${e != null && Math.abs(e) >= .05 ? `<em class="${e >= 0 ? "up" : "down"}">${e >= 0 ? "▲" : "▼"} ${nl1(Math.abs(e))}</em>` : ""}<small>${esc(shortDate(g.date))}</small></span></button>`; }).join("")}</div>`).join("");
     html += `<p class="footnote">De pijl laat zien hoeveel dat cijfer je gemiddelde voor dat vak omhoog of omlaag bracht.</p>`;
   }
   el.innerHTML = html;
   animateAverages(el);
+}
+/* the panel next to (computer) or under (phone) the overview, like Magister's detail pane */
+function cellDetailHtml(k, subs, effects){
+  const s = k && subs.find(x=>x.all.some(g=>gkey(g) === k)), g = s && s.all.find(x=>gkey(x) === k);
+  if(!g) return `<div class="cd-empty"><b>Details</b><span>Tik op een cijfer om te zien waar het voor was, de weging en wat het met je gemiddelde deed.</span>
+    <div class="cd-legend"><span><i class="g-bad"></i>Onvoldoende</span><span><i class="mm">M</i>Uit Magister</span><span><i class="nc"></i>Telt niet mee</span>${prefs.gr.newDot ? `<span><i class="nw"></i>Nieuw</span>` : ""}</div></div>`;
+  const e = effects.get(k), c = s.code ? subjectColor(s.code) : "#8E8E93";
+  const rows = [["Omschrijving", g.desc || "–"], g.colName ? ["Kolom", g.colName] : null, g.period ? ["Periode", g.period] : null, ["Datum", g.date ? new Date(g.date + "T12:00").toLocaleDateString("nl-NL", {weekday:"short", day:"numeric", month:"long"}) : "–"],
+    ["Weging", String(g.weight).replace(".", ",") + "×"], ["Telt mee", g.counts === false ? "Nee" : "Ja"], e != null ? ["Effect op gemiddelde", (e >= 0 ? "+" : "−") + nl1(Math.abs(e))] : null].filter(Boolean);
+  return `<div class="cd-card" style="--c:${c}"><div class="cd-top"><span class="cd-val ${gcls(g.num)}">${esc(g.value || "–")}</span><span class="cd-sub"><b>${esc(s.name)}</b><small>${esc(g.desc || "Cijfer")}</small></span>
+      <button type="button" class="cd-x" data-cellclose aria-label="Sluiten">✕</button></div>
+    <dl>${rows.map(([a,b])=>`<div><dt>${esc(a)}</dt><dd class="${a.startsWith("Effect") ? (e >= 0 ? "g-good" : "g-bad") : ""}">${esc(b)}</dd></div>`).join("")}</dl>
+    <button type="button" class="btn press cd-more" data-subj="${esc(s.key)}" data-g="${esc(k)}">Alles van ${esc(s.name)}</button></div>`;
+}
+function selectCell(k){
+  clSel = clSel === k ? null : k; haptic();
+  document.querySelectorAll("#v-grades .cl-c.sel").forEach(n=>n.classList.remove("sel"));
+  if(clSel) document.querySelector(`#v-grades .cl-c[data-cell="${CSS.escape(clSel)}"]`)?.classList.add("sel");
+  const d = $("cl-detail"); if(!d) return;
+  const all = subjectsWithOfficial(gradeList());
+  d.innerHTML = cellDetailHtml(clSel, all, gradeEffects(all));
+  if(!reduced) d.firstElementChild?.animate([{opacity:0, transform:"translateY(8px) scale(.98)"},{opacity:1, transform:"none"}], {duration:380, easing:"cubic-bezier(.2,1.2,.4,1)"});
+  if(clSel && !WIDE.matches) d.scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"nearest"});
 }
 /* rows glide to their new place when you change the sort */
 function flipGrades(change){
@@ -4327,7 +4756,8 @@ const ABS_IC = {late:"⏱", sick:"🤒", absent:"🚪", removed:"⚠️", other:
 const ABS_TAB_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12.5" r="8.5"/><path d="M12 8v4.8l3 1.9"/></svg>';
 const ABS_KINDS = {late:["Te laat","var(--orange)"], sick:["Ziek","var(--blue)"], absent:["Afwezig","#8E8E93"]};
 const absKind = a => a.kind === "late" || a.kind === "sick" ? a.kind : "absent";
-let absFilter = "all";
+let absFilter = "all", absMonth = null, absSubj = null;
+const absSubjOf = a => a.code || (a.lesson ? a.lesson.split(" - ")[0] : "");
 function renderAbsences(now, list, el){
   const A = absenceList();
   const sub = extra.absences || mode === "demo" ? "dit schooljaar" + (lastUpdated && mode === "live" ? " · bijgewerkt " + esc(relTime(lastUpdated)) : "") : "";
@@ -4353,27 +4783,30 @@ function renderAbsences(now, list, el){
   const per = months.map(([y,m])=>{ const inM = all.filter(a=>{ const d = new Date(a.start); return d.getFullYear() === y && d.getMonth() === m; });
     return {m, late:inM.filter(a=>absKind(a)==="late").length, sick:inM.filter(a=>absKind(a)==="sick").length, absent:inM.filter(a=>absKind(a)==="absent").length, total:inM.length}; });
   const max = Math.max(1, ...per.map(p=>p.total));
-  const chart = `<div class="abs-chart" role="img" aria-label="Absenties per maand">${per.map((p,i)=>`<div class="abs-col" title="${p.total} in ${MON[p.m]}">
+  const chart = `<div class="abs-chart" role="group" aria-label="Absenties per maand">${per.map((p,i)=>`<button type="button" class="abs-col ${absMonth === months[i].join("-") ? "on" : ""} ${absMonth && absMonth !== months[i].join("-") ? "dim" : ""}" data-absm="${months[i].join("-")}" ${p.total ? "" : "disabled"} title="${p.total} in ${MON[p.m]}" aria-label="${p.total} in ${MONTHS_FULL[p.m]}">
       <div class="abs-bar" style="height:${Math.round(p.total/max*100)}%;--k:${i}">${["absent","sick","late"].map(k=>p[k] ? `<i class="b-${k}" style="flex:${p[k]}"></i>` : "").join("")}</div>
-      <small>${MON[p.m]}</small><b>${p.total || ""}</b></div>`).join("")}</div>
+      <small>${MON[p.m]}</small><b>${p.total || ""}</b></button>`).join("")}</div>
     <div class="abs-legend">${Object.entries(ABS_KINDS).map(([k,[l]])=>`<span><i class="b-${k}"></i>${l}</span>`).join("")}</div>`;
 
   // which lessons it happens most in
   const bySub = {};
-  for(const a of all){ const c = a.code || (a.lesson ? a.lesson.split(" - ")[0] : ""); if(!c) continue; (bySub[c] = bySub[c] || {late:0, total:0}); bySub[c].total++; if(absKind(a)==="late") bySub[c].late++; }
+  for(const a of all){ const c = absSubjOf(a); if(!c) continue; (bySub[c] = bySub[c] || {late:0, total:0}); bySub[c].total++; if(absKind(a)==="late") bySub[c].late++; }
   const subs = Object.entries(bySub).sort((a,b)=>b[1].total-a[1].total).slice(0,6);
-  const subHtml = subs.length ? `<div class="list">${subs.map(([c,v])=>`<div class="abs-sub"><span class="dot" style="background:${subjectColor(c)}"></span><b>${esc(SUBJECTS[c] || c)}</b>
-      <span class="abs-subbar"><i style="width:${Math.round(v.total/subs[0][1].total*100)}%;background:${subjectColor(c)}"></i></span><span class="abs-subn">${v.total}${v.late ? ` <small>(${v.late} te laat)</small>` : ""}</span></div>`).join("")}</div>` : "";
+  const subHtml = subs.length ? `<div class="list">${subs.map(([c,v])=>`<button type="button" class="abs-sub ${absSubj === c ? "on" : ""}" data-abss="${esc(c)}"><span class="dot" style="background:${subjectColor(c)}"></span><b>${esc(SUBJECTS[c] || c)}</b>
+      <span class="abs-subbar"><i style="width:${Math.round(v.total/subs[0][1].total*100)}%;background:${subjectColor(c)}"></i></span><span class="abs-subn">${v.total}${v.late ? ` <small>(${v.late} te laat)</small>` : ""}</span></button>`).join("")}</div>` : "";
 
   // the list, grouped per month, with the filter from the tiles
-  const pick = absFilter === "bad" ? all.filter(a=>a.allowed === false) : absFilter === "all" ? all : all.filter(a=>absKind(a) === absFilter);
+  const pick = (absFilter === "bad" ? all.filter(a=>a.allowed === false) : absFilter === "all" ? all : all.filter(a=>absKind(a) === absFilter))
+    .filter(a=>{ const d = new Date(a.start); return (!absMonth || absMonth === d.getFullYear() + "-" + d.getMonth()) && (!absSubj || absSubjOf(a) === absSubj); });
   const groups = [];
   for(const a of pick){ const d = new Date(a.start), k = d.getFullYear()+"-"+d.getMonth(); let g = groups[groups.length-1]; if(!g || g.k !== k){ g = {k, label: MONTHS_FULL[d.getMonth()] + (d.getFullYear() !== now.getFullYear() ? " " + d.getFullYear() : ""), items:[]}; groups.push(g); } g.items.push(a); }
-  const chips = [["all","Alles"],["late","Te laat"],["sick","Ziek"],["absent","Afwezig"],["bad","Ongeoorloofd"]].map(([k,l])=>`<button type="button" class="chip ${absFilter===k?"on":""}" data-absf="${k}">${l}</button>`).join("");
+  const chips = [["all","Alles"],["late","Te laat"],["sick","Ziek"],["absent","Afwezig"],["bad","Ongeoorloofd"]].map(([k,l])=>`<button type="button" class="chip ${absFilter===k?"on":""}" data-absf="${k}">${l}</button>`).join("")
+    + (absMonth ? `<button type="button" class="chip on x" data-absm="${absMonth}">${MONTHS_FULL[Number(absMonth.split("-")[1])]} ✕</button>` : "")
+    + (absSubj ? `<button type="button" class="chip on x" data-abss="${esc(absSubj)}">${esc(SUBJECTS[absSubj] || absSubj)} ✕</button>` : "");
   const listHtml = groups.length ? groups.map(g=>`<div class="caption">${esc(g.label)}</div><div class="list">${g.items.map(a=>{ const d = new Date(a.start), subj = SUBJECTS[a.code] || (a.lesson ? a.lesson.split(" - ")[0] : "");
-      return `<div class="abs-row"><span class="abs-ic k-${absKind(a)}" aria-hidden="true">${ABS_IC[a.kind] || "•"}</span>
+      return `<button type="button" class="abs-row press" data-abs="${esc(a.id)}"><span class="abs-ic k-${absKind(a)}" aria-hidden="true">${ABS_IC[a.kind] || "•"}</span>
         <span style="min-width:0"><b>${esc(a.label)}</b><small>${esc(DOW[d.getDay()] + " " + d.getDate() + " " + MON[d.getMonth()])}${a.hour ? " · " + a.hour + "e uur" : ""}${subj ? " · " + esc(subj) : ""}</small></span>
-        <span class="abs-tag ${a.allowed === false ? "bad" : a.allowed ? "ok" : ""}">${a.allowed === false ? "Ongeoorloofd" : a.allowed ? "Geoorloofd" : "Open"}</span></div>`; }).join("")}</div>`).join("")
+        <span class="abs-tag ${a.allowed === false ? "bad" : a.allowed ? "ok" : ""}">${a.allowed === false ? "Ongeoorloofd" : a.allowed ? "Geoorloofd" : "Open"}</span></button>`; }).join("")}</div>`).join("")
     : emptyState("done", "Niets in deze lijst", "Kies een ander filter.", true);
 
   if(WIDE.matches){
@@ -4386,6 +4819,34 @@ function renderAbsences(now, list, el){
   }
   html += `<p class="footnote">Uit Magister. Controleer Magister voor het officiële overzicht.</p>`;
   el.innerHTML = html;
+}
+/* one absence in detail: what, when, which lesson, whether it is excused, and how often this happened */
+function openAbsence(id, src){
+  const A = absenceList() || [], a = A.find(x=>String(x.id) === String(id)); if(!a) return;
+  haptic();
+  const k = absKind(a), [kl, kc] = ABS_KINDS[k] || ["Afwezig","#8E8E93"], d = new Date(a.start), e = a.end ? new Date(a.end) : null;
+  const subj = absSubjOf(a), subjName = SUBJECTS[subj] || subj;
+  const sorted = [...A].sort((x,y)=> new Date(x.start) - new Date(y.start));
+  const nth = sorted.filter(x=>absKind(x) === k && new Date(x.start) <= d).length, total = sorted.filter(x=>absKind(x) === k).length;
+  const sameSubj = subj ? A.filter(x=>absSubjOf(x) === subj).length : 0;
+  const sameDay = A.filter(x=>x !== a && dayKey(new Date(x.start)) === dayKey(d));
+  const lesson = events.find(ev=>ev.school && ev.start <= d && d < ev.end);
+  const time = e && e - d > 60000 && e - d < 12*36e5 ? `${hm(d)} – ${hm(e)}` : hm(d);
+  const rows = [["Soort", kl], subjName ? ["Vak", subjName] : null, a.lesson ? ["Les", a.lesson] : null, a.hour ? ["Lesuur", a.hour + "e uur"] : null, ["Tijd", time],
+    ["Geoorloofd", a.allowed === true ? "Ja" : a.allowed === false ? "Nee" : "Nog niet bekend"], ["Afgehandeld", a.handled ? "Ja" : "Nee"],
+    lesson && (lesson.room || lesson.teacher) ? ["Lokaal / docent", [lesson.room, lesson.teacher].filter(Boolean).join(" · ")] : null].filter(Boolean);
+  const facts = [`Je ${nth}e keer ${k === "late" ? "te laat" : k === "sick" ? "ziek" : "afwezig"} dit schooljaar (van ${total}).`,
+    sameSubj > 1 ? `${sameSubj}× bij ${subjName}.` : "", sameDay.length ? `Die dag nog ${sameDay.length} ${sameDay.length === 1 ? "melding" : "meldingen"}.` : ""].filter(Boolean);
+  $("abs-body").innerHTML = `<div class="detail-hero abs-hero" style="--c:${kc}"><span class="abs-big">${ABS_IC[a.kind] || "•"}</span><h3>${esc(a.label)}</h3>
+      <p>${esc(d.toLocaleDateString("nl-NL", {weekday:"long", day:"numeric", month:"long"}))}${a.hour ? " · " + a.hour + "e uur" : ""}</p>
+      <span class="abs-tag big ${a.allowed === false ? "bad" : a.allowed ? "ok" : ""}">${a.allowed === false ? "Ongeoorloofd" : a.allowed ? "Geoorloofd" : "Open"}</span></div>
+    <div class="list abs-kv">${rows.map(([x,y])=>`<div class="kv"><span>${esc(x)}</span><span>${esc(y)}</span></div>`).join("")}</div>
+    <div class="caption">Goed om te weten</div><div class="list"><div class="abs-facts">${facts.map(f=>`<p>${esc(f)}</p>`).join("")}
+      ${a.allowed === false && !a.handled ? `<p class="warn-t">Dit staat nog open. Vraag je mentor of de administratie wat je moet doen.</p>` : ""}</div></div>
+    ${sameDay.length ? `<div class="caption">Dezelfde dag</div><div class="list">${sameDay.map(x=>`<button type="button" class="abs-row press" data-abs2="${esc(x.id)}"><span class="abs-ic k-${absKind(x)}">${ABS_IC[x.kind] || "•"}</span><span style="min-width:0"><b>${esc(x.label)}</b><small>${x.hour ? x.hour + "e uur" : hm(new Date(x.start))}${absSubjOf(x) ? " · " + esc(SUBJECTS[absSubjOf(x)] || absSubjOf(x)) : ""}</small></span><span></span></button>`).join("")}</div>` : ""}
+    <div class="list"><a class="linkrow" href="${esc((extra.magisterUrl || magisterUrl() + "/magister/") + "#/afwezigheid")}" target="_blank" rel="noopener">Bekijk in Magister ↗</a></div>`;
+  $("abs-body").onclick = ev=>{ const o = ev.target.closest("[data-abs2]"); if(o) openAbsence(o.dataset.abs2); };
+  if(!absDlg.open) openSheet(absDlg, src); else $("abs-body").scrollTop = 0;
 }
 function shortDate(k){ const d = new Date(k+"T12:00"); const n = daysUntil(d, new Date()); return n === 0 ? "vandaag" : n === -1 ? "gisteren" : d.getDate()+" "+MON[d.getMonth()]; }
 function openSubject(key, src, highlight){
@@ -4558,7 +5019,7 @@ function replanAll(){
 const SYNC_FILE = "rooster-state.json";
 const SYNC_KEYS = {
   done:     [()=>done,   v=>{ done = v || {}; store.set("ml-done", done); }],
-  stuff:    [()=>stuff,  v=>{ stuff = Array.isArray(v) ? v : []; store.set("ml-items", stuff); }],
+  stuff:    [()=>stuff,  v=>{ stuff = Array.isArray(v) ? v : []; store.set("ml-items", stuff); if(extra.matList) mergeMaterials(extra.matList, extra.magisterUrl); }],
   packed:   [()=>packed, v=>{ packed = v || {}; store.set("ml-packed", packed); }],
   plans:    [()=>plans,  v=>{ plans = v || {}; store.set("ml-plans", plans); }],
   prefs:    [()=>prefs,  v=>{ if(v && typeof v === "object"){ Object.assign(prefs, v); store.set("ml-prefs", prefs); } }],
@@ -4674,6 +5135,7 @@ function renderSyncRow(){
   $("do-connect").hidden = !connectReady || mode === "demo";
   $("do-connect").textContent = source === "link" ? "Koppeling beheren" : "Koppel met Magister";
   $("do-linkcopy").hidden = source !== "link";
+  $("do-magsync").hidden = source !== "link" || !connectReady;
   $("set-source").innerHTML = `<span class="src-badge"><i></i>${esc(srcText)}${lastUpdated && mode === "live" ? " · "+esc(relTime(lastUpdated)) : ""}</span>`;
 }
 $("do-sync").addEventListener("click", ()=>{
@@ -4688,6 +5150,8 @@ $("do-unsync").addEventListener("click", ()=>{
   renderSyncRow(); toast("Synchroniseren staat uit");
 });
 $("do-connect").addEventListener("click", ()=>{ location.href = CONNECT_URL; });
+// opens your koppelpagina, which updates from Magister straight away; back in MCML the new data loads by itself
+$("do-magsync").addEventListener("click", ()=>{ window.open(CONNECT_URL + "?sync=1", "_blank", "noopener"); toast("Je koppelpagina werkt Magister nu bij. Kom daarna terug."); });
 $("do-linkcopy").addEventListener("click", ()=>{
   const u = linkUrl();
   (navigator.clipboard?.writeText(u) || Promise.reject()).then(()=>toast("Inloglink gekopieerd. Deel hem met niemand."), ()=>{ window.prompt("Kopieer je inloglink:", u); });
