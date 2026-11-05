@@ -1652,7 +1652,7 @@ button.abs-col.on{transform:translateY(-3px)}
 button.abs-col.on b{color:var(--blue)}
 .abs-chips .chip.x{background:var(--blue);color:#fff}
 .abs-hero{display:grid;justify-items:center;text-align:center;gap:4px;padding-top:22px}
-.abs-big{font-size:40px;width:74px;height:74px;border-radius:24px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,var(--bg2));margin-bottom:6px}
+.abs-bigic{font-size:40px;width:74px;height:74px;border-radius:24px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,var(--bg2));margin-bottom:6px}
 .abs-hero h3{margin:0}
 .abs-tag.big{margin-top:8px;font-size:13px;padding:5px 12px}
 .abs-kv .kv span:last-child{text-align:right;font-weight:600}
@@ -1686,11 +1686,11 @@ button.abs-col.on b{color:var(--blue)}
 .abs-bar{align-self:end;width:100%;max-width:30px;min-height:3px;border-radius:7px;overflow:hidden;display:flex;flex-direction:column-reverse;background:var(--fill);
   animation:growH .7s var(--out) both;animation-delay:calc(var(--k) * 45ms)}
 .abs-bar i{display:block;min-height:3px}
-.b-late{background:var(--orange)} .b-sick{background:var(--blue)} .b-absent{background:#8E8E93}
+.b-late{background:#FF9F0A} .b-sick{background:#32ADE6} .b-absent{background:#8E8E93}
 .abs-legend{display:flex;gap:14px;justify-content:center;margin-top:10px;font-size:12px;font-weight:600;color:var(--label2)}
 .abs-legend span{display:inline-flex;align-items:center;gap:6px}
 .abs-legend i{width:9px;height:9px;border-radius:3px}
-.abs-sub{display:grid;grid-template-columns:10px minmax(0,130px) minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 16px;font-size:15px}
+.abs-sub{display:grid;grid-template-columns:10px minmax(70px,1fr) minmax(36px,1.3fr) auto;gap:10px;align-items:center;padding:12px 16px;font-size:15px}
 .abs-sub + .abs-sub{border-top:.5px solid var(--sep)}
 .abs-sub b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .abs-subbar{height:8px;border-radius:4px;background:var(--fill);overflow:hidden}
@@ -1724,7 +1724,7 @@ button.abs-col.on b{color:var(--blue)}
 
 /* the table: subject column and average stay put while the grades scroll */
 .cl-scroll{overflow-x:auto;margin:0 -16px;padding:0 16px 6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
-.cl{--nw:minmax(100px,130px);--cw:46px;--pw:50px;--tw:0px;--aw:60px;display:grid;column-gap:6px;row-gap:6px;align-items:stretch;width:max-content;min-width:100%;
+.cl{--nw:minmax(100px,130px);--cw:46px;--pw:50px;--tw:minmax(0px,1fr);--aw:60px;display:grid;column-gap:6px;row-gap:6px;align-items:stretch;width:max-content;min-width:100%;
   background:var(--bg2);border-radius:var(--r-lg,22px);box-shadow:var(--card-shadow);padding:10px 10px 12px}
 .cl-h{font-size:11.5px;font-weight:650;color:var(--label3);text-align:center;padding:2px 0 4px}
 .cl-h.cl-name{text-align:left;padding-left:8px}
@@ -1787,8 +1787,9 @@ button.abs-col.on b{color:var(--blue)}
 @media (max-width:420px){ .cl-sum{grid-template-columns:1fr 1fr} .cl-big{grid-column:1/-1} }
 @media (min-width:1024px){
   .cl-scroll{margin:0;padding:0 0 6px}
-  .cl{--nw:minmax(170px,220px);--cw:56px;--pw:62px;--tw:minmax(110px,1fr);--aw:80px;column-gap:8px;padding:14px 16px 16px}
-  .cl.no-trend{--tw:0px}
+  .cl{--nw:minmax(170px,240px);--cw:56px;--pw:62px;--tw:minmax(110px,1fr);--aw:80px;column-gap:8px;padding:14px 16px 16px}
+  .cl > .cl-h.cl-sp{visibility:visible}
+  .cl.no-trend{--tw:0px;--nw:minmax(170px,1fr)}
   .cl.no-trend .cl-h.cl-sp{visibility:hidden}
   .cl-trend{display:flex;align-items:center;padding:0 10px}
   .cl-trend svg{display:block}
@@ -1801,6 +1802,7 @@ button.abs-col.on b{color:var(--blue)}
 html.calm .cl-c,html.calm .cl-cell-name,html.calm .cl-cell-avg,html.calm .cl-row,html.calm .cl-cards .gr-card{animation:none!important}
 /* --- rows, period headers, period averages (both styles) --- */
 .cl-r{display:contents}
+.cl-h.cl-sp{visibility:hidden}
 .cl-ph{grid-row:auto;font-size:12px;font-weight:750;letter-spacing:.02em;text-transform:uppercase;color:var(--blue);text-align:center;padding:6px 0 5px;border-radius:9px;
   background:color-mix(in srgb,var(--blue) 10%,transparent)}
 .cl-ph0{padding:0}
@@ -1808,6 +1810,12 @@ html.calm .cl-c,html.calm .cl-cell-name,html.calm .cl-cell-avg,html.calm .cl-row
 .cl-pa{position:relative;display:grid;place-items:center;border-radius:12px;background:var(--fill)}
 .cl-pa b{font-family:var(--round);font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
 .cl-pa i{position:absolute;top:3px;right:4px;font-style:normal;font-size:8.5px;font-weight:800;color:var(--blue);line-height:1}
+.cl-c{min-width:0}
+.cl-c b{white-space:nowrap}
+.cd-card dd{max-width:68%;overflow-wrap:anywhere}
+.cd-card dl div.long{display:grid;gap:4px}
+.cd-card dl div.long dd{max-width:none;text-align:left;font-weight:500;line-height:1.35}
+.cl-mtag{font-style:normal;font-size:10px;font-weight:700;color:var(--blue);margin-left:4px}
 .cl-c .cl-k{position:absolute;left:0;right:0;bottom:3px;font-size:8.5px;font-weight:650;color:var(--label3);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip;letter-spacing:0}
 .cl.lbl .cl-c b{transform:translateY(-4px)}
 .cl.lbl .cl-c sup{top:2px}
@@ -4479,6 +4487,9 @@ $("import-file").addEventListener("change", async e=>{
 const GRADE_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="13" width="4" height="7.5" rx="1.2"/><rect x="10" y="8.5" width="4" height="12" rx="1.2"/><rect x="16.5" y="4" width="4" height="16.5" rx="1.2"/></svg>';
 const nl1 = n => n == null || isNaN(n) ? "–" : (Math.round(n*10)/10).toFixed(1).replace(".", ",");
 const gcls = n => { const p = prefs.gr.pass; return n == null ? "" : n < p ? "g-bad" : n < p + 1 ? "g-mid" : "g-good"; };
+/* a grade's colour; words like O / V / G (onvoldoende, voldoende, goed) count too */
+const gclsG = g => { if(g.num != null) return gcls(g.num); const v = String(g.value || "").trim().toUpperCase().match(/^(ZS|S|O|M|ON|V|RV|G|ZG|U|GOED|VOLDOENDE|ONVOLDOENDE)\b/);
+  if(!v) return ""; const k = v[1]; return /^(ZS|S|O|M|ON|ONVOLDOENDE)$/.test(k) ? "g-bad" : /^(V|RV|VOLDOENDE)$/.test(k) ? "g-mid" : "g-good"; };
 /* averages with one or two decimals (your choice); single grades stay exactly as Magister writes them */
 const nlA = n => n == null || isNaN(n) ? "–" : prefs.gr.avgDec === 2 ? (Math.round(n*100)/100).toFixed(2).replace(".", ",") : nl1(n);
 function demoGrades(){
@@ -4524,6 +4535,7 @@ function subjectsWithOfficial(G){
   for(const a of officialList()){
     if(a.num == null) continue;
     const key = a.code || a.subject;
+    if(!key) continue;              // an average without a subject is your overall average (shown at the top)
     if(subs.some(s=>s.key === key || (a.subject && s.name.toLowerCase() === a.subject.toLowerCase()))) continue;
     const o = officialFor(key, a.subject);
     subs.push({key, code:a.code, name: SUBJECTS[a.code] || (a.subject ? a.subject[0].toUpperCase() + a.subject.slice(1) : key), all:[], sum:0, w:0, avg:o.num, official:o});
@@ -4538,7 +4550,7 @@ function officialFor(key, name){
 function bySubject(list){
   const m = new Map();
   for(const g of list){
-    const k = g.code || g.subject; if(!k) continue;
+    const k = g.code || g.subject; if(!k || !String(k).trim()) continue;
     if(!m.has(k)) m.set(k, {key:k, code:g.code, name: SUBJECTS[g.code] || g.subject || g.code, all:[], sum:0, w:0});
     const s = m.get(k); s.all.push(g);
     if(g.num != null && g.counts !== false){ s.sum += g.num * g.weight; s.w += g.weight; }
@@ -4553,6 +4565,15 @@ function spark(all){
 }
 /* a stable key for one grade, so a tap in the overview can point at it in the subject sheet */
 const gkey = g => [g.code || g.subject, g.date, g.value, g.desc].join("|");
+/* some teachers type a whole sentence as the "grade" (feedback, or O/V/G with an explanation): show it short */
+const isTextGrade = g => g.num == null && String(g.value || "").trim().length > 4;
+function gval(g){
+  const v = String(g.value || "").trim(); if(!v) return "–";
+  if(!isTextGrade(g)) return v;
+  const m = v.match(/^([A-Za-z+\-]{1,3})\s*[:.\-–]/); return m ? m[1].toUpperCase() : "💬";
+}
+/* Magister's overall average (an official average that belongs to no subject) */
+const overallOfficial = () => { const L = officialList().filter(a=>a.num != null && !a.code && !a.subject); return L.length ? L[L.length-1] : null; };
 const isNew = (g, now) => g.date && (now - new Date(g.date + "T12:00")) < 7*864e5;
 /* how much one grade moved the average of its subject (chronological, weighted, only grades that count) */
 function gradeEffects(subs){
@@ -4580,7 +4601,8 @@ function periodAvg(s, pname, cells){
   for(const g of cells){ if(g.num == null || g.counts === false) continue; sum += g.num * g.weight; w += g.weight; }
   return {num: w ? sum / w : null, official:false};
 }
-const shortHead = g => (g.colName || g.desc || "").replace(/^(toets|test)\s*/i, "T ").split(/\s+/).slice(0,2).join(" ").slice(0,6);
+const shortHead = g => (g.colName || g.desc || "").replace(/^\s*[\[(][^\])]*[\])]\s*/, "").replace(/^(toets|test)\s*/i, "T ").split(/\s+/).slice(0,2).join(" ").trim().slice(0,6);
+const wShow = g => prefs.gr.weight && g.weight !== 1 && g.weight > 0;
 function cellLabel(g){
   const h = prefs.gr.heads;
   if(h === "kop") return shortHead(g);
@@ -4602,7 +4624,8 @@ function renderGrades(now, list, el){
   subs.forEach(s=>{ s.show = subjAvg(s); });
   const VG = G.filter(g=>!hiddenSet.has(g.code || g.subject));
   const scored = subs.filter(s=>s.show != null);
-  const overall = scored.length ? scored.reduce((a,s)=>a+s.show, 0) / scored.length : null;
+  const oo = GP.avgSource !== "own" && !hiddenSet.size ? overallOfficial() : null;
+  const overall = oo ? oo.num : scored.length ? scored.reduce((a,s)=>a+s.show, 0) / scored.length : null;
   const bad = scored.filter(s=>s.show < GP.pass);
   const at = mode === "demo" ? null : grades?.at;
   const fresh = VG.filter(g=>isNew(g, now));
@@ -4612,9 +4635,9 @@ function renderGrades(now, list, el){
   if(GP.summary){
     const lo = scored.length ? scored.reduce((a,s)=> s.show < a.show ? s : a) : null, last = VG[0];
     html += `<div class="cl-sum">
-      <div class="cl-big" style="--g1:${g1}"><small>Gemiddeld</small><b class="num" data-avg="${overall ?? ""}">${nlA(overall)}</b><span>${scored.length} vakken · ${bad.length ? `<em class="g-bad">${bad.length} onvoldoende</em>` : "geen onvoldoendes"}</span></div>
+      <div class="cl-big" style="--g1:${g1}"><small>Gemiddeld${oo ? ` <i class="cl-mtag">Magister</i>` : ""}</small><b class="num" data-avg="${overall ?? ""}">${nlA(overall)}</b><span>${scored.length} vakken · ${bad.length ? `<em class="g-bad">${bad.length} onvoldoende</em>` : "geen onvoldoendes"}</span></div>
       <div class="cl-mini"><small>Laagste</small>${lo ? `<b class="${gcls(lo.show)} num">${nlA(lo.show)}</b><span>${esc(lo.name)}</span>` : "<b>–</b>"}</div>
-      <div class="cl-mini"><small>${fresh.length ? "Nieuw deze week" : "Laatste cijfer"}</small>${last ? `<b class="${gcls(last.num)} num">${fresh.length > 1 ? fresh.length : esc(last.value || "–")}</b><span>${fresh.length > 1 ? "nieuwe cijfers" : esc(SUBJECTS[last.code] || last.subject)}</span>` : "<b>–</b>"}</div>
+      <div class="cl-mini"><small>${fresh.length ? "Nieuw deze week" : "Laatste cijfer"}</small>${last ? `<b class="${gcls(last.num)} num">${fresh.length > 1 ? fresh.length : esc(gval(last))}</b><span>${fresh.length > 1 ? "nieuwe cijfers" : esc(SUBJECTS[last.code] || last.subject)}</span>` : "<b>–</b>"}</div>
     </div>`;
   }
 
@@ -4656,8 +4679,8 @@ function renderGrades(now, list, el){
           const g = cells[j];
           if(!g){ html += `<div class="cl-c empty" style="--i:${i}"></div>`; continue; }
           const k = gkey(g), lab = cellLabel(g);
-          html += `<button type="button" class="cl-c ${gcls(g.num)} ${g.counts === false ? "nc" : ""} ${GP.newDot && isNew(g, now) ? "new" : ""} ${clSel === k ? "sel" : ""}" data-cell="${esc(k)}" data-subj="${esc(s.key)}" data-g="${esc(k)}" style="--i:${i}"
-            aria-label="${esc((SUBJECTS[g.code] || g.subject) + ": " + (g.value || "–") + (g.desc ? ", " + g.desc : ""))}"><b>${esc(g.value || "–")}</b>${GP.weight && g.weight !== 1 ? `<sup>${String(g.weight).replace(".",",")}×</sup>` : ""}${lab ? `<small class="cl-k">${esc(lab)}</small>` : ""}</button>`;
+          html += `<button type="button" class="cl-c ${gclsG(g)} ${g.counts === false ? "nc" : ""} ${GP.newDot && isNew(g, now) ? "new" : ""} ${clSel === k ? "sel" : ""}" data-cell="${esc(k)}" data-subj="${esc(s.key)}" data-g="${esc(k)}" style="--i:${i}"
+            aria-label="${esc((SUBJECTS[g.code] || g.subject) + ": " + (g.value || "–") + (g.desc ? ", " + g.desc : ""))}"><b>${esc(gval(g))}</b>${wShow(g) && !lab ? `<sup>${String(g.weight).replace(".",",")}×</sup>` : ""}${lab || wShow(g) ? `<small class="cl-k">${esc([wShow(g) ? String(g.weight).replace(".",",") + "×" : "", lab].filter(Boolean).join(" "))}</small>` : ""}</button>`;
         }
         if(usePer){ const pa = periodAvg(s, p, cells);
           html += `<div class="cl-pa ${gcls(pa.num)}" style="--i:${i++}" title="${pa.official ? "Gemiddelde uit Magister" : "Berekend uit je cijfers"}"><b class="num">${nlA(pa.num)}</b>${pa.official ? "<i>M</i>" : ""}</div>`; }
@@ -4676,7 +4699,7 @@ function renderGrades(now, list, el){
       const trend = prev.length >= 2 ? (prev[prev.length-1].num >= prev[prev.length-2].num ? "▲" : "▼") : "";
       return `<button class="gr-card press" type="button" data-subj="${esc(s.key)}" style="--c:${c};--i:${i}"><span class="nm">${esc(s.name)}</span>
         <span class="av"><b class="${gcls(s.show)} num" data-avg="${s.show ?? ""}">${nlA(s.show)}</b>${trend ? `<small class="${trend==="▲"?"g-good":"g-bad"}">${trend}</small>` : ""}${s.official && GP.avgSource !== "own" ? `<span class="off-tag" title="${esc(s.official.label)}">Magister</span>` : ""}</span>
-        <span class="meta">${s.all.length ? `${s.all.length} ${s.all.length===1?"cijfer":"cijfers"} · laatst ${esc(lastG.value)}` : esc(s.official?.label || "Officieel gemiddelde")}</span>${GP.trend ? spark(s.all) : ""}</button>`; }).join("");
+        <span class="meta">${s.all.length ? `${s.all.length} ${s.all.length===1?"cijfer":"cijfers"} · laatst ${esc(gval(lastG))}` : esc(s.official?.label || "Officieel gemiddelde")}</span>${GP.trend ? spark(s.all) : ""}</button>`; }).join("");
     html += sortBar + `<div class="gr-grid cl-cards">${cards}</div>`;
   }
 
@@ -4687,7 +4710,7 @@ function renderGrades(now, list, el){
     let i = 0;
     html += groups.map(gr=>`<div class="caption">${esc(gr.label)}</div><div class="list">${gr.items.map(g=>{ const e = effects.get(gkey(g)), c = g.code ? subjectColor(g.code) : "#8E8E93";
       return `<button type="button" class="cl-row" data-subj="${esc(g.code || g.subject)}" data-g="${esc(gkey(g))}" style="--c:${c};--i:${i++}">
-        <span class="cl-pill ${gcls(g.num)} ${GP.newDot && isNew(g, now) ? "new" : ""}"><b>${esc(g.value || "–")}</b></span>
+        <span class="cl-pill ${gclsG(g)} ${GP.newDot && isNew(g, now) ? "new" : ""}"><b>${esc(gval(g))}</b></span>
         <span class="cl-txt"><b>${esc(SUBJECTS[g.code] || g.subject)}</b><small>${esc(g.desc || "Cijfer")}${GP.weight && g.weight !== 1 ? " · weging " + String(g.weight).replace(".",",") : ""}${g.period ? " · " + esc(g.period) : ""}${g.counts === false ? " · telt niet mee" : ""}</small></span>
         <span class="cl-eff">${e != null && Math.abs(e) >= .05 ? `<em class="${e >= 0 ? "up" : "down"}">${e >= 0 ? "▲" : "▼"} ${nl1(Math.abs(e))}</em>` : ""}<small>${esc(shortDate(g.date))}</small></span></button>`; }).join("")}</div>`).join("");
     html += `<p class="footnote">De pijl laat zien hoeveel dat cijfer je gemiddelde voor dat vak omhoog of omlaag bracht.</p>`;
@@ -4702,10 +4725,11 @@ function cellDetailHtml(k, subs, effects){
     <div class="cd-legend"><span><i class="g-bad"></i>Onvoldoende</span><span><i class="mm">M</i>Uit Magister</span><span><i class="nc"></i>Telt niet mee</span>${prefs.gr.newDot ? `<span><i class="nw"></i>Nieuw</span>` : ""}</div></div>`;
   const e = effects.get(k), c = s.code ? subjectColor(s.code) : "#8E8E93";
   const rows = [["Omschrijving", g.desc || "–"], g.colName ? ["Kolom", g.colName] : null, g.period ? ["Periode", g.period] : null, ["Datum", g.date ? new Date(g.date + "T12:00").toLocaleDateString("nl-NL", {weekday:"short", day:"numeric", month:"long"}) : "–"],
-    ["Weging", String(g.weight).replace(".", ",") + "×"], ["Telt mee", g.counts === false ? "Nee" : "Ja"], e != null ? ["Effect op gemiddelde", (e >= 0 ? "+" : "−") + nl1(Math.abs(e))] : null].filter(Boolean);
-  return `<div class="cd-card" style="--c:${c}"><div class="cd-top"><span class="cd-val ${gcls(g.num)}">${esc(g.value || "–")}</span><span class="cd-sub"><b>${esc(s.name)}</b><small>${esc(g.desc || "Cijfer")}</small></span>
+    ["Weging", g.weight > 0 ? String(g.weight).replace(".", ",") + "×" : "–"], ["Telt mee", g.counts === false ? "Nee" : "Ja"], e != null ? ["Effect op gemiddelde", (e >= 0 ? "+" : "−") + nl1(Math.abs(e))] : null].filter(Boolean);
+  if(isTextGrade(g)) rows.unshift(["Beoordeling", g.value]);
+  return `<div class="cd-card" style="--c:${c}"><div class="cd-top"><span class="cd-val ${gclsG(g)}">${esc(gval(g))}</span><span class="cd-sub"><b>${esc(s.name)}</b><small>${esc(g.desc || "Cijfer")}</small></span>
       <button type="button" class="cd-x" data-cellclose aria-label="Sluiten">✕</button></div>
-    <dl>${rows.map(([a,b])=>`<div><dt>${esc(a)}</dt><dd class="${a.startsWith("Effect") ? (e >= 0 ? "g-good" : "g-bad") : ""}">${esc(b)}</dd></div>`).join("")}</dl>
+    <dl>${rows.map(([a,b])=>`<div class="${String(b).length > 40 ? "long" : ""}"><dt>${esc(a)}</dt><dd class="${a.startsWith("Effect") ? (e >= 0 ? "g-good" : "g-bad") : ""}">${esc(b)}</dd></div>`).join("")}</dl>
     <button type="button" class="btn press cd-more" data-subj="${esc(s.key)}" data-g="${esc(k)}">Alles van ${esc(s.name)}</button></div>`;
 }
 function selectCell(k){
@@ -4754,7 +4778,7 @@ function absenceList(){
 }
 const ABS_IC = {late:"⏱", sick:"🤒", absent:"🚪", removed:"⚠️", other:"📘"};
 const ABS_TAB_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12.5" r="8.5"/><path d="M12 8v4.8l3 1.9"/></svg>';
-const ABS_KINDS = {late:["Te laat","var(--orange)"], sick:["Ziek","var(--blue)"], absent:["Afwezig","#8E8E93"]};
+const ABS_KINDS = {late:["Te laat","#FF9F0A"], sick:["Ziek","#32ADE6"], absent:["Afwezig","#8E8E93"]};
 const absKind = a => a.kind === "late" || a.kind === "sick" ? a.kind : "absent";
 let absFilter = "all", absMonth = null, absSubj = null;
 const absSubjOf = a => a.code || (a.lesson ? a.lesson.split(" - ")[0] : "");
@@ -4771,8 +4795,8 @@ function renderAbsences(now, list, el){
   if(!all.length){ el.innerHTML = html + emptyState("done", "Geen absenties", "Je bent dit schooljaar nergens te laat of afwezig geweest. Netjes."); return; }
   const n = k => all.filter(a=>absKind(a) === k).length, unexcused = all.filter(a=>a.allowed === false);
   html += `<div class="abs-stats abs-big">
-    <button class="abs-st press ${absFilter==="late"?"on":""}" type="button" data-absf="${absFilter==="late"?"all":"late"}" style="--k:var(--orange)"><b class="num">${n("late")}</b><span>Te laat</span></button>
-    <button class="abs-st press ${absFilter==="sick"?"on":""}" type="button" data-absf="${absFilter==="sick"?"all":"sick"}" style="--k:var(--blue)"><b class="num">${n("sick")}</b><span>Ziek</span></button>
+    <button class="abs-st press ${absFilter==="late"?"on":""}" type="button" data-absf="${absFilter==="late"?"all":"late"}" style="--k:#FF9F0A"><b class="num">${n("late")}</b><span>Te laat</span></button>
+    <button class="abs-st press ${absFilter==="sick"?"on":""}" type="button" data-absf="${absFilter==="sick"?"all":"sick"}" style="--k:#32ADE6"><b class="num">${n("sick")}</b><span>Ziek</span></button>
     <button class="abs-st press ${absFilter==="absent"?"on":""}" type="button" data-absf="${absFilter==="absent"?"all":"absent"}" style="--k:#8E8E93"><b class="num">${n("absent")}</b><span>Afwezig</span></button>
     <button class="abs-st press ${unexcused.length ? "warn" : ""} ${absFilter==="bad"?"on":""}" type="button" data-absf="${absFilter==="bad"?"all":"bad"}" style="--k:var(--red)"><b class="num">${unexcused.length}</b><span>Ongeoorloofd</span></button></div>`;
   if(unexcused.some(a=>!a.handled)) html += `<p class="abs-note">Er staat iets open bij je absenties. Kijk in Magister of je nog iets moet regelen.</p>`;
@@ -4837,7 +4861,7 @@ function openAbsence(id, src){
     lesson && (lesson.room || lesson.teacher) ? ["Lokaal / docent", [lesson.room, lesson.teacher].filter(Boolean).join(" · ")] : null].filter(Boolean);
   const facts = [`Je ${nth}e keer ${k === "late" ? "te laat" : k === "sick" ? "ziek" : "afwezig"} dit schooljaar (van ${total}).`,
     sameSubj > 1 ? `${sameSubj}× bij ${subjName}.` : "", sameDay.length ? `Die dag nog ${sameDay.length} ${sameDay.length === 1 ? "melding" : "meldingen"}.` : ""].filter(Boolean);
-  $("abs-body").innerHTML = `<div class="detail-hero abs-hero" style="--c:${kc}"><span class="abs-big">${ABS_IC[a.kind] || "•"}</span><h3>${esc(a.label)}</h3>
+  $("abs-body").innerHTML = `<div class="detail-hero abs-hero" style="--c:${kc}"><span class="abs-bigic">${ABS_IC[a.kind] || "•"}</span><h3>${esc(a.label)}</h3>
       <p>${esc(d.toLocaleDateString("nl-NL", {weekday:"long", day:"numeric", month:"long"}))}${a.hour ? " · " + a.hour + "e uur" : ""}</p>
       <span class="abs-tag big ${a.allowed === false ? "bad" : a.allowed ? "ok" : ""}">${a.allowed === false ? "Ongeoorloofd" : a.allowed ? "Geoorloofd" : "Open"}</span></div>
     <div class="list abs-kv">${rows.map(([x,y])=>`<div class="kv"><span>${esc(x)}</span><span>${esc(y)}</span></div>`).join("")}</div>
@@ -4854,7 +4878,7 @@ function openSubject(key, src, highlight){
   haptic();
   const c = s.code ? subjectColor(s.code) : "#8E8E93";
   $("grade-title").textContent = s.name;
-  const rows = [...s.all].reverse().map(g=>`<div class="g-row ${highlight && gkey(g) === highlight ? "hl" : ""}"><span class="g-pill ${gcls(g.num)}">${esc(g.value || "–")}</span><span style="min-width:0"><b>${esc(g.desc || "Cijfer")}</b><small>${esc(shortDate(g.date))}${g.counts === false ? " · telt niet mee" : ""}</small></span><span class="w"><em>×${String(g.weight).replace(".",",")}</em>weging</span></div>`).join("");
+  const rows = [...s.all].reverse().map(g=>`<div class="g-row ${highlight && gkey(g) === highlight ? "hl" : ""}"><span class="g-pill ${gclsG(g)}">${esc(gval(g))}</span><span style="min-width:0"><b>${esc(g.desc || "Cijfer")}</b><small>${isTextGrade(g) ? esc(g.value) + " · " : ""}${esc(shortDate(g.date))}${g.counts === false ? " · telt niet mee" : ""}</small></span><span class="w"><em>×${String(g.weight).replace(".",",")}</em>weging</span></div>`).join("");
   $("grade-body").innerHTML = `<div class="detail-hero" style="--c:${c}"><h3>${nl1(s.avg)}</h3><p>${s.official ? "Officieel gemiddelde in Magister" + (s.own != null ? " · zelf berekend " + nl1(s.own) : "") : "Gemiddelde " + esc(s.name)} · ${s.all.length} ${s.all.length===1?"cijfer":"cijfers"}</p></div>
     <div class="caption">Wat moet ik halen?</div>
     <div class="list calc" style="--c:${c}">
