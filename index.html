@@ -1957,7 +1957,16 @@ button.sync-line{border:0;background:none;font:inherit;font-size:13px;font-weigh
 .sync-stats small{display:block;font-size:11.5px;color:var(--label2);line-height:1.25;margin-top:2px}
 #sync-body .kv span:last-child{text-align:right;color:var(--label2);max-width:62%}
 .sp-row{padding:11px 16px;display:grid;gap:2px}
+.sync-warn,.sync-calm{display:grid;gap:3px;margin:12px 0 0;padding:12px 14px;border-radius:16px;font-size:14px;line-height:1.4}
+.sync-warn{background:color-mix(in srgb,var(--orange) 14%,transparent);color:color-mix(in srgb,var(--orange) 55%,var(--label))}
+.sync-calm{background:color-mix(in srgb,var(--blue) 9%,transparent);color:var(--label2)}
+.sync-warn > b,.sync-calm > b{color:var(--label);font-size:15px}
 .sp-row + .sp-row{border-top:.5px solid var(--sep)}
+.side-links{display:grid;gap:2px;margin:4px 0 6px}
+.side-links button{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border:0;border-radius:12px;background:none;font:inherit;font-size:15px;font-weight:600;color:var(--label2);cursor:pointer;text-align:left}
+.side-links button:hover{background:color-mix(in srgb,var(--fill) 60%,transparent);color:var(--label)}
+.side-links svg{width:20px;height:20px}
+.ai-btn{color:#AF52DE}
 .sp-row b{font-size:15.5px;font-weight:600}
 .sp-row small{font-size:13.5px;color:var(--label2);line-height:1.35}
 
@@ -2077,21 +2086,72 @@ html.calm .wgrid.editing .wg{animation:none}
 .ai-orb{width:58px;height:58px;border-radius:50%;margin-bottom:8px;background:conic-gradient(from 0deg,#AF52DE,#5E5CE6,#0A84FF,#64D2FF,#AF52DE);filter:saturate(1.2);animation:orbSpin 6s linear infinite;box-shadow:0 8px 30px -8px #AF52DE}
 @keyframes orbSpin{to{rotate:360deg}}
 .ai-sugg{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 4px}
-.ai-bar{position:sticky;bottom:0;display:flex;align-items:flex-end;gap:8px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px) + var(--kb,0px));background:var(--glass-strong,var(--bg));-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-top:.5px solid var(--sep)}
+.ai-bar{display:flex;justify-content:center;padding:10px 14px calc(12px + env(safe-area-inset-bottom,0px) + var(--kb,0px));background:linear-gradient(180deg,transparent,var(--bg) 35%)}
 .ai-bar[hidden]{display:none}
-.ai-bar textarea{flex:1;min-width:0;border:0;border-radius:20px;padding:10px 14px;font:inherit;font-size:16px;line-height:1.3;resize:none;max-height:140px;background:var(--bg2);color:var(--label);box-shadow:inset 0 0 0 .5px var(--sep)}
-.ai-bar textarea:focus{outline:2px solid color-mix(in srgb,var(--blue) 50%,transparent)}
-.ai-bar button{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .25s var(--spring)}
+.ai-pill{display:flex;align-items:center;gap:6px;width:100%;max-width:560px;margin:0 auto;padding:5px 5px 5px 18px;border-radius:26px;background:var(--bg2);
+  box-shadow:0 6px 24px -10px rgba(0,0,0,.25),inset 0 0 0 .5px var(--sep);transition:box-shadow .25s}
+.ai-pill:focus-within{box-shadow:0 6px 24px -10px rgba(0,0,0,.25),inset 0 0 0 1.5px color-mix(in srgb,var(--blue) 60%,transparent)}
+.ai-bar textarea{flex:1;min-width:0;border:0;background:transparent;padding:9px 0;margin:0;font:inherit;font-size:16px;line-height:22px;height:40px;max-height:140px;resize:none;color:var(--label);outline:none;align-self:center}
+.ai-bar textarea::placeholder{color:var(--label3)}
+.ai-bar button{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .25s var(--spring),opacity .2s;align-self:flex-end}
 .ai-bar button:active{transform:scale(.9)}
-.ai-bar button svg{width:21px;height:21px}
+.ai-bar button svg{width:20px;height:20px}
 .ai-bar button.stop svg{display:none}
-.ai-bar button.stop::before{content:"";width:13px;height:13px;border-radius:3px;background:#fff}
+.ai-bar button.stop::before{content:"";width:12px;height:12px;border-radius:3px;background:#fff}
 .ai-sheet{height:88vh;overflow:hidden}
 .ai-sheet[open]{display:flex;flex-direction:column}
 .ai-sheet .sheet-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
 .ai-sheet .ai-bar{position:static;flex:none}
 @media (min-width:640px){ .ai-sheet{height:min(760px,calc(100vh - 120px))} }
 .danger-t{color:var(--red)!important}
+/* =================== AI widget =================== */
+.w-ask{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;padding:6px 6px 6px 14px;border-radius:999px;background:color-mix(in srgb,var(--wc) 10%,var(--bg2));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--wc) 25%,transparent);color:var(--label2);font-size:15px}
+.w-ask i{width:30px;height:30px;border-radius:50%;background:var(--wc);color:#fff;display:grid;place-items:center}
+.w-ask i svg{width:17px;height:17px}
+.w-quote{display:block;margin-top:6px;font-size:16px;font-weight:600;line-height:1.35;color:var(--label);font-style:italic}
+/* =================== friends in MCML =================== */
+.fr-me{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:20px;background:radial-gradient(120% 120% at 0 0,color-mix(in srgb,#64D2FF 18%,transparent),transparent 60%),var(--bg2);box-shadow:var(--card-shadow)}
+.fr-me small{display:block;font-size:12.5px;color:var(--label2);font-weight:600}
+.fr-me .code{display:block;font-family:ui-monospace,Menlo,monospace;font-size:24px;font-weight:800;letter-spacing:.14em}
+.fr-add{display:flex;gap:8px;margin-top:10px}
+.fr-add input{flex:1;min-width:0;border:0;border-radius:14px;padding:0 14px;height:44px;font:inherit;font-size:16px;letter-spacing:.08em;text-transform:uppercase;background:var(--bg2);color:var(--label);box-shadow:inset 0 0 0 .5px var(--sep)}
+.fr-add input::placeholder{letter-spacing:0;text-transform:none}
+.fr-add .btn{height:44px}
+.fr-btn{height:34px;padding:0 14px;font-size:14px;margin-left:auto}
+.fr-del{margin-left:auto;border:0;background:var(--fill);color:var(--label2);height:30px;min-width:30px;border-radius:999px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:0 10px}
+.fr-del.sure{background:var(--red);color:#fff}
+.fr-row .fr-n{flex:1}
+/* =================== fun =================== */
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.confetti i{position:absolute;top:-20px}
+.ach-top{display:flex;align-items:baseline;justify-content:center;gap:8px;padding:12px 0 4px}
+.ach-top b{font-family:var(--round);font-size:40px;font-weight:800}
+.ach-top span{color:var(--label2)}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.ach{display:grid;justify-items:center;text-align:center;gap:4px;padding:16px 10px;border-radius:20px;background:var(--bg2);box-shadow:var(--card-shadow);opacity:.55;filter:grayscale(1)}
+.ach.on{opacity:1;filter:none;background:radial-gradient(100% 80% at 50% 0,color-mix(in srgb,#FFD60A 22%,transparent),transparent 70%),var(--bg2)}
+.ach-ic{font-size:34px;line-height:1.1}
+.ach b{font-size:14.5px}
+.ach small{font-size:12px;color:var(--label2);line-height:1.3}
+.sleep-in{display:flex;align-items:center;gap:12px;margin:12px 0 0;padding:12px 14px;border-radius:20px;background:radial-gradient(120% 120% at 0 0,color-mix(in srgb,#5E5CE6 20%,transparent),transparent 65%),var(--bg2);box-shadow:var(--card-shadow)}
+.si-ic{font-size:30px}
+.sleep-in b{display:block;font-size:15.5px}
+.sleep-in small{display:block;font-size:13.5px;color:var(--label2)}
+.streak{color:#FF6B2C;font-weight:700}
+/* =================== rooster: how far into the day =================== */
+.day-prog{margin:4px 2px 12px}
+.dp-row{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--label2);font-variant-numeric:tabular-nums}
+.dp-row b{font-size:13.5px;color:var(--label);font-weight:650}
+.dp-track{position:relative;height:6px;margin-top:6px;border-radius:999px;background:var(--fill)}
+.dp-track i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,color-mix(in srgb,var(--red) 55%,var(--orange)),var(--red));transition:width 1.2s linear}
+.dp-track em{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px var(--bg),0 0 12px color-mix(in srgb,var(--red) 60%,transparent);transition:left 1.2s linear}
+.now-row{position:relative;height:0;list-style:none;border-top:2px solid var(--red);margin:0 0 0 14px;z-index:2}
+.now-row::before{content:"";position:absolute;left:-5px;top:-6px;width:10px;height:10px;border-radius:50%;background:var(--red)}
+.now-row span{position:absolute;right:12px;top:-11px;font-size:11px;font-weight:700;color:#fff;background:var(--red);border-radius:7px;padding:2px 6px;font-variant-numeric:tabular-nums}
+.row.is-now{position:relative;background:color-mix(in srgb,var(--red) 5%,var(--bg2))}
+.row.is-now::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:var(--np,0%);background:var(--red);border-radius:0 3px 3px 0;transition:width 1.2s linear}
+.row.is-now::before{content:"";position:absolute;left:calc(var(--np,0%) - 4px);bottom:-3px;width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 2px var(--bg2);z-index:1;transition:left 1.2s linear}
+
 
 </style>
 </head>
@@ -2102,6 +2162,7 @@ html.calm .wgrid.editing .wg{animation:none}
     <div class="nav-left" id="nav-left"></div>
     <div class="nav-title" id="nav-title"></div>
     <div class="nav-right"><button class="icon-btn press glass-rim" id="open-search" type="button" aria-label="Zoeken" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    <button class="icon-btn press glass-rim ai-btn" id="open-ai" type="button" aria-label="Assistent" title="Assistent" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></button>
     <button class="icon-btn press glass-rim focus-btn" id="open-focus" type="button" aria-label="Focus-timer" title="Focus (F)" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 2.5h4M18.5 6l1.5-1.5"/></svg></button>
     <button class="icon-btn press glass-rim" id="open-settings" type="button" aria-label="Instellingen" hidden>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -2225,6 +2286,11 @@ html.calm .wgrid.editing .wg{animation:none}
   <div class="sheet-head"><span style="min-width:50px"></span><h2>Widgets</h2><button type="button" class="sheet-close">Klaar</button></div>
   <div class="sheet-body" id="w-body"></div>
 </dialog>
+<dialog class="sheet" id="achsheet">
+  <div class="grabber" aria-hidden="true"></div>
+  <div class="sheet-head"><span style="min-width:50px"></span><h2>Prestaties</h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-body" id="ach-body"></div>
+</dialog>
 <dialog class="sheet" id="moresheet">
   <div class="grabber" aria-hidden="true"></div>
   <div class="sheet-head"><span style="min-width:50px"></span><h2>Meer</h2><button type="button" class="sheet-close">Klaar</button></div>
@@ -2234,7 +2300,7 @@ html.calm .wgrid.editing .wg{animation:none}
   <div class="grabber" aria-hidden="true"></div>
   <div class="sheet-head"><button type="button" class="ai-gear" id="ai-gear" aria-label="Instellingen assistent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button><h2>Assistent<small id="ai-mode"></small></h2><button type="button" class="sheet-close">Klaar</button></div>
   <div class="sheet-body"><div id="ai-log" class="ai-log"></div><div id="ai-set" hidden></div></div>
-  <form class="ai-bar" id="ai-form"><textarea id="ai-in" rows="1" placeholder="Vraag iets…" enterkeyhint="send" aria-label="Je vraag"></textarea><button type="submit" id="ai-send" aria-label="Versturen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></form>
+  <form class="ai-bar" id="ai-form"><div class="ai-pill"><textarea id="ai-in" rows="1" placeholder="Vraag iets…" enterkeyhint="send" aria-label="Je vraag"></textarea><button type="submit" id="ai-send" aria-label="Versturen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></div></form>
 </dialog>
 
 <dialog class="sheet" id="abssheet">
@@ -2303,6 +2369,10 @@ html.calm .wgrid.editing .wg{animation:none}
       <button class="linkrow" type="button" id="do-ai">AI-assistent</button>
       <button class="linkrow" type="button" id="do-friends">Samen vrij</button>
       <button class="linkrow" type="button" id="do-widgets">Widgets op Vandaag</button>
+      <button class="linkrow" type="button" id="do-ach">Prestaties</button>
+      <button class="linkrow" type="button" id="do-ics">Rooster naar je agenda (.ics)</button>
+      <label class="field sw"><span>Leuke extra's<small class="field-sub">Confetti, uitslapen-melding en je huiswerkreeks</small></span><span class="switch"><input id="set-fun" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Lestijd in het tabblad<small class="field-sub">Op de computer: "Nog 12 min · Engels"</small></span><span class="switch"><input id="set-title" type="checkbox" role="switch"><span></span></span></label>
     </div>
     <div class="caption">Jij</div>
     <div class="list">
@@ -2446,6 +2516,8 @@ const PREF_DEFAULTS = {
   region:"zuid",         // school holiday region
   note:"",               // the Notitie widget
   wxPlace:null,          // the Weer widget: {name, lat, lon}
+  fun:true,              // confetti, sleep-in banner, streak flame
+  titleCount:true,       // the browser tab shows how long the lesson still takes
   focusMin:25,           // focus session length
   breakMin:5,
 };
@@ -2704,6 +2776,9 @@ function rawToBundle(raw, via){
     materials: raw.materialen ? raw.materialen.map(rawMaterial).filter(Boolean) : null,
     averages: raw.gemiddelden ? raw.gemiddelden.map(rawAverage).filter(Boolean) : null,
     columns: Array.isArray(raw.kolommen) ? raw.kolommen.map(rawColumn).filter(Boolean) : null,
+    social: raw.social && typeof raw.social === "object" ? {code:String(raw.social.code || ""), share:!!raw.social.share, admin:!!raw.social.admin,
+      friends:(raw.social.friends || []).map(f=>({name:String(f.name || "?").slice(0, 24), code:String(f.code || ""), status:f.status || "", test:!!f.test})),
+      incoming:(raw.social.incoming || []).map(f=>({name:String(f.name || "?").slice(0, 24), code:String(f.code || "")}))} : null,
     friends: Array.isArray(raw.vrienden) ? raw.vrienden.filter(f=>f && f.name).map(f=>({name:String(f.name).slice(0, 24), test:!!f.test, days:f.days || {}})) : null,
     magisterUrl: raw.magister || ""};
 }
@@ -2795,8 +2870,9 @@ function applyBundle(b, animate){
   mode = "live"; events = (b.events || []).map(fromBundle).filter(Boolean).sort((a,c)=>a.start-c.start);
   lastUpdated = new Date(b.updated || Date.now());
   if(b.grades){ grades = {at:b.gradesAt || b.updated, list:b.grades}; store.set("ml-grades", grades); }
+  setTimeout(()=>{ if(friendsDlg.open) $("friends-body").innerHTML = friendsSheetHtml(); checkAchievements(!store.get("ml-ach", null)); }, 50);
   extra = {absences: b.absences || null, averages: b.averages || null, columns: b.columns || null, magisterUrl: b.magisterUrl || "", materials: Array.isArray(b.materials) ? b.materials.length : null, matList: Array.isArray(b.materials) ? b.materials : null,
-    friends: b.friends || null, meta: b.meta || null};
+    friends: b.friends || null, meta: b.meta || null, social: b.social || null};
   noteUitval();
   if(b.materials) mergeMaterials(b.materials, b.magisterUrl);
   if(b.school && !store.get("ml-magister","")) store.set("ml-magister", b.school + ".magister.net");
@@ -3074,16 +3150,26 @@ const nowMin = d => d.getHours() * 60 + d.getMinutes();
 /* ---------- how often MCML syncs ---------- */
 let lastFetched = null;            // when this device last pulled fresh data
 const SYNC_PLAN = {
-  link: [["Rooster (uitval, lokaal)", "Elke 10 minuten op schooldagen, 6:30 – 17:00"], ["Alles (cijfers, absenties …)", "Elk uur van 6 tot 19 uur, in het weekend om 9 uur"], ["Avond", "Zondag t/m donderdag tussen 19 en 22 uur, voor morgen"]],
+  link: [["Rooster (uitval, lokaal)", "Elke 10 minuten op schooldagen van 6:30 tot 17:00, en 's avonds voor een schooldag elk half uur tot 22:30"], ["Alles (cijfers, absenties …)", "Elk uur van 6 tot 23 uur op schooldagen, in het weekend om 9 uur en op zondagavond"], ["'s Nachts", "Van 22:30 tot 6:30 kijkt MCML niet. Magister verandert dan bijna nooit iets"]],
   code: [["Alles", "Elk uur via je GitHub-sync"]],
   google: [["Rooster en huiswerk", "Elk uur via je GitHub-sync naar Google Agenda"]],
   bm: [["Alles", "Alleen als jij de Magister-bladwijzer gebruikt"]],
 };
+/* the same timetable as the script (tick, every 10 minutes): is a check due at this moment? */
+function checkSlot(d){
+  const dow = d.getDay() === 0 ? 7 : d.getDay(), m = nowMin(d), h = d.getHours(), school = dow <= 5, tomorrow = dow === 7 || dow <= 4;
+  return (school && m >= 390 && m < 1020) || (tomorrow && m >= 1020 && m < 1350 && d.getMinutes() % 30 < 10) ||
+    (h >= 6 && h <= 22 && d.getMinutes() < 10 && (school || (dow === 7 && h >= 17))) || (dow >= 6 && h === 9 && d.getMinutes() < 10);
+}
 function nextCheckAt(now){
-  // the script runs every 10 minutes in the school window; otherwise on the hour
-  const d = new Date(now), dow = (d.getDay() + 6) % 7, m = nowMin(d);
-  if(dow <= 4 && m >= 390 && m < 1020){ const n = new Date(d); n.setMinutes(Math.ceil((m + 1) / 10) * 10 - d.getHours() * 60, 0, 0); return n; }
-  const n = new Date(d); n.setHours(d.getHours() + 1, 0, 0, 0); return n;
+  const d = new Date(now); d.setSeconds(0, 0); d.setMinutes(Math.floor(d.getMinutes() / 10) * 10 + 10);
+  for(let i = 0; i < 6 * 24 * 3; i++, d.setMinutes(d.getMinutes() + 10)) if(checkSlot(d)) return d;
+  return null;
+}
+function lastSlotBefore(t){
+  const d = new Date(t); d.setSeconds(0, 0); d.setMinutes(Math.floor(d.getMinutes() / 10) * 10);
+  for(let i = 0; i < 6 * 24 * 3; i++, d.setMinutes(d.getMinutes() - 10)) if(checkSlot(d)) return d;
+  return null;
 }
 function syncInfo(){
   const meta = extra.meta || {}, today = dayKey(new Date());
@@ -3098,7 +3184,7 @@ function syncSheetHtml(){
   return `<div class="sync-hero"><span class="sync-orb ${s.checked && now - s.checked < 3 * 36e5 ? "ok" : "old"}"><i></i></span>
       <b>${s.checked ? "Gecontroleerd " + esc(ago(s.checked)) : "Nog niet bijgewerkt"}</b>
       <small>${source === "link" ? "MCML kijkt zelf of er iets veranderd is in Magister" : source === "demo" ? "Voorbeeld" : "Via " + esc({code:"je GitHub-sync", google:"Google Agenda", bm:"de Magister-bladwijzer"}[source] || "Magister")}</small></div>
-    ${source === "link" ? `<div class="sync-stats"><div><b class="num">${s.checks}</b><small>Keer gecontroleerd vandaag</small></div><div><b class="num">${s.fulls}</b><small>Keer alles bijgewerkt vandaag</small></div><div><b class="num">${nx ? hm(nx) : "–"}</b><small>Volgende controle (ongeveer)</small></div></div>` : ""}
+    ${source === "link" ? `<div class="sync-stats"><div><b class="num">${s.checks}</b><small>Keer gecontroleerd vandaag</small></div><div><b class="num">${s.fulls}</b><small>Keer alles bijgewerkt vandaag</small></div><div><b class="num">${nx ? hm(nx) : "–"}</b><small>Volgende controle${nx && dayKey(nx) !== dayKey(now) ? " (" + esc(relDay(nx, now).toLowerCase()) + ")" : " (ongeveer)"}</small></div></div>${syncNote(s, now, nx)}` : ""}
     <div class="caption">Wanneer</div><div class="list">${[...plan, ["Dit apparaat", "Haalt elke 5 minuten nieuwe gegevens als MCML open is, en meteen als je de app opent"]].map(([a, b])=>`<div class="sp-row"><b>${esc(a)}</b><small>${esc(b)}</small></div>`).join("")}</div>
     <div class="caption">Laatst</div><div class="list">
       <div class="kv"><span>Rooster gecontroleerd</span><span>${esc(ago(s.checked))}</span></div>
@@ -3107,6 +3193,15 @@ function syncSheetHtml(){
       ${store.get("ml-synclinked", false) ? `<div class="kv"><span>Vinkjes en Kast tussen je apparaten</span><span>${store.get("ml-lastsync", 0) ? esc(ago(new Date(store.get("ml-lastsync", 0)))) : "–"} · via Google Drive</span></div>` : ""}</div>
     ${source === "link" && connectReady ? `<div class="list"><button class="linkrow" type="button" id="sync-now">Magister nu bijwerken</button></div>
       <p class="footnote">Uitval of een ander lokaal staat er meestal binnen 10 minuten in. Alles bijwerken duurt even, daarom gebeurt dat elk uur, of meteen als je rooster verandert.</p>` : ""}`;
+}
+/* why it hasn't updated: night time, or the script is behind */
+function syncNote(s, now, nx){
+  const due = lastSlotBefore(new Date(now - 15 * 60000));
+  if(s.checked && due && s.checked < new Date(due - 20 * 60000))
+    return `<div class="sync-warn"><b>Het bijwerken loopt achter</b><span>Volgens het schema had MCML om ${hm(due)} moeten kijken. Open je koppelpagina met <b>Magister nu bijwerken</b> hieronder. Staat daar een foutmelding, stuur die dan naar Mark. Heb je net een nieuwe versie van het script gezet? Dan begint het vanzelf bij de volgende controle.</span></div>`;
+  if(!checkSlot(now) && nx && nx - now > 40 * 60000)
+    return `<div class="sync-calm"><b>MCML rust even</b><span>${now.getHours() >= 22 || now.getHours() < 6 ? "'s Nachts kijkt MCML niet in Magister." : "Op dit moment staat er geen controle gepland."} De volgende is ${dayKey(nx) === dayKey(now) ? "om " + hm(nx) : esc(relDay(nx, now).toLowerCase()) + " om " + hm(nx)}. Wil je toch nu kijken? Tik op Magister nu bijwerken.</span></div>`;
+  return "";
 }
 function openSync(src){ $("sync-body").innerHTML = syncSheetHtml(); openSheet(syncDlg, src); }
 
@@ -3158,12 +3253,11 @@ function friendStatus(fr, now){
 }
 function friendsSheetHtml(){
   const F = friendsList(), now = new Date();
-  if(!F.length) return `<div class="gr-empty">${IC.people || ""}<h3 style="margin:0">Nog geen vrienden</h3>
-    <p>Voeg vrienden toe op je koppelpagina. Je ziet dan wanneer jullie allebei een tussenuur of uitval hebben. Jullie delen alleen wanneer je vrij bent, niets anders.</p>
-    ${source === "link" && connectReady ? `<a class="btn press" href="${esc(CONNECT_URL)}" target="_blank" rel="noopener">Vrienden toevoegen</a>` : ""}</div>`;
+  if(!F.length) return friendsManageHtml() + `<div class="gr-empty" style="margin-top:14px"><h3 style="margin:0">Nog niemand om mee samen vrij te zijn</h3>
+    <p>Deel je code met een vriend en voeg die van hem toe. Zodra jullie elkaar allebei hebben toegevoegd en delen aanstaat, zie je hier wanneer jullie allebei een tussenuur of uitval hebben.</p></div>` + friendsListHtml();
   const days = upcomingDays(now, schoolList()).slice(0, 5);
   const avatar = n => `<span class="fr-av" style="--c:${subjectColor(n.toLowerCase().slice(0,4))}">${esc(n.slice(0,1).toUpperCase())}</span>`;
-  let html = `<div class="caption">Nu</div><div class="list">${F.map(fr=>{ const [t, k] = friendStatus(fr, now); return `<div class="fr-row">${avatar(fr.name)}<span class="fr-n"><b>${esc(fr.name)}${fr.test ? ' <small class="fr-test">test</small>' : ""}</b><small class="st-${k}">${esc(t)}</small></span></div>`; }).join("")}</div>`;
+  let html = friendsManageHtml() + `<div class="caption">Nu</div><div class="list">${F.map(fr=>{ const [t, k] = friendStatus(fr, now); return `<div class="fr-row">${avatar(fr.name)}<span class="fr-n"><b>${esc(fr.name)}${fr.test ? ' <small class="fr-test">test</small>' : ""}</b><small class="st-${k}">${esc(t)}</small></span></div>`; }).join("")}</div>`;
   for(const k of days){
     const {slots, out, me} = togetherOn(k); if(!me) continue;
     const d = new Date(k + "T12:00");
@@ -3172,8 +3266,7 @@ function friendsSheetHtml(){
       (out != null ? `<div class="fr-slot out"><span class="num">vanaf ${tOf(out)}</span><span class="fr-names"><b>Iedereen uit</b></span></div>` : "") + `</div>`;
   }
   html += `<p class="footnote">Je vrienden zien alleen wanneer jij vrij bent en hoe laat je begint en uit bent. ${F.some(f=>f.test) ? "De testvriend is nep, om het uit te proberen. " : ""}Bijgewerkt met je gegevens uit Magister.</p>`;
-  if(source === "link" && connectReady) html += `<div class="list"><a class="linkrow" href="${esc(CONNECT_URL)}" target="_blank" rel="noopener">Vrienden beheren ↗</a></div>`;
-  return html;
+  return html + friendsListHtml();
 }
 function openFriends(src){ $("friends-body").innerHTML = friendsSheetHtml(); openSheet(friendsDlg, src); }
 
@@ -3228,6 +3321,9 @@ const WIDGETS = {
   notitie:{n:"Notitie", d:"Een briefje voor jezelf", c:"#FFCC00", ic:WSVG('<path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/>'), sizes:["s","m"]},
   weer:   {n:"Weer", d:"Moet je een jas of paraplu mee?", c:"#32ADE6", ic:WSVG('<path d="M7 18a4 4 0 1 1 .6-7.95A5.5 5.5 0 0 1 18 11.5a3.25 3.25 0 0 1-.5 6.5z"/>'), sizes:["s","m"]},
   ai:     {n:"Assistent", d:"Vraag de AI iets over je rooster of leren", c:"#AF52DE", ic:WSVG('<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>'), sizes:["s","m"], act:"ai"},
+  reeks:  {n:"Reeks", d:"Hoeveel dagen op rij je al je huiswerk af had", c:"#FF6B2C", ic:WSVG('<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.3 1.6 1.2 2.5 2 2.5-.6-2.6 0-5.5 1-8z"/>'), sizes:["s"], act:"ach"},
+  spreuk: {n:"Spreuk van de dag", d:"Elke dag een nieuwe", c:"#FF9F0A", ic:WSVG('<path d="M7 8h4v4H8a3 3 0 0 0 3 3M13 8h4v4h-3a3 3 0 0 0 3 3"/>'), sizes:["m","s"]},
+  prestaties:{n:"Prestaties", d:"Badges die je verdient met MCML", c:"#FFD60A", ic:WSVG('<circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 21l5-2.5 5 2.5-1.5-7.5"/>'), sizes:["s"], act:"ach"},
   sync:   {n:"Synchronisatie", d:"Wanneer MCML Magister heeft gecontroleerd", c:"#34C759", ic:WSVG('<path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/>'), sizes:["s"], act:"sync"},
 };
 const WDEF = [{t:"toets", s:"s"}, {t:"hw", s:"s"}];
@@ -3308,8 +3404,10 @@ function wBody(t, size, now, list){
       return `<span class="w-big num">${ic} ${Math.round(d.current.temperature_2m)}°</span><span class="w-sub">${esc(prefs.wxPlace.name)} · ${txt}${size === "m" ? ` · ${Math.round(d.daily.temperature_2m_min[0])}° / ${Math.round(d.daily.temperature_2m_max[0])}°` : ""}</span><span class="w-sub w-tip">${tip}${size === "m" ? ` · ${rain}% kans op regen` : ""}</span>`;
     }
     case "ai":
-      return size === "m" ? `<span class="w-sub">Vraag iets over je rooster, toetsen of leren</span><span class="w-chips">${aiSuggestions().slice(0,3).map(q=>`<button type="button" data-aiq="${esc(q)}">${esc(q)}</button>`).join("")}</span>`
-        : big("Vraag", "iets aan de AI");
+      return `<span class="w-ask"><span>Vraag iets…</span><i>${WSVG('<path d="M12 19V5M5 12l7-7 7 7"/>')}</i></span>` + (size === "m" ? `<span class="w-chips">${aiSuggestions().slice(0,3).map(q=>`<button type="button" data-aiq="${esc(q)}">${esc(q)}</button>`).join("")}</span>` : "");
+    case "reeks": { const n = streakDays(); return big(`${n}<small> ${n === 1 ? "dag" : "dagen"}</small>`, n ? "op rij alles af 🔥" : "Vink je huiswerk af om te beginnen"); }
+    case "spreuk": return `<span class="w-quote">“${esc(quoteOfDay(now))}”</span>`;
+    case "prestaties": { const n = (store.get("ml-ach", []) || []).length; return big(`${n}<small>/${ACH.length}</small>`, "prestaties verdiend"); }
     case "sync": {
       const s = syncInfo();
       return big(s.checked ? hm(s.checked) : "–", source === "link" ? `gecontroleerd${s.checks ? ` · ${s.checks}× vandaag` : ""}` : "laatst bijgewerkt");
@@ -3412,14 +3510,16 @@ function renderAi(scroll){
   $("ai-mode").textContent = aiCfg.provider === "gemini" ? "Gemini" : aiCfg.provider === "claude" ? "Claude" : "Zonder sleutel";
   if(scroll !== false) requestAnimationFrame(()=>{ const s = aiDlg.querySelector(".sheet-body"); s.scrollTop = s.scrollHeight; });
 }
-function openAi(q, src){
-  renderAi(); openSheet(aiDlg, src);
-  if(q) setTimeout(()=>aiSend(q), 250); else setTimeout(()=>{ if(!matchMedia("(pointer:coarse)").matches) $("ai-in").focus(); }, 350);
+function openAi(q, src, focus){
+  aiShowSettings(false); renderAi(); openSheet(aiDlg, src);
+  if(q) setTimeout(()=>aiSend(q), 250);
+  else if(focus) $("ai-in").focus({preventScroll:true});           // straight to typing (must happen inside the tap on a phone)
+  else setTimeout(()=>{ if(!matchMedia("(pointer:coarse)").matches) $("ai-in").focus(); }, 350);
 }
 async function aiSend(q){
   q = String(q || "").trim(); if(!q || aiBusy) return;
   $("ai-in").value = ""; autoGrow($("ai-in"));
-  aiMsgs.push({role:"user", text:q});
+  aiMsgs.push({role:"user", text:q}); store.set("ml-asked", true);
   if(aiCfg.provider === "none" || !aiCfg.key){ aiMsgs.push({role:"handoff", q}); saveChat(); renderAi(); return; }
   const bot = {role:"bot", text:""}; aiMsgs.push(bot); renderAi();
   const hist = aiMsgs.filter(m=>m.role === "user" || (m.role === "bot" && m.text && !m.err)).slice(-12);
@@ -3466,7 +3566,7 @@ async function streamGemini(hist, onText, signal, model){
   if(!r.ok){ let msg = r.status + ""; try{ const j = await r.json(); msg = r.status + " " + (j.error?.message || ""); }catch{} throw new Error(msg); }
   await readSSE(r, j=>{ const parts = j.candidates?.[0]?.content?.parts || []; for(const p of parts) if(p.text) onText(p.text); });
 }
-function autoGrow(t){ if(!t) return; t.style.height = "auto"; t.style.height = Math.min(140, t.scrollHeight) + "px"; }
+function autoGrow(t){ if(!t) return; t.style.height = "40px"; if(t.scrollHeight > 42) t.style.height = Math.min(140, t.scrollHeight) + "px"; }
 function aiSettingsHtml(){
   const P = [["none","Zonder sleutel"],["gemini","Gemini (gratis)"],["claude","Claude"]];
   return `<div class="list"><div class="opt-block"><span>AI</span><div class="seg-opts" data-aiprov>${P.map(([k,l])=>`<button type="button" data-v="${k}" aria-pressed="${aiCfg.provider===k}"><span>${l}</span></button>`).join("")}</div></div>
@@ -3498,6 +3598,8 @@ function moreSheetHtml(){
       ${tile("data-mact=\"ai\"", "#AF52DE", WIDGETS.ai.ic, "Assistent")}
       ${tile("data-mact=\"friends\"", "#64D2FF", WIDGETS.vrij.ic, "Samen vrij")}
       ${tile("data-mact=\"sync\"", "#34C759", WIDGETS.sync.ic, "Synchronisatie")}
+      ${tile("data-mact=\"ach\"", "#FFB800", WIDGETS.prestaties.ic, "Prestaties")}
+      ${tile("data-mact=\"ics\"", "#FF375F", WSVG('<rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17M8 2.5v4M16 2.5v4M12 13v5M9.5 15.5L12 18l2.5-2.5"/>'), "Naar je agenda")}
       ${tile("data-mact=\"settings\"", "#636366", WSVG('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'), "Instellingen")}
     </div>
     <p class="footnote">Welke tabs onderaan staan, kies je in Instellingen → Tabs.</p>`;
@@ -3526,6 +3628,162 @@ function installTipHtml(){
   return `<div class="install-tip"><span class="it-ic"><img src="icon-180.png" alt=""></span><span class="it-t"><b>Zet MCML op je beginscherm</b>
       <small>${ios ? "Tik in Safari op Deel <span class=\"it-share\">⬆︎</span> en dan op <b>Zet op beginscherm</b>. Dan opent MCML als een echte app." : installEvt ? "Dan opent MCML als een echte app, zonder adresbalk." : "Open het menu van je browser en kies <b>App installeren</b> of <b>Toevoegen aan startscherm</b>."}</small></span>
     ${!ios && installEvt ? `<button type="button" class="btn press it-go" data-install>Installeer</button>` : ""}<button type="button" class="it-x" data-notip aria-label="Niet meer tonen">✕</button></div>`;
+}
+
+/* =====================================================================
+   Friends inside MCML (actions run on your koppelpagina in a small window that closes itself)
+   ===================================================================== */
+function socialInfo(){
+  if(mode === "demo") return {code:"DEMO42", share:true, admin:false, friends:[{name:"Sanne", code:"S1", status:"ok"},{name:"Daan", code:"D1", status:"ok"},{name:"Noor", code:"N1", status:"ok"},{name:"Lotte", code:"L1", status:"wacht"}], incoming:[{name:"Milan", code:"M1"}]};
+  return extra.social || null;
+}
+function socialPopup(qs){
+  if(mode === "demo"){ toast("In het voorbeeld kun je geen vrienden toevoegen"); return; }
+  const url = CONNECT_URL + "?" + qs + "&popup=1";
+  const w = window.open(url, "mcml-vrienden", "popup,width=480,height=720");
+  if(!w){ location.href = url; return; }
+  toast("Even bezig in het venster dat net openging…");
+}
+addEventListener("message", e=>{
+  let host = ""; try{ host = new URL(e.origin).hostname; }catch{}
+  if(!e.data || e.data.mcml !== "social" || !/(^|\.)(googleusercontent|google)\.com$/.test(host)) return;
+  toast(e.data.message || (e.data.ok ? "Gelukt" : "Dat lukte niet"));
+  if(e.data.ok) setTimeout(()=>load(), 900);
+});
+const FR_STATUS = {ok:"Verbonden", wacht:"Wacht tot die jou ook toevoegt", deeltniet:"Deelt (nog) geen vrije uren", weg:"Gebruikt MCML niet meer"};
+function friendsManageHtml(){
+  const S = socialInfo();
+  if(!S){
+    return source === "link" ? `<div class="sync-calm"><b>Werk je script bij</b><span>Om hier vrienden toe te voegen heeft je koppeling de nieuwste versie nodig. Zet de nieuwe bestanden in je script, publiceer een nieuwe versie en tik daarna op Magister nu bijwerken.</span></div>`
+      : `<div class="sync-calm"><b>Alleen met de koppeling</b><span>Samen vrij werkt als je inlogt met Begin met Magister.</span></div>`;
+  }
+  const av = n => `<span class="fr-av" style="--c:${subjectColor(n.toLowerCase().slice(0,4))}">${esc(n.slice(0,1).toUpperCase())}</span>`;
+  return `<div class="fr-me"><div><small>Jouw vriendcode</small><b class="code">${esc(S.code)}</b></div><button type="button" class="btn press" data-frshare>Deel</button></div>
+    <form class="fr-add" data-fradd><input name="c" placeholder="Code van je vriend" maxlength="10" autocapitalize="characters" autocomplete="off" spellcheck="false"><button type="submit" class="btn press">Voeg toe</button></form>
+    ${!S.share ? `<div class="sync-calm" style="margin-top:12px"><b>Je deelt je vrije uren nog niet</b><span>Zet het aan, dan zie je ook die van je vrienden. Alleen wanneer je vrij bent wordt gedeeld.</span><button type="button" class="btn press" data-frshareon style="margin-top:8px;justify-self:start">Zet aan</button></div>` : ""}
+    ${S.incoming?.length ? `<div class="caption">Wil jou toevoegen</div><div class="list">${S.incoming.map(f=>`<div class="fr-row">${av(f.name)}<span class="fr-n"><b>${esc(f.name)}</b><small>Heeft jou toegevoegd</small></span><button type="button" class="btn press fr-btn" data-fracc="${esc(f.code)}">Voeg toe</button></div>`).join("")}</div>` : ""}`;
+}
+function friendsListHtml(){
+  const S = socialInfo(); if(!S || !S.friends?.length) return "";
+  const av = n => `<span class="fr-av" style="--c:${subjectColor(n.toLowerCase().slice(0,4))}">${esc(n.slice(0,1).toUpperCase())}</span>`;
+  return `<div class="caption">Je vrienden</div><div class="list">${S.friends.map(f=>`<div class="fr-row">${av(f.name)}<span class="fr-n"><b>${esc(f.name)}${f.test ? ' <small class="fr-test">test</small>' : ""}</b><small>${esc(FR_STATUS[f.status] || "")}</small></span><button type="button" class="fr-del" data-frdel="${esc(f.code)}" aria-label="${esc(f.name)} verwijderen">✕</button></div>`).join("")}</div>
+    ${S.admin ? `<div class="list"><button class="linkrow" type="button" data-frtest="${S.friends.some(f=>f.test) ? 0 : 1}">${S.friends.some(f=>f.test) ? "Testvriend weghalen" : "Testvriend toevoegen"}</button></div>` : ""}`;
+}
+
+/* =====================================================================
+   Just for fun: confetti, streaks, achievements, sleep-in, quote of the day
+   ===================================================================== */
+function confetti(n = 90){
+  if(reduced || prefs.fun === false) return;
+  const box = document.createElement("div"); box.className = "confetti"; document.body.appendChild(box);
+  const C = ["#FF453A","#FF9F0A","#FFD60A","#30D158","#64D2FF","#0A84FF","#BF5AF2","#FF375F"];
+  for(let i = 0; i < n; i++){
+    const p = document.createElement("i"), x = Math.random() * 100, dx = (Math.random() - .5) * 260, rot = Math.random() * 900 - 450, d = 1400 + Math.random() * 1300;
+    p.style.cssText = `left:${x}vw;background:${C[i % C.length]};width:${6 + Math.random() * 6}px;height:${8 + Math.random() * 8}px;border-radius:${Math.random() < .3 ? "50%" : "2px"}`;
+    box.appendChild(p);
+    p.animate([{transform:"translate(0,-20px) rotate(0)", opacity:1},{transform:`translate(${dx}px,${innerHeight + 60}px) rotate(${rot}deg)`, opacity:.9}], {duration:d, delay:Math.random() * 250, easing:"cubic-bezier(.25,.6,.45,1)", fill:"forwards"});
+  }
+  setTimeout(()=>box.remove(), 3200);
+}
+/* a day counts for the streak when everything due that day is ticked off */
+function streakLog(){ return store.get("ml-streak", []) || []; }
+function noteStreak(){
+  const now = new Date(), k = dayKey(now);
+  const due = schoolList().filter(e=>e.hw && e.body && !e.gone && e.end > now && daysUntil(e.start, now) <= 1);
+  if(!due.length || due.some(e=>!done[e.id])) return false;
+  const L = streakLog(); if(L.includes(k)) return false;
+  L.push(k); store.set("ml-streak", L.slice(-120)); return true;
+}
+function streakDays(){
+  const L = new Set(streakLog()); let n = 0; const d = new Date();
+  if(!L.has(dayKey(d))) d.setDate(d.getDate() - 1);
+  for(let i = 0; i < 120; i++){ if(d.getDay() % 6 === 0){ d.setDate(d.getDate() - 1); continue; } if(L.has(dayKey(d))){ n++; d.setDate(d.getDate() - 1); } else break; }
+  return n;
+}
+function afterCheck(id){
+  const open = schoolList().filter(e=>e.hw && e.body && e.end > new Date() && !done[e.id]);
+  if(done[id] && noteStreak()){ confetti(); const s = streakDays(); toast(s > 1 ? `Alles af! 🔥 ${s} dagen op rij` : "Alles af voor morgen! 🎉"); }
+  else if(done[id] && !open.length){ store.set("ml-allesaf", true); confetti(60); toast("Al je huiswerk is af! 🎉"); }
+  checkAchievements();
+}
+/* achievements: worked out from what MCML already knows */
+const ACH = [
+  ["acht", "🌟", "Dikke voldoende", "Haal een 8 of hoger", ()=>gradeList().some(g=>g.num >= 8)],
+  ["tien", "💯", "Perfect", "Haal een 10", ()=>gradeList().some(g=>g.num >= 10)],
+  ["allesaf", "✅", "Alles af", "Vink al je huiswerk voor morgen af", ()=>streakLog().length > 0 || store.get("ml-allesaf", false)],
+  ["reeks3", "🔥", "Op dreef", "3 schooldagen op rij alles af", ()=>streakDays() >= 3],
+  ["reeks10", "☄️", "Onstopbaar", "10 schooldagen op rij alles af", ()=>streakDays() >= 10],
+  ["focus1", "🎯", "Gefocust", "Een uur gefocust in totaal", ()=>focusTotal() >= 60],
+  ["focus10", "🧠", "Focus-meester", "10 uur gefocust in totaal", ()=>focusTotal() >= 600],
+  ["vroeg", "🌅", "Vroege vogel", "Open MCML voor 7:00", ()=>store.get("ml-early", false)],
+  ["laat", "🦉", "Nachtuil", "Open MCML na 23:00", ()=>store.get("ml-late", false)],
+  ["optijd", "⏰", "Altijd op tijd", "Nog nooit te laat dit schooljaar", ()=>{ const A = absenceList(); return !!A && A.length > 0 && !A.some(a=>absKind(a) === "late"); }],
+  ["vriend", "🤝", "Samen sterk", "Voeg een vriend toe in Samen vrij", ()=>(socialInfo()?.friends || []).some(f=>f.status === "ok")],
+  ["thema", "🎨", "Stijlicoon", "Kies een kleurthema", ()=>prefs.skin && prefs.skin !== "standard"],
+  ["widget", "🧩", "Bouwer", "Zet 5 widgets op Vandaag", ()=>wList().length >= 5],
+  ["ai", "✨", "Nieuwsgierig", "Stel de assistent een vraag", ()=>store.get("ml-asked", false)],
+  ["geheim", "🥚", "Paaseieren", "Vind het geheimpje op Vandaag", ()=>store.get("ml-egg", false)],
+];
+function focusTotal(){ try{ return focusLog.reduce((a, l)=>a + (Number(l.min) || 0), 0); }catch{ return 0; } }
+function checkAchievements(quiet){
+  if(mode !== "live" && mode !== "demo") return;
+  const got = new Set(store.get("ml-ach", []) || []), fresh = [];
+  for(const [id, ic, name, , test] of ACH){ let ok = false; try{ ok = !!test(); }catch{} if(ok && !got.has(id)){ got.add(id); fresh.push([ic, name]); } }
+  if(!fresh.length) return;
+  store.set("ml-ach", [...got]);
+  if(quiet || mode === "demo") return;
+  setTimeout(()=>{ confetti(70); toast(`${fresh[0][0]} Prestatie: ${fresh[0][1]}${fresh.length > 1 ? ` (+${fresh.length - 1})` : ""}`, ()=>openAch(), "Bekijk"); }, 900);
+}
+function achHtml(){
+  const got = new Set(store.get("ml-ach", []) || []);
+  return `<div class="ach-top"><b class="num">${got.size}</b><span>van de ${ACH.length} prestaties</span></div>
+    <div class="ach-grid">${ACH.map(([id, ic, name, how])=>`<div class="ach ${got.has(id) ? "on" : ""}"><span class="ach-ic">${got.has(id) ? ic : "🔒"}</span><b>${esc(name)}</b><small>${esc(how)}</small></div>`).join("")}</div>
+    <p class="footnote">Je reeks: ${streakDays()} ${streakDays() === 1 ? "dag" : "dagen"} op rij alles af.</p>`;
+}
+function openAch(src){ checkAchievements(true); $("ach-body").innerHTML = achHtml(); openSheet(achDlg, src); }
+/* "your first hour is cancelled": tell the good news */
+function sleepInHtml(now){
+  if(prefs.fun === false) return "";
+  const days = upcomingDays(now, schoolList()).slice(0, 2);
+  for(const k of days){
+    const L = schoolList().filter(e=>dayKey(e.start) === k), first = L[0];
+    if(!first || !first.gone) continue;
+    const real = L.find(e=>!e.gone); if(k === dayKey(now) && first.start < now) continue;
+    const mins = real ? Math.round((real.start - first.start) / 60000) : null;
+    return `<div class="sleep-in"><span class="si-ic">😴</span><span><b>${k === dayKey(now) ? "Vandaag" : "Morgen"} mag je uitslapen</b><small>${real ? `Je ${first.hour ? first.hour + "e uur" : "eerste les"} valt uit. Je begint pas om ${hm(real.start)}, ${mins} minuten later.` : "Al je lessen vallen uit!"}</small></span></div>`;
+  }
+  return "";
+}
+const QUOTES = ["Elke expert was ooit een beginner.","Kleine stapjes zijn ook stapjes.","Eerst je huiswerk, dan de rest van de dag voor jou.","Fouten maken is ook leren.","Je hoeft niet perfect te zijn, alleen beter dan gisteren.","Leren is als sporten voor je hoofd.","Een 6 is ook een voldoende. Een 8 is leuker.","Begin gewoon. De rest komt vanzelf.","Pauze nemen is ook productief.","Doe het voor de jou van volgende week.","Twijfel je? Vraag het je docent.","Wat je vandaag leert, hoef je morgen niet meer te leren.","Hard werken verslaat talent als talent niet hard werkt.","Je bent verder dan je denkt.","Eén Pomodoro tegelijk.","Water drinken, telefoon weg, gaan.","Goed geslapen is half geleerd.","Je kunt het. Echt.","Morgen is er weer een dag, maar vandaag ook.","Slimme mensen vragen om hulp.","Elke toets is een kans om te laten zien wat je kan.","Herhalen is de moeder van alle kennis.","Focus op voortgang, niet op perfectie.","Lach eens, het is bijna weekend.","Een plan zonder actie is een wens.","Vergelijk jezelf alleen met jezelf.","De moeilijkste stap is de eerste.","Je toekomstige zelf zegt: dankjewel.","Rust, reinheid, regelmaat. En je rooster in MCML.","Geef niet op. Het begin is altijd het moeilijkst."];
+const quoteOfDay = now => QUOTES[(Math.floor(new Date(dayKey(now) + "T12:00") / 864e5)) % QUOTES.length];
+/* the browser tab shows how long the lesson still takes */
+function updateTitle(){
+  if(prefs.titleCount === false || (mode !== "live" && mode !== "demo")){ document.title = "MCML"; return; }
+  const now = new Date(), cur = schoolList().find(e=>!e.gone && e.start <= now && e.end > now);
+  document.title = cur ? `Nog ${dur(cur.end - now)} · ${cur.label}` : "MCML";
+}
+/* QoL: the rooster as a calendar file, and today as text to share */
+function icsExport(){
+  const L = schoolList().filter(e=>!e.gone), z = d => d.toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
+  const esc_ = t => String(t || "").replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/[,;]/g, m=>"\\" + m);
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//MCML//NL","CALSCALE:GREGORIAN",
+    ...L.flatMap(e=>["BEGIN:VEVENT", `UID:mcml-${String(e.id).replace(/[^\w-]/g, "")}@mcml`, `DTSTAMP:${z(new Date())}`, `DTSTART:${z(e.start)}`, `DTEND:${z(e.end)}`, `SUMMARY:${esc_((e.test ? "Toets: " : "") + e.label)}`, e.room ? `LOCATION:${esc_("Lokaal " + e.room)}` : "", e.body ? `DESCRIPTION:${esc_(e.body)}` : "", "END:VEVENT"].filter(Boolean)), "END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([ics], {type:"text/calendar"})); a.download = "MCML-rooster.ics"; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  toast(`${L.length} lessen opgeslagen als agendabestand`);
+}
+async function shareDay(k){
+  const d = new Date(k + "T12:00"), L = schoolList().filter(e=>dayKey(e.start) === k);
+  const txt = `${cap(DOW_LONG[d.getDay()])} ${d.getDate()} ${MON_LONG[d.getMonth()]}\n` + L.map(e=>`${hm(e.start)}–${hm(e.end)} ${e.label}${e.room ? " (" + e.room + ")" : ""}${e.gone ? " ❌ valt uit" : ""}${e.test ? " 📝 toets" : ""}`).join("\n");
+  try{ if(navigator.share){ await navigator.share({text: txt}); return; } }catch(e){ if(e.name === "AbortError") return; }
+  try{ await navigator.clipboard.writeText(txt); toast("Rooster gekopieerd"); }catch{ toast("Kopiëren lukte niet"); }
+}
+/* the "now" line in the day list */
+function dayProgressHtml(now, items){
+  const real = items.filter(e=>!e.gone); if(!real.length || selectedDay !== dayKey(now)) return "";
+  const s = real[0].start, e = real[real.length-1].end, pct = Math.min(100, Math.max(0, (now - s) / (e - s) * 100));
+  const txt = now < s ? `Begint over ${dur(s - now)}` : now >= e ? "Klaar voor vandaag 🎉" : `Nog ${dur(e - now)} · ${Math.round(pct)}%`;
+  return `<div class="day-prog" data-s="${+s}" data-e="${+e}"><div class="dp-row"><span>${hm(s)}</span><b>${txt}</b><span>${hm(e)}</span></div><div class="dp-track"><i style="width:${pct.toFixed(1)}%"></i><em style="left:${pct.toFixed(1)}%"></em></div></div>`;
 }
 
 function renderToday(now, list, el){
@@ -3563,7 +3821,7 @@ function renderToday(now, list, el){
     }
   }
 
-  html += installTipHtml();
+  html += sleepInHtml(now) + installTipHtml();
   if(prefs.today.widgets) html += widgetsHtml(now, list);
 
   const apps = prefs.today.apps ? `<div class="section-h"><h2>Snel naar</h2></div>` + appsHtml(list) : "";
@@ -3606,6 +3864,11 @@ function widgetClick(e){
   const t = e.target;
   if(t.closest("[data-syncinfo]")){ openSync(t.closest("[data-syncinfo]")); return true; }
   if(t.closest("[data-friends]")){ openFriends(t.closest("[data-friends]")); return true; }
+  const sd = t.closest("[data-shareday]"); if(sd){ shareDay(sd.dataset.shareday); return true; }
+  const h1 = t.closest("#v-today .large h1"); if(h1 && prefs.fun !== false){
+    const n = (h1._taps = (Date.now() - (h1._t || 0) < 600 ? (h1._taps || 0) : 0) + 1); h1._t = Date.now();
+    if(n >= 5){ h1._taps = 0; confetti(140); h1.animate([{transform:"rotate(0)"},{transform:"rotate(-6deg) scale(1.05)"},{transform:"rotate(5deg)"},{transform:"none"}], {duration:600}); store.set("ml-egg", true); toast("🥚 Je hebt het geheimpje gevonden!"); checkAchievements(); }
+    return true; }
   if(t.closest("[data-notip]")){ store.set("ml-notip", true); t.closest(".install-tip")?.remove(); return true; }
   if(t.closest("[data-install]")){ installEvt?.prompt(); installEvt?.userChoice.then(()=>{ installEvt = null; render(); }); return true; }
   const q = t.closest("[data-aiq]"); if(q){ openAi(q.dataset.aiq, q); return true; }
@@ -3626,7 +3889,7 @@ function widgetClick(e){
   if(wg && !wEdit){
     if(wg.dataset.wgo){ setView(wg.dataset.wgo, true); return true; }
     const a = wg.dataset.wact;
-    if(a === "friends") openFriends(wg); else if(a === "sync") openSync(wg); else if(a === "ai") openAi(null, wg);
+    if(a === "friends") openFriends(wg); else if(a === "sync") openSync(wg); else if(a === "ai") openAi(null, wg, true); else if(a === "ach") openAch(wg);
     else if(a === "focus"){ if(fRunning()) openFocus(); else { focusStart("focus"); openFocus(); } }
     return true;
   }
@@ -3875,6 +4138,7 @@ function toggleInPlace(id, btn){
     if(nowDone && !reduced){ b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
   });
   document.querySelectorAll(`[data-hwid="${CSS.escape(id)}"]`).forEach(r=> r.classList.toggle("done", nowDone));
+  setTimeout(()=>afterCheck(id), 250);
   const side = document.querySelector(".wk-side");
   if(side){
     const all = side.querySelectorAll("[data-hwid]"), n = side.querySelectorAll("[data-hwid].done").length;
@@ -3899,8 +4163,24 @@ function dayListHtml(now, list){
     rows += rowHtml(now)(e);
   }
   if(fd) while(gi < fd.f.length){ rows += gapRowHtml(fd.f[gi], slots); gi++; }
-  let html = items.length ? `<ul class="list">${rows}</ul>` : `<div class="list"><div class="empty-row">Geen lessen op deze dag.</div></div>`;
-  if(items.length){ const real = items.filter(e=>!e.gone); html += `<p class="footnote">${real.length} lessen · ${hm(items[0].start)} tot ${hm(items[items.length-1].end)}</p>`; }
+  // "now": a red line between lessons, or a bar inside the lesson you're in
+  if(selectedDay === dayKey(now) && items.some(e=>!e.gone)){
+    const real = items.filter(e=>!e.gone), cur = real.find(e=>e.start <= now && e.end > now);
+    const tmp = document.createElement("ul"); tmp.innerHTML = rows;
+    const lis = [...tmp.children].filter(li=>!li.classList.contains("gap-row"));
+    if(cur){ const li = lis[items.indexOf(cur)]; if(li){ li.classList.add("is-now"); li.style.setProperty("--np", ((now - cur.start) / (cur.end - cur.start) * 100).toFixed(1) + "%"); } }
+    else if(now > real[0].start && now < real[real.length-1].end){
+      const nxt = items.find(e=>e.start > now), li = nxt && lis[items.indexOf(nxt)];
+      if(li){
+        const prev = li.previousElementSibling, g = prev && prev.classList.contains("gap-row") ? fd?.f.find(([a, b])=>nowMin(now) >= a && nowMin(now) < b) : null;
+        if(g){ prev.classList.add("is-now"); prev.style.setProperty("--np", ((nowMin(now) - g[0]) / (g[1] - g[0]) * 100).toFixed(1) + "%"); }
+        else { const line = document.createElement("li"); line.className = "now-row"; line.setAttribute("aria-hidden", "true"); line.innerHTML = `<span>${hm(now)}</span>`; li.before(line); }
+      }
+    }
+    rows = tmp.innerHTML;
+  }
+  let html = dayProgressHtml(now, items) + (items.length ? `<ul class="list">${rows}</ul>` : `<div class="list"><div class="empty-row">Geen lessen op deze dag.</div></div>`);
+  if(items.length){ const real = items.filter(e=>!e.gone); html += `<p class="footnote">${real.length} lessen · ${hm(items[0].start)} tot ${hm(items[items.length-1].end)} · <button type="button" class="mat-btn" data-shareday="${selectedDay}">Deel deze dag</button></p>`; }
   const others = events.filter(e=>!e.school && dayKey(e.start)===selectedDay && !/^sleep$/i.test(e.label));
   if(others.length){ html += `<div class="caption">Ook in je agenda</div><ul class="list">${others.map(e=>`<li class="row"><div class="lead"><b>${hm(e.start)}</b>${hm(e.end)}</div><div class="body"><div class="title"><span class="t">${esc(e.label)}</span></div></div><div class="trail"></div></li>`).join("")}</ul>`; }
   return html;
@@ -3929,7 +4209,8 @@ function renderHw(now, list, el){
   const items = list.filter(e=>e.hw && e.body && e.end>now);
   const open = items.filter(e=>!done[e.id]);
   const vis = showDone ? items : open;
-  let html = large("Huiswerk", items.length ? `${open.length} open${items.length-open.length?` · ${items.length-open.length} af`:""}` : "");
+  const stk = streakDays();
+  let html = large("Huiswerk", (items.length ? `${open.length} open${items.length-open.length?` · ${items.length-open.length} af`:""}` : "") + (stk > 1 && prefs.fun !== false ? ` · <span class="streak">🔥 ${stk} dagen op rij</span>` : ""));
   if(items.length){
     const nDone = items.length - open.length, pct = Math.round(nDone/items.length*100);
     const first = open[0];
@@ -4004,7 +4285,8 @@ function goToDay(k){
 function renderSide(now, list){
   if(!WIDE.matches) return;
   const tests = list.filter(e=>e.test && !e.gone && e.end>now).slice(0,3);
-  let html = `<div class="side-cap"><span>Komende toetsen</span></div>`;
+  let html = `<div class="side-links"><button type="button" data-sideact="ai">${WIDGETS.ai.ic}<span>Assistent</span></button><button type="button" data-sideact="friends">${WIDGETS.vrij.ic}<span>Samen vrij</span></button><button type="button" data-sideact="sync">${WIDGETS.sync.ic}<span>Synchronisatie</span></button><button type="button" data-sideact="ach">${WIDGETS.prestaties.ic}<span>Prestaties</span></button></div>`;
+  html += `<div class="side-cap"><span>Komende toetsen</span></div>`;
   html += tests.length ? tests.map(e=>{ const n = daysUntil(e.start, now);
       return `<div class="side-test" data-ev="${esc(e.id)}" role="button" tabindex="0"><span class="n ${n<=2?"soon":""}">${n}</span><span style="min-width:0"><b>${esc(e.label)}</b><small>${esc(relDay(e.start, now))} · ${hm(e.start)}</small></span></div>`; }).join("")
     : `<div class="side-empty">Geen toetsen gepland.</div>`;
@@ -4044,6 +4326,7 @@ $("tabbar").addEventListener("click", e=>{
   if(e.target.closest("[data-search]")){ openSpot(); return; }
   const cal = e.target.closest("[data-cal]"); if(cal){ if(!cal.disabled) goToDay(cal.dataset.cal); return; }
   const ev = e.target.closest("[data-ev]"); if(ev){ openDetail(ev.dataset.ev, ev); return; }
+  const sa = e.target.closest("[data-sideact]"); if(sa){ const a = sa.dataset.sideact; if(a === "ai") openAi(null, sa, true); else if(a === "friends") openFriends(sa); else if(a === "ach") openAch(sa); else openSync(sa); return; }
   if(e.target.closest("[data-more]")){ haptic(); openMore(e.target.closest("[data-more]")); return; }
   const b = e.target.closest("button[data-view]"); if(!b) return; haptic();
   if(b.dataset.view===view){
@@ -4119,6 +4402,7 @@ function toggleDone(id, row){
   haptic();
   if(done[id]){ delete done[id]; saveDone(); render(); return; }
   done[id] = ev ? dayKey(ev.start) : dayKey(new Date()); saveDone();
+  setTimeout(()=>afterCheck(id), 1200);
   if(!row || showDone || reduced){ render(); return; }
   // Reminders: fill + check + strike, pause, then the row folds away
   busy++;
@@ -4126,7 +4410,7 @@ function toggleDone(id, row){
   setTimeout(()=>{
     row.style.height = row.offsetHeight + "px"; void row.offsetHeight;
     row.classList.add("collapse");
-    setTimeout(()=>{ busy--; render(); toast("Afgevinkt"); }, 420);
+    setTimeout(()=>{ busy--; render(); if(!document.querySelector(".confetti")) toast("Afgevinkt"); }, 420);
   }, 650);
 }
 
@@ -4225,7 +4509,7 @@ $("toast-undo").addEventListener("click", ()=>{ const a = toastAction; toastActi
 
 /* ================= screens ================= */
 function showWelcome(msg){
-  $("welcome").hidden = false; $("tabbar").hidden = true; $("open-settings").hidden = true; $("open-search").hidden = true; $("app-disclaimer").hidden = true; $("open-focus").hidden = true; $("focus-pill").classList.remove("show");
+  $("welcome").hidden = false; $("tabbar").hidden = true; $("open-settings").hidden = true; $("open-search").hidden = true; $("open-ai").hidden = true; $("app-disclaimer").hidden = true; $("open-focus").hidden = true; $("focus-pill").classList.remove("show");
   for(const k of VIEWS) $("v-"+k).hidden = true;
   $("nav-left").textContent = ""; $("nav-title").textContent = "";
   $("welcome-text").textContent = msg || "Je lessen, huiswerk, toetsen en cijfers uit Magister, in één oogopslag.";
@@ -4244,9 +4528,10 @@ function layoutTabs(){
 WIDE.addEventListener?.("change", ()=>{ if(mode === "live" || mode === "demo"){ layoutTabs(); setView(view, false); } });
 function showApp(animate){
   layoutTabs();
-  $("welcome").hidden = true; $("tabbar").hidden = false; $("open-settings").hidden = false; $("open-search").hidden = false; $("app-disclaimer").hidden = false; $("open-focus").hidden = false; focusUI();
+  $("welcome").hidden = true; $("tabbar").hidden = false; $("open-settings").hidden = false; $("open-search").hidden = false; $("open-ai").hidden = false; $("app-disclaimer").hidden = false; $("open-focus").hidden = false; focusUI();
   setView(view, false);
   if(animate) render(true);
+  { const h = new Date().getHours(); if(h < 7 && h >= 4) store.set("ml-early", true); if(h >= 23) store.set("ml-late", true); }
 }
 function showBanner(msg, retry){
   $("banner").innerHTML = `<div class="banner"><span>${esc(msg)}</span><button class="btn press" type="button" id="banner-retry">Opnieuw</button></div>`;
@@ -4264,7 +4549,7 @@ $("demo").addEventListener("click", ()=>{ mode = "demo"; events = demoEvents(); 
 
 /* ================= settings sheet ================= */
 const dlg = $("settings"), detail = $("detail"), itemSheet = $("itemsheet"), focusDlg = $("focus"), bmDlg = $("bmsheet"), planDlg = $("plansheet"), gradeDlg = $("gradesheet"), grpDlg = $("grprefs"), absDlg = $("abssheet"),
-  syncDlg = $("syncsheet"), friendsDlg = $("friendsheet"), wDlg = $("wsheet"), moreDlg = $("moresheet"), aiDlg = $("aisheet");
+  syncDlg = $("syncsheet"), friendsDlg = $("friendsheet"), wDlg = $("wsheet"), moreDlg = $("moresheet"), aiDlg = $("aisheet"), achDlg = $("achsheet");
 const isPhoneSheet = () => !matchMedia("(min-width:640px)").matches;
 
 function openSheet(d, src){
@@ -4343,10 +4628,30 @@ moreDlg.addEventListener("click", e=>{
   const v = e.target.closest("[data-mview]"); if(v){ closeSheet(moreDlg); setTimeout(()=>setView(v.dataset.mview, true), 160); return; }
   const a = e.target.closest("[data-mact]"); if(!a) return;
   const act = a.dataset.mact; closeSheet(moreDlg);
-  setTimeout(()=>{ if(act === "search") openSpot(); else if(act === "focus") openFocus(); else if(act === "ai") openAi(); else if(act === "friends") openFriends(); else if(act === "sync") openSync(); else if(act === "settings") openSettings(); }, 280);
+  setTimeout(()=>{ if(act === "search") openSpot(); else if(act === "focus") openFocus(); else if(act === "ai") openAi(); else if(act === "friends") openFriends(); else if(act === "sync") openSync(); else if(act === "settings") openSettings(); else if(act === "ach") openAch(); else if(act === "ics") icsExport(); }, 280);
 });
 syncDlg.addEventListener("click", e=>{ if(e.target.closest("#sync-now")){ window.open(CONNECT_URL + "?sync=1", "_blank", "noopener"); toast("Je koppelpagina werkt Magister nu bij. Kom daarna terug."); } });
-friendsDlg.addEventListener("click", e=>{ if(e.target.closest("a")) closeSheet(friendsDlg); });
+friendsDlg.addEventListener("click", async e=>{
+  const S = socialInfo();
+  if(e.target.closest("[data-frshare]") && S){
+    const url = CONNECT_URL + "?friend=" + S.code, text = `Voeg me toe in MCML, dan zien we wanneer we allebei vrij zijn. Mijn code: ${S.code}`;
+    try{ if(navigator.share){ await navigator.share({title:"MCML Samen vrij", text, url}); return; } }catch(er){ if(er.name === "AbortError") return; }
+    try{ await navigator.clipboard.writeText(text + "\n" + url); toast("Link gekopieerd. Stuur hem naar je vriend."); }catch{ toast("Je code is " + S.code); }
+    return; }
+  const acc = e.target.closest("[data-fracc]"); if(acc){ socialPopup("friend=" + encodeURIComponent(acc.dataset.fracc)); return; }
+  if(e.target.closest("[data-frshareon]")){ socialPopup("share=1"); return; }
+  const tf = e.target.closest("[data-frtest]"); if(tf){ socialPopup("testfriend=" + tf.dataset.frtest); return; }
+  const del = e.target.closest("[data-frdel]"); if(del){
+    if(!del.dataset.sure){ del.dataset.sure = "1"; del.textContent = "Zeker?"; del.classList.add("sure"); setTimeout(()=>{ if(del.isConnected){ del.dataset.sure = ""; del.textContent = "✕"; del.classList.remove("sure"); } }, 3000); return; }
+    socialPopup("unfriend=" + encodeURIComponent(del.dataset.frdel)); return; }
+});
+friendsDlg.addEventListener("submit", e=>{
+  const f = e.target.closest("[data-fradd]"); if(!f) return; e.preventDefault();
+  const c = f.c.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if(c.length < 4){ toast("Typ de code van je vriend"); return; }
+  if(socialInfo()?.code === c){ toast("Dat is je eigen code"); return; }
+  f.c.value = ""; socialPopup("friend=" + c);
+});
 /* assistant */
 function aiShowSettings(on){
   $("ai-set").hidden = !on; $("ai-log").hidden = on; $("ai-form").hidden = on;
@@ -4372,7 +4677,7 @@ aiDlg.addEventListener("change", e=>{
 /* keep the chat input above the phone keyboard */
 if(window.visualViewport) visualViewport.addEventListener("resize", ()=>{ if(!aiDlg.open) return; const kb = Math.max(0, innerHeight - visualViewport.height - visualViewport.offsetTop); aiDlg.style.setProperty("--kb", kb + "px"); });
 
-for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg, grpDlg, absDlg, syncDlg, friendsDlg, wDlg, moreDlg, aiDlg]){
+for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg, grpDlg, absDlg, syncDlg, friendsDlg, wDlg, moreDlg, aiDlg, achDlg]){
   d.addEventListener("cancel", e=>{ e.preventDefault(); closeSheet(d); });
   d.addEventListener("close", ()=>{ document.body.classList.remove("sheet-open","dragging"); if(d._src){ d._src.style.opacity = ""; d._src = null; } });
   d.addEventListener("click", e=>{
@@ -4433,6 +4738,7 @@ function renderPrefControls(){
   $("set-swipe").checked = prefs.swipe !== false;
   $("set-more").checked = prefs.moreTab !== false; $("set-barmin").checked = prefs.barMin !== false; $("set-haptics").checked = prefs.haptics !== false;
   $("set-uitval").checked = prefs.uitvalToast !== false; $("set-gaps").checked = prefs.showGaps !== false;
+  $("set-fun").checked = prefs.fun !== false; $("set-title").checked = prefs.titleCount !== false;
   $("set-name").value = prefs.name || "";
   $("set-start").innerHTML = [["last","Laatst geopend"], ...visibleViews().map(v=>[v, TITLES[v]])].map(([v,l])=>`<option value="${v}" ${prefs.start===v?"selected":""}>${l}</option>`).join("");
   renderTabEditor(); renderTodayEditor(); renderSwatches(); renderSkins();
@@ -4486,6 +4792,8 @@ dlg.addEventListener("change", e=>{
   if(t.id === "set-haptics"){ prefs.haptics = t.checked; prefChanged(false); return; }
   if(t.id === "set-uitval"){ prefs.uitvalToast = t.checked; prefChanged(false); return; }
   if(t.id === "set-gaps"){ prefs.showGaps = t.checked; prefChanged(); return; }
+  if(t.id === "set-fun"){ prefs.fun = t.checked; prefChanged(); if(t.checked) confetti(50); return; }
+  if(t.id === "set-title"){ prefs.titleCount = t.checked; prefChanged(false); updateTitle(); return; }
   if(t.id === "set-start"){ prefs.start = t.value; prefChanged(false); return; }
   if(t.dataset.showtab){ const v = t.dataset.showtab;
     prefs.hidden = t.checked ? prefs.hidden.filter(x=>x!==v) : [...new Set([...prefs.hidden, v])];
@@ -4542,6 +4850,8 @@ grpDlg.addEventListener("change", e=>{
 $("do-grprefs").addEventListener("click", openGradePrefs);
 const fromSettings = fn => () => { closeSheet(dlg); setTimeout(fn, 280); };
 $("do-sync").addEventListener("click", fromSettings(()=>openSync()));
+$("do-ach").addEventListener("click", fromSettings(()=>openAch()));
+$("do-ics").addEventListener("click", ()=>icsExport());
 $("do-ai").addEventListener("click", fromSettings(()=>{ openAi(); aiShowSettings(true); }));
 $("do-friends").addEventListener("click", fromSettings(()=>openFriends()));
 $("do-widgets").addEventListener("click", fromSettings(()=>{ if(view !== "today") setView("today", true); wEdit = true; render(); setTimeout(()=>$("wgrid")?.scrollIntoView({behavior:"smooth", block:"center"}), 300); }));
@@ -4561,6 +4871,7 @@ document.addEventListener("keydown", e=>{
   if(e.key === "n" || e.key === "N"){ openItemSheet(null); e.preventDefault(); return; }
   if(e.key === ","){ openSettings(); e.preventDefault(); return; }
   if(e.key === "f" || e.key === "F"){ openFocus(); e.preventDefault(); return; }
+  if(e.key === "a" || e.key === "A"){ openAi(null, null, true); e.preventDefault(); return; }
   if(e.key === "t" || e.key === "T"){ const now = new Date(); weekOff = [0,6].includes(now.getDay()) ? 1 : 0; selectedDay = null; setView(view==="rooster" ? "rooster" : "today", true); return; }
   if(view === "rooster" && (e.key === "ArrowLeft" || e.key === "ArrowRight")){
     const d = e.key === "ArrowRight" ? 1 : -1;
@@ -4816,6 +5127,7 @@ spotRes.addEventListener("click", e=>{ const it = e.target.closest(".spot-item")
 spotRes.addEventListener("pointermove", e=>{ const it = e.target.closest(".spot-item"); if(it && Number(it.dataset.k) !== spotSel){ spotSel = Number(it.dataset.k) - 0; spotMove(0); } });
 spotBack.addEventListener("click", closeSpot);
 $("open-search").addEventListener("click", openSpot);
+$("open-ai").addEventListener("click", e=>openAi(null, e.currentTarget));
 const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 $("kbd-hint").textContent = isMac ? "⌘K" : "Ctrl K";
 document.addEventListener("keydown", e=>{
@@ -6271,6 +6583,7 @@ async function boot(){
   }
 }
 function stateSig(){
+  updateTitle();
   const now = new Date(), list = schoolList();
   const live = list.filter(e=>!e.gone && e.end>now), cur = live.find(e=>e.start<=now), next = live.find(e=>e.start>now);
   return [dayKey(now), view, (cur||next||{}).id, cur ? 1 : 0, list.filter(e=>e.end<=now).length, now.getHours() < 12 ? 0 : now.getHours() < 18 ? 1 : 2].join("|");
@@ -6295,6 +6608,11 @@ function tick(){
   });
   const bar = document.querySelector(".hero .bar i");
   if(bar && cur) bar.style.setProperty("--w", Math.min(100, Math.max(0, (now-cur.start)/(cur.end-cur.start)*100)).toFixed(1)+"%");
+  document.querySelectorAll(".day-prog[data-s]").forEach(b=>{ const s0 = +b.dataset.s, e0 = +b.dataset.e, p = Math.min(100, Math.max(0, (now - s0) / (e0 - s0) * 100));
+    b.querySelector(".dp-track i").style.width = p.toFixed(1) + "%"; b.querySelector(".dp-track em").style.left = p.toFixed(1) + "%";
+    b.querySelector(".dp-row b").textContent = now < s0 ? `Begint over ${dur(s0 - now)}` : now >= e0 ? "Klaar voor vandaag 🎉" : `Nog ${dur(e0 - now)} · ${Math.round(p)}%`; });
+  const nl = document.querySelector(".now-row span"); if(nl) nl.textContent = hm(now);
+  const cl = document.querySelector("#day-list .is-now"); if(cl){ const c = schoolList().find(e=>!e.gone && e.start <= now && e.end > now); if(c) cl.style.setProperty("--np", ((now - c.start) / (c.end - c.start) * 100).toFixed(1) + "%"); }
   document.querySelectorAll(".nowline[data-px]").forEach(n=>{
     const px = Number(n.dataset.px), h0 = Number(n.dataset.h0);
     n.style.top = (((now.getHours()-h0)*60 + now.getMinutes()) * px/60) + "px";
@@ -6302,6 +6620,7 @@ function tick(){
   });
 }
 setInterval(tick, 15000);
+setInterval(updateTitle, 15000);
 WIDE.addEventListener?.("change", ()=>{ if(mode==="live"||mode==="demo"||mode==="loading"){ setView(view, false); } });
 setInterval(()=>{ if(mode==="live" && document.visibilityState==="visible" && source !== "bm") load(); }, 5*60000);
 setInterval(()=>{ if(mode==="live" && document.visibilityState==="visible") syncNow(); }, 2*60000);
