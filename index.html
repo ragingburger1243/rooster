@@ -2104,6 +2104,35 @@ html.calm .wgrid.editing .wg{animation:none}
 .ai-sheet .ai-bar{position:static;flex:none}
 @media (min-width:640px){ .ai-sheet{height:min(760px,calc(100vh - 120px))} }
 .danger-t{color:var(--red)!important}
+/* settings: main list + pages */
+.set-list{margin-bottom:14px}
+.set-row{display:flex;align-items:center;gap:13px;width:100%;min-height:52px;padding:8px 14px;border:0;background:none;font:inherit;color:var(--label);text-align:left;cursor:pointer}
+.set-row + .set-row{border-top:.5px solid var(--sep)}
+.set-row:active{background:color-mix(in srgb,var(--fill) 70%,transparent)}
+@media (hover:hover){ .set-row:hover{background:color-mix(in srgb,var(--fill) 45%,transparent)} }
+.set-ic{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff}
+.set-ic svg{width:18px;height:18px}
+.sr-l{flex:1;font-size:16.5px;font-weight:500}
+.sr-v{font-size:14.5px;color:var(--label2);max-width:46%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.set-row .chev{width:16px;height:16px;color:var(--label3);flex:none}
+.set-back{display:flex;align-items:center;gap:2px;min-width:50px;border:0;background:none;font:inherit;font-size:17px;color:var(--blue);cursor:pointer;padding:0}
+.set-back svg{width:22px;height:22px}
+.set-back[hidden],.set-sp[hidden]{display:none}
+.set-page[hidden]{display:none}
+.set-page[data-page="main"]{padding-top:6px}
+/* the ✨ dropdown */
+.xmenu-back{position:fixed;inset:0;z-index:60}
+.xmenu{position:fixed;z-index:61;width:min(320px,calc(100vw - 20px));padding:6px;border-radius:20px;background:var(--glass-strong,var(--bg2));-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);
+  border:.5px solid var(--glass-line,var(--sep));box-shadow:0 18px 50px -12px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.08);transform-origin:top right}
+.xmenu[hidden]{display:none}
+.xmenu button{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;border:0;border-radius:14px;background:none;font:inherit;color:var(--label);text-align:left;cursor:pointer}
+.xmenu button + button{margin-top:2px}
+.xmenu button:hover,.xmenu button:focus-visible{background:color-mix(in srgb,var(--fill) 70%,transparent);outline:none}
+.xi{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff}
+.xi svg{width:19px;height:19px}
+.xt b{display:block;font-size:15.5px;font-weight:600}
+.xt small{display:block;font-size:12.5px;color:var(--label2);line-height:1.3}
+#open-ai[aria-expanded="true"]{background:color-mix(in srgb,#AF52DE 16%,var(--glass,var(--bg2)))}
 /* =================== AI widget =================== */
 .w-ask{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;padding:6px 6px 6px 14px;border-radius:999px;background:color-mix(in srgb,var(--wc) 10%,var(--bg2));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--wc) 25%,transparent);color:var(--label2);font-size:15px}
 .w-ask i{width:30px;height:30px;border-radius:50%;background:var(--wc);color:#fff;display:grid;place-items:center}
@@ -2124,15 +2153,6 @@ html.calm .wgrid.editing .wg{animation:none}
 /* =================== fun =================== */
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
 .confetti i{position:absolute;top:-20px}
-.ach-top{display:flex;align-items:baseline;justify-content:center;gap:8px;padding:12px 0 4px}
-.ach-top b{font-family:var(--round);font-size:40px;font-weight:800}
-.ach-top span{color:var(--label2)}
-.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
-.ach{display:grid;justify-items:center;text-align:center;gap:4px;padding:16px 10px;border-radius:20px;background:var(--bg2);box-shadow:var(--card-shadow);opacity:.55;filter:grayscale(1)}
-.ach.on{opacity:1;filter:none;background:radial-gradient(100% 80% at 50% 0,color-mix(in srgb,#FFD60A 22%,transparent),transparent 70%),var(--bg2)}
-.ach-ic{font-size:34px;line-height:1.1}
-.ach b{font-size:14.5px}
-.ach small{font-size:12px;color:var(--label2);line-height:1.3}
 .sleep-in{display:flex;align-items:center;gap:12px;margin:12px 0 0;padding:12px 14px;border-radius:20px;background:radial-gradient(120% 120% at 0 0,color-mix(in srgb,#5E5CE6 20%,transparent),transparent 65%),var(--bg2);box-shadow:var(--card-shadow)}
 .si-ic{font-size:30px}
 .sleep-in b{display:block;font-size:15.5px}
@@ -2162,7 +2182,7 @@ html.calm .wgrid.editing .wg{animation:none}
     <div class="nav-left" id="nav-left"></div>
     <div class="nav-title" id="nav-title"></div>
     <div class="nav-right"><button class="icon-btn press glass-rim" id="open-search" type="button" aria-label="Zoeken" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
-    <button class="icon-btn press glass-rim ai-btn" id="open-ai" type="button" aria-label="Assistent" title="Assistent" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></button>
+    <button class="icon-btn press glass-rim ai-btn" id="open-ai" type="button" aria-label="Extra: assistent, samen vrij en meer" aria-haspopup="menu" aria-expanded="false" aria-controls="xmenu" title="Extra" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></button>
     <button class="icon-btn press glass-rim focus-btn" id="open-focus" type="button" aria-label="Focus-timer" title="Focus (F)" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 2.5h4M18.5 6l1.5-1.5"/></svg></button>
     <button class="icon-btn press glass-rim" id="open-settings" type="button" aria-label="Instellingen" hidden>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -2286,11 +2306,6 @@ html.calm .wgrid.editing .wg{animation:none}
   <div class="sheet-head"><span style="min-width:50px"></span><h2>Widgets</h2><button type="button" class="sheet-close">Klaar</button></div>
   <div class="sheet-body" id="w-body"></div>
 </dialog>
-<dialog class="sheet" id="achsheet">
-  <div class="grabber" aria-hidden="true"></div>
-  <div class="sheet-head"><span style="min-width:50px"></span><h2>Prestaties</h2><button type="button" class="sheet-close">Klaar</button></div>
-  <div class="sheet-body" id="ach-body"></div>
-</dialog>
 <dialog class="sheet" id="moresheet">
   <div class="grabber" aria-hidden="true"></div>
   <div class="sheet-head"><span style="min-width:50px"></span><h2>Meer</h2><button type="button" class="sheet-close">Klaar</button></div>
@@ -2327,6 +2342,8 @@ html.calm .wgrid.editing .wg{animation:none}
   <div class="sheet-body" id="focus-body"></div>
 </dialog>
 
+<div class="xmenu-back" id="xmenu-back" hidden></div>
+<div class="xmenu" id="xmenu" role="menu" aria-label="Extra" hidden></div>
 <div class="ctx-back" id="ctx-back" hidden></div>
 <div class="ctx" id="ctx" role="menu" hidden></div>
 
@@ -2339,52 +2356,50 @@ html.calm .wgrid.editing .wg{animation:none}
 
 <dialog class="sheet" id="settings">
   <div class="grabber" aria-hidden="true"></div>
-  <div class="sheet-head"><span style="min-width:50px"></span><h2>Instellingen</h2><button type="button" class="sheet-close">Klaar</button></div>
+  <div class="sheet-head"><button type="button" class="set-back" id="set-back" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg><span>Terug</span></button><span class="set-sp" id="set-sp" style="min-width:50px"></span><h2 id="set-htitle">Instellingen</h2><button type="button" class="sheet-close">Klaar</button></div>
   <div class="sheet-body">
+  <div class="set-page" data-page="main">
+    <div class="list set-list"><button type="button" class="set-row" data-goto="weergave"><span class="set-ic" style="background:#5E5CE6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17M12 3.5a8.5 8.5 0 0 1 0 17" fill="currentColor"/></svg></span><span class="sr-l">Weergave</span><span class="sr-v" id="sv-weergave"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" class="set-row" data-goto="tabs"><span class="set-ic" style="background:#0A84FF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M3.5 15.5h17M9 15.5V20M15 15.5V20"/></svg></span><span class="sr-l">Tabbladen</span><span class="sr-v" id="sv-tabs"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" class="set-row" data-goto="vandaag"><span class="set-ic" style="background:#FF9F0A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg></span><span class="sr-l">Vandaag</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" class="set-row" id="do-grprefs"><span class="set-ic" style="background:#AF52DE"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V12M10 20V7M15 20v-6M20 20V4"/></svg></span><span class="sr-l">Cijferlijst</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="list set-list"><button type="button" class="set-row" data-goto="gemak"><span class="set-ic" style="background:#FF375F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></span><span class="sr-l">Meldingen en gemak</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="list set-list"><button type="button" class="set-row" data-goto="magister"><span class="set-ic" style="background:#007AFF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V6l8 7 8-7v13"/></svg></span><span class="sr-l">Magister</span><span class="sr-v" id="sv-magister"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" class="set-row" data-goto="sync"><span class="set-ic" style="background:#34C759"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></span><span class="sr-l">Synchroniseren</span><span class="sr-v" id="sv-sync"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" class="set-row" data-goto="kast"><span class="set-ic" style="background:#FF9500"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="5" height="16" rx="1.2"/><rect x="9" y="6" width="5" height="14" rx="1.2"/><path d="M15 7.5l3.5-1 3 11-3.5 1z"/></svg></span><span class="sr-l">Kast en back-up</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><button type="button" class="set-row" data-goto="gegevens"><span class="set-ic" style="background:#8E8E93"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6M4.5 12v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></svg></span><span class="sr-l">Gegevens</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="list"><button class="linkrow danger" type="button" id="do-signout">Uitloggen</button></div>
+    <p class="footnote" id="set-status"></p>
+    <p class="footnote disclaimer-set">MCML (Mark's custom Magister launcher) is geen officiële app van Magister. Controleer Magister altijd voor alle belangrijke informatie, zoals cijfers, toetsen en roosterwijzigingen.</p>
+  </div>
+  <div class="set-page" data-page="weergave" hidden>
     <div class="set-preview" aria-hidden="true"><div class="ph"></div></div>
-    <div class="caption">Weergave</div>
-    <div class="list">
-      <div class="opt-block"><span>Thema</span><div class="skins" id="skins" role="group" aria-label="Thema"></div></div>
+    <div class="list"><div class="opt-block"><span>Thema</span><div class="skins" id="skins" role="group" aria-label="Thema"></div></div>
       <div class="opt-block"><span>Licht of donker</span><div class="seg-opts" data-pref="theme" role="group" aria-label="Licht of donker"></div></div>
       <div class="opt-block"><span>Accentkleur</span><div class="swatches" id="swatches" role="group" aria-label="Accentkleur" style="padding:2px 0 0"></div></div>
       <div class="opt-block"><span>Achtergrond</span><div class="seg-opts" data-pref="bg" role="group" aria-label="Achtergrond"></div></div>
       <div class="opt-block"><span>Dichtheid</span><div class="seg-opts" data-pref="density" role="group" aria-label="Dichtheid"></div></div>
-      <label class="field sw"><span>Minder beweging<small class="field-sub">Zet animaties uit</small></span><span class="switch"><input id="set-calm" type="checkbox" role="switch"><span></span></span></label>
-      <label class="field sw"><span>Vegen om te wisselen<small class="field-sub">Op je telefoon: veeg opzij voor een andere dag of tab</small></span><span class="switch"><input id="set-swipe" type="checkbox" role="switch"><span></span></span></label>
       <div class="opt-block"><span>Tekstgrootte</span><div class="seg-opts" data-pref="zoom" role="group" aria-label="Tekstgrootte"></div></div>
-      <button class="linkrow" type="button" id="do-grprefs">Cijferlijst aanpassen</button>
-    </div>
-    <div class="caption">Telefoon</div>
-    <div class="list">
+      <label class="field sw"><span>Minder beweging<small class="field-sub">Zet animaties uit</small></span><span class="switch"><input id="set-calm" type="checkbox" role="switch"><span></span></span></label></div>
+  </div>
+  <div class="set-page" data-page="tabs" hidden>
+    <div class="list"><label class="field"><span>Openen met</span><select id="set-start"></select></label>
       <label class="field sw"><span>Meer-knop in de tabbalk<small class="field-sub">Maximaal 5 tabs onderaan, de rest onder Meer</small></span><span class="switch"><input id="set-more" type="checkbox" role="switch"><span></span></span></label>
       <label class="field sw"><span>Tabbalk kleiner bij scrollen<small class="field-sub">Meer ruimte voor je rooster</small></span><span class="switch"><input id="set-barmin" type="checkbox" role="switch"><span></span></span></label>
-      <label class="field sw"><span>Trillen bij tikken</span><span class="switch"><input id="set-haptics" type="checkbox" role="switch"><span></span></span></label>
-      <label class="field sw"><span>Melding bij uitval<small class="field-sub">Als een les vandaag of morgen uitvalt</small></span><span class="switch"><input id="set-uitval" type="checkbox" role="switch"><span></span></span></label>
-      <label class="field sw"><span>Tussenuren in je rooster<small class="field-sub">Met wie van je vrienden ook vrij is</small></span><span class="switch"><input id="set-gaps" type="checkbox" role="switch"><span></span></span></label>
-      <div class="opt-block"><span>Vakantieregio</span><div class="seg-opts" data-pref="region" role="group" aria-label="Vakantieregio"></div></div>
-    </div>
-    <div class="caption">Extra</div>
-    <div class="list">
-      <button class="linkrow" type="button" id="do-sync">Synchronisatie</button>
-      <button class="linkrow" type="button" id="do-ai">AI-assistent</button>
-      <button class="linkrow" type="button" id="do-friends">Samen vrij</button>
-      <button class="linkrow" type="button" id="do-widgets">Widgets op Vandaag</button>
-      <button class="linkrow" type="button" id="do-ach">Prestaties</button>
-      <button class="linkrow" type="button" id="do-ics">Rooster naar je agenda (.ics)</button>
-      <label class="field sw"><span>Leuke extra's<small class="field-sub">Confetti, uitslapen-melding en je huiswerkreeks</small></span><span class="switch"><input id="set-fun" type="checkbox" role="switch"><span></span></span></label>
-      <label class="field sw"><span>Lestijd in het tabblad<small class="field-sub">Op de computer: "Nog 12 min · Engels"</small></span><span class="switch"><input id="set-title" type="checkbox" role="switch"><span></span></span></label>
-    </div>
-    <div class="caption">Jij</div>
-    <div class="list">
-      <label class="field"><span>Je naam</span><input id="set-name" type="text" autocomplete="given-name" maxlength="24" placeholder="Voor de begroeting"></label>
-      <label class="field"><span>Openen met</span><select id="set-start"></select></label>
-    </div>
-    <div class="caption">Tabbladen</div>
+      <label class="field sw"><span>Vegen om te wisselen<small class="field-sub">Op je telefoon: veeg opzij voor een andere dag of tab</small></span><span class="switch"><input id="set-swipe" type="checkbox" role="switch"><span></span></span></label></div>
+    <div class="caption">Volgorde</div>
     <div class="list" id="tab-editor"></div>
     <p class="footnote">Zet tabbladen aan of uit en zet ze met de pijltjes in jouw volgorde. Vandaag blijft altijd.</p>
-    <div class="caption">Op Vandaag</div>
+  </div>
+  <div class="set-page" data-page="vandaag" hidden>
+    <div class="list"><label class="field"><span>Je naam</span><input id="set-name" type="text" autocomplete="given-name" maxlength="24" placeholder="Voor de begroeting"></label>
+      <button class="linkrow" type="button" id="do-widgets">Widgets aanpassen</button></div>
+    <div class="caption">Wat je ziet</div>
     <div class="list" id="today-editor"></div>
-    <div class="caption">Magister</div>
+  </div>
+  <div class="set-page" data-page="gemak" hidden>
+    <div class="list"><label class="field sw"><span>Melding bij uitval<small class="field-sub">Als een les vandaag of morgen uitvalt</small></span><span class="switch"><input id="set-uitval" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Tussenuren in je rooster<small class="field-sub">Met wie van je vrienden ook vrij is</small></span><span class="switch"><input id="set-gaps" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Trillen bij tikken</span><span class="switch"><input id="set-haptics" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Lestijd in het tabblad<small class="field-sub">Op de computer: "Nog 12 min · Engels"</small></span><span class="switch"><input id="set-title" type="checkbox" role="switch"><span></span></span></label>
+      <label class="field sw"><span>Leuke extra's<small class="field-sub">Confetti, uitslapen-melding en je huiswerkreeks</small></span><span class="switch"><input id="set-fun" type="checkbox" role="switch"><span></span></span></label>
+      <div class="opt-block"><span>Vakantieregio</span><div class="seg-opts" data-pref="region" role="group" aria-label="Vakantieregio"></div></div></div>
+  </div>
+  <div class="set-page" data-page="magister" hidden><div class="caption">Magister</div>
     <div class="list">
       <div class="kv"><span>Gegevens</span><span id="set-source"></span></div>
       <button class="linkrow" type="button" id="do-magsync" hidden>Magister nu bijwerken</button>
@@ -2393,30 +2408,27 @@ html.calm .wgrid.editing .wg{animation:none}
       <button class="linkrow" type="button" id="do-bookmarklet">Magister-bladwijzer instellen</button>
       <label class="field"><span>Schooladres</span><input id="set-magister" type="url" inputmode="url" autocomplete="off" placeholder="school.magister.net"></label>
     </div>
-    <p class="footnote">Met de bladwijzer haal je je rooster en cijfers direct uit Magister, ook tussen de syncs door.</p>
-    <div class="caption">Synchroniseren</div>
+    <p class="footnote">Met de bladwijzer haal je je rooster en cijfers direct uit Magister, ook tussen de syncs door.</p></div>
+  <div class="set-page" data-page="sync" hidden><div class="caption">Synchroniseren</div>
     <div class="list">
       <div class="kv"><span>Google Drive</span><span id="set-sync"></span></div>
       <button class="linkrow" type="button" id="do-sync">Koppelen</button>
       <button class="linkrow danger" type="button" id="do-unsync" hidden>Ontkoppelen</button>
     </div>
-    <p class="footnote">Vinkjes, je Kast, studieplannen, focustijd en instellingen staan dan op al je apparaten. Ze komen in een verborgen map in je eigen Google Drive die alleen MCML kan zien.</p>
-    <div class="caption">Kast</div>
+    <p class="footnote">Vinkjes, je Kast, studieplannen, focustijd en instellingen staan dan op al je apparaten. Ze komen in een verborgen map in je eigen Google Drive die alleen MCML kan zien.</p></div>
+  <div class="set-page" data-page="kast" hidden><div class="caption">Kast</div>
     <div class="list">
       <button class="linkrow" type="button" id="do-export">Back-up van je kast downloaden</button>
       <button class="linkrow" type="button" id="do-import">Back-up terugzetten</button>
     </div>
     <input type="file" id="import-file" accept="application/json,.json" hidden>
-    <p class="footnote">Een back-up is een bestand met je kast en instellingen. Handig als je niet synchroniseert.</p>
-    <div class="caption">Gegevens</div>
+    <p class="footnote">Een back-up is een bestand met je kast en instellingen. Handig als je niet synchroniseert.</p></div>
+  <div class="set-page" data-page="gegevens" hidden><div class="caption">Gegevens</div>
     <div class="list">
       <button class="linkrow" type="button" id="do-refresh">Nu verversen</button>
       <button class="linkrow" type="button" id="do-cleardone">Afgevinkt huiswerk terugzetten</button>
       <button class="linkrow" type="button" id="do-resetprefs">Weergave terugzetten naar standaard</button>
-      <button class="linkrow danger" type="button" id="do-signout">Uitloggen</button>
-    </div>
-    <p class="footnote" id="set-status"></p>
-    <p class="footnote disclaimer-set">MCML (Mark's custom Magister launcher) is geen officiële app van Magister. Controleer Magister altijd voor alle belangrijke informatie, zoals cijfers, toetsen en roosterwijzigingen.</p>
+    </div></div>
   </div>
 </dialog>
 
@@ -2870,7 +2882,7 @@ function applyBundle(b, animate){
   mode = "live"; events = (b.events || []).map(fromBundle).filter(Boolean).sort((a,c)=>a.start-c.start);
   lastUpdated = new Date(b.updated || Date.now());
   if(b.grades){ grades = {at:b.gradesAt || b.updated, list:b.grades}; store.set("ml-grades", grades); }
-  setTimeout(()=>{ if(friendsDlg.open) $("friends-body").innerHTML = friendsSheetHtml(); checkAchievements(!store.get("ml-ach", null)); }, 50);
+  setTimeout(()=>{ if(friendsDlg.open) $("friends-body").innerHTML = friendsSheetHtml(); }, 50);
   extra = {absences: b.absences || null, averages: b.averages || null, columns: b.columns || null, magisterUrl: b.magisterUrl || "", materials: Array.isArray(b.materials) ? b.materials.length : null, matList: Array.isArray(b.materials) ? b.materials : null,
     friends: b.friends || null, meta: b.meta || null, social: b.social || null};
   noteUitval();
@@ -3321,9 +3333,8 @@ const WIDGETS = {
   notitie:{n:"Notitie", d:"Een briefje voor jezelf", c:"#FFCC00", ic:WSVG('<path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/>'), sizes:["s","m"]},
   weer:   {n:"Weer", d:"Moet je een jas of paraplu mee?", c:"#32ADE6", ic:WSVG('<path d="M7 18a4 4 0 1 1 .6-7.95A5.5 5.5 0 0 1 18 11.5a3.25 3.25 0 0 1-.5 6.5z"/>'), sizes:["s","m"]},
   ai:     {n:"Assistent", d:"Vraag de AI iets over je rooster of leren", c:"#AF52DE", ic:WSVG('<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>'), sizes:["s","m"], act:"ai"},
-  reeks:  {n:"Reeks", d:"Hoeveel dagen op rij je al je huiswerk af had", c:"#FF6B2C", ic:WSVG('<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.3 1.6 1.2 2.5 2 2.5-.6-2.6 0-5.5 1-8z"/>'), sizes:["s"], act:"ach"},
+  reeks:  {n:"Reeks", d:"Hoeveel dagen op rij je al je huiswerk af had", c:"#FF6B2C", ic:WSVG('<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.3 1.6 1.2 2.5 2 2.5-.6-2.6 0-5.5 1-8z"/>'), sizes:["s"], go:"hw"},
   spreuk: {n:"Spreuk van de dag", d:"Elke dag een nieuwe", c:"#FF9F0A", ic:WSVG('<path d="M7 8h4v4H8a3 3 0 0 0 3 3M13 8h4v4h-3a3 3 0 0 0 3 3"/>'), sizes:["m","s"]},
-  prestaties:{n:"Prestaties", d:"Badges die je verdient met MCML", c:"#FFD60A", ic:WSVG('<circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 21l5-2.5 5 2.5-1.5-7.5"/>'), sizes:["s"], act:"ach"},
   sync:   {n:"Synchronisatie", d:"Wanneer MCML Magister heeft gecontroleerd", c:"#34C759", ic:WSVG('<path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/>'), sizes:["s"], act:"sync"},
 };
 const WDEF = [{t:"toets", s:"s"}, {t:"hw", s:"s"}];
@@ -3407,7 +3418,6 @@ function wBody(t, size, now, list){
       return `<span class="w-ask"><span>Vraag iets…</span><i>${WSVG('<path d="M12 19V5M5 12l7-7 7 7"/>')}</i></span>` + (size === "m" ? `<span class="w-chips">${aiSuggestions().slice(0,3).map(q=>`<button type="button" data-aiq="${esc(q)}">${esc(q)}</button>`).join("")}</span>` : "");
     case "reeks": { const n = streakDays(); return big(`${n}<small> ${n === 1 ? "dag" : "dagen"}</small>`, n ? "op rij alles af 🔥" : "Vink je huiswerk af om te beginnen"); }
     case "spreuk": return `<span class="w-quote">“${esc(quoteOfDay(now))}”</span>`;
-    case "prestaties": { const n = (store.get("ml-ach", []) || []).length; return big(`${n}<small>/${ACH.length}</small>`, "prestaties verdiend"); }
     case "sync": {
       const s = syncInfo();
       return big(s.checked ? hm(s.checked) : "–", source === "link" ? `gecontroleerd${s.checks ? ` · ${s.checks}× vandaag` : ""}` : "laatst bijgewerkt");
@@ -3592,17 +3602,7 @@ function moreSheetHtml(){
   const M = TAB_META_FN();
   const tile = (attr, c, ic, l, cur) => `<button type="button" class="more-tile press ${cur ? "cur" : ""}" ${attr}><span class="ti" style="background:${c}">${ic}</span><span>${l}</span></button>`;
   return `<div class="more-grid">${moreViews().map(v=>tile(`data-mview="${v}"`, M[v][0], M[v][1], TITLES[v], v === view)).join("")}</div>
-    <div class="caption">Handig</div><div class="more-grid">
-      ${tile("data-mact=\"search\"", "#8E8E93", WSVG('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'), "Zoeken")}
-      ${tile("data-mact=\"focus\"", "#5E5CE6", WIDGETS.focus.ic, "Focus")}
-      ${tile("data-mact=\"ai\"", "#AF52DE", WIDGETS.ai.ic, "Assistent")}
-      ${tile("data-mact=\"friends\"", "#64D2FF", WIDGETS.vrij.ic, "Samen vrij")}
-      ${tile("data-mact=\"sync\"", "#34C759", WIDGETS.sync.ic, "Synchronisatie")}
-      ${tile("data-mact=\"ach\"", "#FFB800", WIDGETS.prestaties.ic, "Prestaties")}
-      ${tile("data-mact=\"ics\"", "#FF375F", WSVG('<rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17M8 2.5v4M16 2.5v4M12 13v5M9.5 15.5L12 18l2.5-2.5"/>'), "Naar je agenda")}
-      ${tile("data-mact=\"settings\"", "#636366", WSVG('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'), "Instellingen")}
-    </div>
-    <p class="footnote">Welke tabs onderaan staan, kies je in Instellingen → Tabs.</p>`;
+    <p class="footnote">Welke tabs onderaan staan, kies je in Instellingen → Tabbladen. De assistent, Samen vrij en meer vind je onder ✨ bovenaan.</p>`;
 }
 function openMore(src){ $("more-body").innerHTML = moreSheetHtml(); openSheet(moreDlg, src); }
 /* the tab bar shrinks while you scroll down and comes back when you scroll up */
@@ -3703,44 +3703,8 @@ function streakDays(){
 function afterCheck(id){
   const open = schoolList().filter(e=>e.hw && e.body && e.end > new Date() && !done[e.id]);
   if(done[id] && noteStreak()){ confetti(); const s = streakDays(); toast(s > 1 ? `Alles af! 🔥 ${s} dagen op rij` : "Alles af voor morgen! 🎉"); }
-  else if(done[id] && !open.length){ store.set("ml-allesaf", true); confetti(60); toast("Al je huiswerk is af! 🎉"); }
-  checkAchievements();
+  else if(done[id] && !open.length){ confetti(60); toast("Al je huiswerk is af! 🎉"); }
 }
-/* achievements: worked out from what MCML already knows */
-const ACH = [
-  ["acht", "🌟", "Dikke voldoende", "Haal een 8 of hoger", ()=>gradeList().some(g=>g.num >= 8)],
-  ["tien", "💯", "Perfect", "Haal een 10", ()=>gradeList().some(g=>g.num >= 10)],
-  ["allesaf", "✅", "Alles af", "Vink al je huiswerk voor morgen af", ()=>streakLog().length > 0 || store.get("ml-allesaf", false)],
-  ["reeks3", "🔥", "Op dreef", "3 schooldagen op rij alles af", ()=>streakDays() >= 3],
-  ["reeks10", "☄️", "Onstopbaar", "10 schooldagen op rij alles af", ()=>streakDays() >= 10],
-  ["focus1", "🎯", "Gefocust", "Een uur gefocust in totaal", ()=>focusTotal() >= 60],
-  ["focus10", "🧠", "Focus-meester", "10 uur gefocust in totaal", ()=>focusTotal() >= 600],
-  ["vroeg", "🌅", "Vroege vogel", "Open MCML voor 7:00", ()=>store.get("ml-early", false)],
-  ["laat", "🦉", "Nachtuil", "Open MCML na 23:00", ()=>store.get("ml-late", false)],
-  ["optijd", "⏰", "Altijd op tijd", "Nog nooit te laat dit schooljaar", ()=>{ const A = absenceList(); return !!A && A.length > 0 && !A.some(a=>absKind(a) === "late"); }],
-  ["vriend", "🤝", "Samen sterk", "Voeg een vriend toe in Samen vrij", ()=>(socialInfo()?.friends || []).some(f=>f.status === "ok")],
-  ["thema", "🎨", "Stijlicoon", "Kies een kleurthema", ()=>prefs.skin && prefs.skin !== "standard"],
-  ["widget", "🧩", "Bouwer", "Zet 5 widgets op Vandaag", ()=>wList().length >= 5],
-  ["ai", "✨", "Nieuwsgierig", "Stel de assistent een vraag", ()=>store.get("ml-asked", false)],
-  ["geheim", "🥚", "Paaseieren", "Vind het geheimpje op Vandaag", ()=>store.get("ml-egg", false)],
-];
-function focusTotal(){ try{ return focusLog.reduce((a, l)=>a + (Number(l.min) || 0), 0); }catch{ return 0; } }
-function checkAchievements(quiet){
-  if(mode !== "live" && mode !== "demo") return;
-  const got = new Set(store.get("ml-ach", []) || []), fresh = [];
-  for(const [id, ic, name, , test] of ACH){ let ok = false; try{ ok = !!test(); }catch{} if(ok && !got.has(id)){ got.add(id); fresh.push([ic, name]); } }
-  if(!fresh.length) return;
-  store.set("ml-ach", [...got]);
-  if(quiet || mode === "demo") return;
-  setTimeout(()=>{ confetti(70); toast(`${fresh[0][0]} Prestatie: ${fresh[0][1]}${fresh.length > 1 ? ` (+${fresh.length - 1})` : ""}`, ()=>openAch(), "Bekijk"); }, 900);
-}
-function achHtml(){
-  const got = new Set(store.get("ml-ach", []) || []);
-  return `<div class="ach-top"><b class="num">${got.size}</b><span>van de ${ACH.length} prestaties</span></div>
-    <div class="ach-grid">${ACH.map(([id, ic, name, how])=>`<div class="ach ${got.has(id) ? "on" : ""}"><span class="ach-ic">${got.has(id) ? ic : "🔒"}</span><b>${esc(name)}</b><small>${esc(how)}</small></div>`).join("")}</div>
-    <p class="footnote">Je reeks: ${streakDays()} ${streakDays() === 1 ? "dag" : "dagen"} op rij alles af.</p>`;
-}
-function openAch(src){ checkAchievements(true); $("ach-body").innerHTML = achHtml(); openSheet(achDlg, src); }
 /* "your first hour is cancelled": tell the good news */
 function sleepInHtml(now){
   if(prefs.fun === false) return "";
@@ -3867,7 +3831,7 @@ function widgetClick(e){
   const sd = t.closest("[data-shareday]"); if(sd){ shareDay(sd.dataset.shareday); return true; }
   const h1 = t.closest("#v-today .large h1"); if(h1 && prefs.fun !== false){
     const n = (h1._taps = (Date.now() - (h1._t || 0) < 600 ? (h1._taps || 0) : 0) + 1); h1._t = Date.now();
-    if(n >= 5){ h1._taps = 0; confetti(140); h1.animate([{transform:"rotate(0)"},{transform:"rotate(-6deg) scale(1.05)"},{transform:"rotate(5deg)"},{transform:"none"}], {duration:600}); store.set("ml-egg", true); toast("🥚 Je hebt het geheimpje gevonden!"); checkAchievements(); }
+    if(n >= 5){ h1._taps = 0; confetti(140); h1.animate([{transform:"rotate(0)"},{transform:"rotate(-6deg) scale(1.05)"},{transform:"rotate(5deg)"},{transform:"none"}], {duration:600}); toast("🥚 Je hebt het geheimpje gevonden!"); }
     return true; }
   if(t.closest("[data-notip]")){ store.set("ml-notip", true); t.closest(".install-tip")?.remove(); return true; }
   if(t.closest("[data-install]")){ installEvt?.prompt(); installEvt?.userChoice.then(()=>{ installEvt = null; render(); }); return true; }
@@ -3889,7 +3853,7 @@ function widgetClick(e){
   if(wg && !wEdit){
     if(wg.dataset.wgo){ setView(wg.dataset.wgo, true); return true; }
     const a = wg.dataset.wact;
-    if(a === "friends") openFriends(wg); else if(a === "sync") openSync(wg); else if(a === "ai") openAi(null, wg, true); else if(a === "ach") openAch(wg);
+    if(a === "friends") openFriends(wg); else if(a === "sync") openSync(wg); else if(a === "ai") openAi(null, wg, true);
     else if(a === "focus"){ if(fRunning()) openFocus(); else { focusStart("focus"); openFocus(); } }
     return true;
   }
@@ -4285,8 +4249,7 @@ function goToDay(k){
 function renderSide(now, list){
   if(!WIDE.matches) return;
   const tests = list.filter(e=>e.test && !e.gone && e.end>now).slice(0,3);
-  let html = `<div class="side-links"><button type="button" data-sideact="ai">${WIDGETS.ai.ic}<span>Assistent</span></button><button type="button" data-sideact="friends">${WIDGETS.vrij.ic}<span>Samen vrij</span></button><button type="button" data-sideact="sync">${WIDGETS.sync.ic}<span>Synchronisatie</span></button><button type="button" data-sideact="ach">${WIDGETS.prestaties.ic}<span>Prestaties</span></button></div>`;
-  html += `<div class="side-cap"><span>Komende toetsen</span></div>`;
+  let html = `<div class="side-cap"><span>Komende toetsen</span></div>`;
   html += tests.length ? tests.map(e=>{ const n = daysUntil(e.start, now);
       return `<div class="side-test" data-ev="${esc(e.id)}" role="button" tabindex="0"><span class="n ${n<=2?"soon":""}">${n}</span><span style="min-width:0"><b>${esc(e.label)}</b><small>${esc(relDay(e.start, now))} · ${hm(e.start)}</small></span></div>`; }).join("")
     : `<div class="side-empty">Geen toetsen gepland.</div>`;
@@ -4326,7 +4289,6 @@ $("tabbar").addEventListener("click", e=>{
   if(e.target.closest("[data-search]")){ openSpot(); return; }
   const cal = e.target.closest("[data-cal]"); if(cal){ if(!cal.disabled) goToDay(cal.dataset.cal); return; }
   const ev = e.target.closest("[data-ev]"); if(ev){ openDetail(ev.dataset.ev, ev); return; }
-  const sa = e.target.closest("[data-sideact]"); if(sa){ const a = sa.dataset.sideact; if(a === "ai") openAi(null, sa, true); else if(a === "friends") openFriends(sa); else if(a === "ach") openAch(sa); else openSync(sa); return; }
   if(e.target.closest("[data-more]")){ haptic(); openMore(e.target.closest("[data-more]")); return; }
   const b = e.target.closest("button[data-view]"); if(!b) return; haptic();
   if(b.dataset.view===view){
@@ -4531,7 +4493,6 @@ function showApp(animate){
   $("welcome").hidden = true; $("tabbar").hidden = false; $("open-settings").hidden = false; $("open-search").hidden = false; $("open-ai").hidden = false; $("app-disclaimer").hidden = false; $("open-focus").hidden = false; focusUI();
   setView(view, false);
   if(animate) render(true);
-  { const h = new Date().getHours(); if(h < 7 && h >= 4) store.set("ml-early", true); if(h >= 23) store.set("ml-late", true); }
 }
 function showBanner(msg, retry){
   $("banner").innerHTML = `<div class="banner"><span>${esc(msg)}</span><button class="btn press" type="button" id="banner-retry">Opnieuw</button></div>`;
@@ -4549,7 +4510,7 @@ $("demo").addEventListener("click", ()=>{ mode = "demo"; events = demoEvents(); 
 
 /* ================= settings sheet ================= */
 const dlg = $("settings"), detail = $("detail"), itemSheet = $("itemsheet"), focusDlg = $("focus"), bmDlg = $("bmsheet"), planDlg = $("plansheet"), gradeDlg = $("gradesheet"), grpDlg = $("grprefs"), absDlg = $("abssheet"),
-  syncDlg = $("syncsheet"), friendsDlg = $("friendsheet"), wDlg = $("wsheet"), moreDlg = $("moresheet"), aiDlg = $("aisheet"), achDlg = $("achsheet");
+  syncDlg = $("syncsheet"), friendsDlg = $("friendsheet"), wDlg = $("wsheet"), moreDlg = $("moresheet"), aiDlg = $("aisheet");
 const isPhoneSheet = () => !matchMedia("(min-width:640px)").matches;
 
 function openSheet(d, src){
@@ -4628,7 +4589,7 @@ moreDlg.addEventListener("click", e=>{
   const v = e.target.closest("[data-mview]"); if(v){ closeSheet(moreDlg); setTimeout(()=>setView(v.dataset.mview, true), 160); return; }
   const a = e.target.closest("[data-mact]"); if(!a) return;
   const act = a.dataset.mact; closeSheet(moreDlg);
-  setTimeout(()=>{ if(act === "search") openSpot(); else if(act === "focus") openFocus(); else if(act === "ai") openAi(); else if(act === "friends") openFriends(); else if(act === "sync") openSync(); else if(act === "settings") openSettings(); else if(act === "ach") openAch(); else if(act === "ics") icsExport(); }, 280);
+  setTimeout(()=>{ if(act === "search") openSpot(); else if(act === "focus") openFocus(); else if(act === "ai") openAi(); else if(act === "friends") openFriends(); else if(act === "sync") openSync(); else if(act === "settings") openSettings(); else if(act === "ics") icsExport(); }, 280);
 });
 syncDlg.addEventListener("click", e=>{ if(e.target.closest("#sync-now")){ window.open(CONNECT_URL + "?sync=1", "_blank", "noopener"); toast("Je koppelpagina werkt Magister nu bij. Kom daarna terug."); } });
 friendsDlg.addEventListener("click", async e=>{
@@ -4677,7 +4638,7 @@ aiDlg.addEventListener("change", e=>{
 /* keep the chat input above the phone keyboard */
 if(window.visualViewport) visualViewport.addEventListener("resize", ()=>{ if(!aiDlg.open) return; const kb = Math.max(0, innerHeight - visualViewport.height - visualViewport.offsetTop); aiDlg.style.setProperty("--kb", kb + "px"); });
 
-for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg, grpDlg, absDlg, syncDlg, friendsDlg, wDlg, moreDlg, aiDlg, achDlg]){
+for(const d of [dlg, detail, itemSheet, focusDlg, bmDlg, planDlg, gradeDlg, grpDlg, absDlg, syncDlg, friendsDlg, wDlg, moreDlg, aiDlg]){
   d.addEventListener("cancel", e=>{ e.preventDefault(); closeSheet(d); });
   d.addEventListener("close", ()=>{ document.body.classList.remove("sheet-open","dragging"); if(d._src){ d._src.style.opacity = ""; d._src = null; } });
   d.addEventListener("click", e=>{
@@ -4849,17 +4810,35 @@ grpDlg.addEventListener("change", e=>{
 });
 $("do-grprefs").addEventListener("click", openGradePrefs);
 const fromSettings = fn => () => { closeSheet(dlg); setTimeout(fn, 280); };
-$("do-sync").addEventListener("click", fromSettings(()=>openSync()));
-$("do-ach").addEventListener("click", fromSettings(()=>openAch()));
-$("do-ics").addEventListener("click", ()=>icsExport());
-$("do-ai").addEventListener("click", fromSettings(()=>{ openAi(); aiShowSettings(true); }));
-$("do-friends").addEventListener("click", fromSettings(()=>openFriends()));
 $("do-widgets").addEventListener("click", fromSettings(()=>{ if(view !== "today") setView("today", true); wEdit = true; render(); setTimeout(()=>$("wgrid")?.scrollIntoView({behavior:"smooth", block:"center"}), 300); }));
+/* settings: a short main list; each row opens its own page inside the sheet */
+const SET_TITLES = {main:"Instellingen", weergave:"Weergave", tabs:"Tabbladen", vandaag:"Vandaag", gemak:"Meldingen en gemak", magister:"Magister", sync:"Synchroniseren", kast:"Kast en back-up", gegevens:"Gegevens"};
+let setPageNow = "main";
+function setPage(name, back){
+  const from = dlg.querySelector(`.set-page[data-page="${setPageNow}"]`), to = dlg.querySelector(`.set-page[data-page="${name}"]`); if(!to) return;
+  setPageNow = name; from.hidden = true; to.hidden = false;
+  $("set-htitle").textContent = SET_TITLES[name] || "Instellingen";
+  $("set-back").hidden = name === "main"; $("set-sp").hidden = name !== "main";
+  dlg.scrollTop = 0; dlg.querySelector(".sheet-body").scrollTop = 0;
+  if(!reduced) to.animate([{opacity:0, transform:`translateX(${back ? -28 : 28}px)`},{opacity:1, transform:"none"}], {duration:320, easing:"cubic-bezier(.2,.9,.3,1)"});
+  if(name === "main") renderSetMain();
+}
+function renderSetMain(){
+  const th = {auto:"automatisch", light:"licht", dark:"donker"}[skin().dark ? "dark" : prefs.theme];
+  $("sv-weergave").textContent = `${skin().n} · ${th}`;
+  $("sv-tabs").textContent = `${visibleViews().length} tabs`;
+  $("sv-magister").textContent = $("set-source").textContent;
+  $("sv-sync").textContent = $("set-sync").textContent;
+}
+dlg.addEventListener("click", e=>{ const g = e.target.closest("[data-goto]"); if(g){ haptic(); setPage(g.dataset.goto); } });
+$("set-back").addEventListener("click", ()=>{ haptic(); setPage("main", true); });
 function openSettings(){
   $("set-magister").value = store.get("ml-magister","");
   $("do-signout").textContent = mode==="demo" ? "Voorbeeld sluiten" : "Uitloggen";
   $("set-status").textContent = mode==="live" && lastUpdated ? "Laatst bijgewerkt om "+hm(lastUpdated)+"." : "";
-  renderPrefControls(); renderSyncRow(); openSheet(dlg);
+  renderPrefControls(); renderSyncRow();
+  if(setPageNow !== "main"){ dlg.querySelector(`.set-page[data-page="${setPageNow}"]`).hidden = true; dlg.querySelector('.set-page[data-page="main"]').hidden = false; setPageNow = "main"; $("set-htitle").textContent = "Instellingen"; $("set-back").hidden = true; $("set-sp").hidden = false; }
+  renderSetMain(); openSheet(dlg);
 }
 $("open-settings").addEventListener("click", openSettings);
 
@@ -5127,7 +5106,42 @@ spotRes.addEventListener("click", e=>{ const it = e.target.closest(".spot-item")
 spotRes.addEventListener("pointermove", e=>{ const it = e.target.closest(".spot-item"); if(it && Number(it.dataset.k) !== spotSel){ spotSel = Number(it.dataset.k) - 0; spotMove(0); } });
 spotBack.addEventListener("click", closeSpot);
 $("open-search").addEventListener("click", openSpot);
-$("open-ai").addEventListener("click", e=>openAi(null, e.currentTarget));
+/* the ✨ dropdown in the top bar: all the extra features in one place */
+const XITEMS = [
+  ["ai", "#AF52DE", "Assistent", "Vraag de AI iets over je rooster of leren"],
+  ["friends", "#64D2FF", "Samen vrij", "Wanneer je vrienden ook vrij zijn"],
+  ["sync", "#34C759", "Synchronisatie", "Wanneer MCML Magister heeft gecontroleerd"],
+  ["widgets", "#FF9F0A", "Widgets aanpassen", "Kies wat je op Vandaag ziet"],
+  ["ics", "#FF375F", "Rooster naar je agenda", "Download als .ics-bestand"],
+];
+function xIcon(k){ return k === "widgets" ? WSVG('<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><path d="M17 14v6M14 17h6"/>')
+  : k === "ics" ? WSVG('<rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17M8 2.5v4M16 2.5v4M12 13v5M9.5 15.5L12 18l2.5-2.5"/>') : WIDGETS[{ai:"ai", friends:"vrij", sync:"sync"}[k]].ic; }
+function openXMenu(){
+  const btn = $("open-ai"), m = $("xmenu");
+  m.innerHTML = XITEMS.map(([k, c, t, d])=>`<button type="button" role="menuitem" data-x="${k}"><span class="xi" style="background:${c}">${xIcon(k)}</span><span class="xt"><b>${t}</b><small>${d}</small></span></button>`).join("");
+  const r = btn.getBoundingClientRect();
+  m.hidden = false;
+  const w = m.offsetWidth; m.style.top = (r.bottom + 10) + "px"; m.style.left = Math.max(10, Math.min(innerWidth - w - 10, r.right - w)) + "px";
+  m.style.transformOrigin = `${Math.max(20, r.left + r.width / 2 - parseFloat(m.style.left))}px 0`; $("xmenu-back").hidden = false; btn.setAttribute("aria-expanded", "true"); haptic();
+  if(!reduced) m.animate([{opacity:0, transform:"translateY(-8px) scale(.94)"},{opacity:1, transform:"none"}], {duration:260, easing:"cubic-bezier(.2,1.1,.4,1)"});
+  m.querySelector("button")?.focus({preventScroll:true});
+}
+function closeXMenu(){ const m = $("xmenu"); if(m.hidden) return; m.hidden = true; $("xmenu-back").hidden = true; $("open-ai").setAttribute("aria-expanded", "false"); }
+$("open-ai").addEventListener("click", ()=>{ $("xmenu").hidden ? openXMenu() : closeXMenu(); });
+$("xmenu-back").addEventListener("click", closeXMenu);
+addEventListener("resize", closeXMenu);
+$("xmenu").addEventListener("keydown", e=>{
+  const items = [...$("xmenu").querySelectorAll("button")], i = items.indexOf(document.activeElement);
+  if(e.key === "Escape"){ closeXMenu(); $("open-ai").focus(); e.preventDefault(); }
+  else if(e.key === "ArrowDown"){ items[(i + 1) % items.length].focus(); e.preventDefault(); }
+  else if(e.key === "ArrowUp"){ items[(i - 1 + items.length) % items.length].focus(); e.preventDefault(); }
+});
+$("xmenu").addEventListener("click", e=>{
+  const b = e.target.closest("[data-x]"); if(!b) return; const k = b.dataset.x; closeXMenu();
+  if(k === "ai") openAi(null, $("open-ai"), true); else if(k === "friends") openFriends(); else if(k === "sync") openSync();
+  else if(k === "ics") icsExport();
+  else if(k === "widgets"){ if(view !== "today") setView("today", true); wEdit = true; render(); setTimeout(()=>$("wgrid")?.scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"center"}), 300); }
+});
 const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 $("kbd-hint").textContent = isMac ? "⌘K" : "Ctrl K";
 document.addEventListener("keydown", e=>{
